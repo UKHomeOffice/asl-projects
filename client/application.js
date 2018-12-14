@@ -1,4 +1,5 @@
 import ExperimentalDesign from './pages/sections/experimental-design';
+import Protocols from './pages/sections/protocols'
 
 export default {
   introduction: {
@@ -12,6 +13,48 @@ export default {
             required: true,
             label: 'Title',
             type: 'text'
+          }
+        ]
+      }
+    }
+  },
+  rabbits: {
+    title: 'Rabbits',
+    subsections: {
+      rabbits: {
+        title: 'Add rabbit',
+        component: Protocols,
+        fields: [
+          {
+            name: 'name',
+            label: 'What would you like to name your rabbit?',
+            type: 'text',
+            required: true,
+            step: 0
+          },
+          {
+            name: 'colour',
+            label: 'Choose the colour of your rabbit',
+            type: 'radio',
+            options: [
+              'White',
+              'Gray',
+              'Black',
+              'Blue'
+            ],
+            required: true,
+            step: 0
+          },
+          {
+            name: 'attributes',
+            label: 'Which attributes should your rabbit have',
+            type: 'radio',
+            options: [
+              'Fluffy',
+              'Hoppy',
+              'Cuddly'
+            ],
+            step: 1
           }
         ]
       }

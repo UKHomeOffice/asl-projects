@@ -106,6 +106,16 @@ main {
   margin-bottom: 2em;
 }
 
+.govuk-inset-text {
+  border-left: 4px solid $mid-grey;
+  padding-left: $govuk-gutter;
+}
+
+hr {
+  border-top: 4px solid $mid-grey;
+  border-left: 0;
+}
+
 .review ul {
   margin-top: 1em;
 }
