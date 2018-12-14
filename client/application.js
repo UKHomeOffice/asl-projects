@@ -59,7 +59,7 @@ export default {
           {
             name: 'additional-instructions',
             label: 'Are there any additional requests?',
-            type: 'textarea',
+            type: 'texteditor',
             step: 2
           }
         ]
