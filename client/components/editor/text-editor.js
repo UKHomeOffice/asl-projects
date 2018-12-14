@@ -135,6 +135,7 @@ export default class TextEditor extends Component {
 
   render() {
 		return (
+      <div className='editor'>
 			<Fragment>
 				<FormatToolbar>
 					{this.renderMarkIcon('title', ic_title)}
@@ -152,6 +153,7 @@ export default class TextEditor extends Component {
 					// renderNode={this.renderNode}
 				/>
 			</Fragment>
+      </div>
 		);
 	}
 }

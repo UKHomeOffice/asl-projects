@@ -109,3 +109,81 @@ main {
 .review ul {
   margin-top: 1em;
 }
+
+$color_1: #555555;
+$color_2: #9d7ff2;
+$color_3: #333333;
+$color_4: rgb(17, 17, 17);
+$font_family_1: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+$font_family_2: Open Sans;
+$font_family_3: Arial;
+$background_color_1: rgb(240, 240, 240);
+$background_color_2: rgb(255, 255, 255);
+
+html {
+	height: 100%;
+}
+body {
+	min-height: 100vh;
+	margin: 0;
+	padding: 0;
+	font-family: $font_family_1;
+	background-color: $background_color_1;
+}
+h1 {
+	margin: 20px 0 25px 0;
+}
+blockquote {
+	font-size: 1.4em;
+	width: 80%;
+	margin: 50px auto;
+	font-family: $font_family_2;
+	font-style: italic;
+	color: $color_1;
+	padding: 1.2em 30px 1.2em 75px;
+	border-left: 8px solid #9d7ff2;
+	line-height: 1.6;
+	position: relative;
+	background: #ededed;
+	&::before {
+		font-family: $font_family_3;
+		content: '\201C';
+		color: $color_2;
+		font-size: 4em;
+		position: absolute;
+		left: 10px;
+		top: -10px;
+	}
+	&::after {
+		content: '';
+	}
+	span {
+		display: block;
+		color: $color_3;
+		font-style: normal;
+		font-weight: bold;
+		margin-top: 1em;
+	}
+}
+a {
+	color: $color_2;
+}
+.editor {
+	color: $color_4;
+	max-width: 740px;
+	background-color: $background_color_2;
+	box-shadow: rgba(118, 143, 255, 0.1) 0px 16px 24px 0px;
+	padding: 40px;
+	margin: 65px auto 45px;
+	border-radius: 4.5px;
+}
+.format-toolbar {
+	display: flex;
+	border-bottom: solid 1.7px rgba(199, 198, 255, 0.15);
+	padding: 10px 0;
+	margin: 0 0 20px 0;
+}
+.tooltip-icon-button {
+	cursor: pointer;
+	border: 0;
+}
