@@ -49,21 +49,20 @@ class Field extends React.Component {
       return <TextArea
         name={ this.props.name }
         label={ this.props.label }
-        value={ this.props.value }
+        value={ this.props.value || '' }
         error={ this.props.error }
         onChange={ e => this.onChange(e.target.value) }
-        />
+      />;
     }
     return <Input
       name={ this.props.name }
       label={ this.props.label }
-      value={ this.props.value }
+      value={ this.props.value || '' }
       error={ this.props.error }
       onChange={ e => this.onChange(e.target.value) }
-      />
+    />;
   }
 
 }
 
 export default Field;
-

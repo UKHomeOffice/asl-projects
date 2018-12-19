@@ -41,14 +41,17 @@ class Section extends React.Component {
 
   render() {
     if (this.props.component) {
+      const { values, fields, title, step, ...rest } = this.props;
       const Section = this.props.component;
       return <Section
-        title={ this.props.title }
+        { ...this.props }
+        title={ title }
         save={ (...args) => this.props.update(...args) }
         exit={ () => this.props.history.push(`/project/${this.props.id}`) }
-        values={ this.props.values }
-        fields={ this.props.fields }
-        step={ this.props.step }
+        values={ values }
+        fields={ fields }
+        step={ step }
+        { ...rest }
         onProgress={ step => this.props.history.push(`/project/${this.props.id}/${this.props.section}/${step}`) }
         />
     }

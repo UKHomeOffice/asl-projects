@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import Fieldset from '../../../components/fieldset';
-import {Button} from '@ukhomeoffice/react-components';
+import { Button } from '@ukhomeoffice/react-components';
 
 const Questions = ({
   title,

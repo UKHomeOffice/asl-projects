@@ -92,6 +92,7 @@ main {
   padding: 12px;
   margin: -15px;
 }
+
 .import-rejected {
   border: 3px dashed $govuk-error-colour;
   padding: 12px;
@@ -106,6 +107,18 @@ main {
   margin-bottom: 2em;
 }
 
+.block {
+  display: block;
+}
+
+.float-right {
+  float: right;
+}
+
+.float-left {
+  float: left;
+}
+
 .govuk-inset-text {
   border-left: 4px solid $mid-grey;
   padding-left: $govuk-gutter;
@@ -118,4 +131,9 @@ hr {
 
 .review ul {
   margin-top: 1em;
+}
+
+.panel {
+  padding: $govuk-gutter;
+  background-color: $mid-grey;
 }

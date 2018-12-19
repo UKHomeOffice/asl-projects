@@ -18,45 +18,70 @@ export default {
       }
     }
   },
-  rabbits: {
-    title: 'Rabbits',
+  protocols: {
+    title: 'Protocols',
     subsections: {
-      rabbits: {
-        title: 'Add rabbit',
+      protocols: {
+        title: 'Protocols',
+        name: 'protocols',
         component: Protocols,
-        fields: [
-          {
-            name: 'name',
-            label: 'What would you like to name your rabbit?',
-            type: 'text',
-            required: true,
-            step: 0
-          },
-          {
-            name: 'colour',
-            label: 'Choose the colour of your rabbit',
+        fields: [{
+          name: 'title',
+          label: 'Title',
+          type: 'text'
+        },
+        {
+          name: 'description',
+          label: 'Describe what you will use this protocol for',
+          type: 'textarea',
+        },
+        {
+          name: 'severity',
+          label: 'What\'s the prospective severity classification of this protocol?',
+          type: 'radio',
+          options: [
+            'Mild',
+            'Moderate',
+            'Severe',
+            'Non-recovery'
+          ]
+        }],
+        species: {
+          name: 'species',
+          title: 'Species',
+          fields: [{
+            name: 'species',
+            label: 'Which species will be used in this protocol',
             type: 'radio',
             options: [
-              'White',
-              'Gray',
-              'Black',
-              'Blue'
-            ],
-            required: true,
-            step: 0
+              'Mice',
+              'Rats'
+            ]
+          }]
+        },
+        steps: {
+          name: 'steps',
+          title: 'Step',
+          fields: [{
+            name: 'title',
+            label: 'Title',
+            type: 'text'
           },
           {
-            name: 'attributes',
-            label: 'Which attributes should your rabbit have',
+            name: 'description',
+            label: 'Please describe the step',
+            type: 'textarea'
+          },
+          {
+            name: 'optional',
+            label: 'Is this step optional?',
             type: 'radio',
             options: [
-              'Fluffy',
-              'Hoppy',
-              'Cuddly'
-            ],
-            step: 1
-          }
-        ]
+              'Yes',
+              'No'
+            ]
+          }]
+        }
       }
     }
   },

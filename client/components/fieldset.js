@@ -3,14 +3,14 @@ import React, { Fragment } from 'react';
 import { Button } from '@ukhomeoffice/react-components';
 import Field from './field';
 
-const Fieldset = ({ fields, values = {}, onFieldChange }) => (
+const Fieldset = ({ fields, values = {}, onFieldChange, prefix = '' }) => (
   <fieldset>
     {
       fields.map(field => {
-
         return <Field
           { ...field }
           key={ field.name }
+          name={ `${prefix}${field.name}` }
           value={ values[field.name] }
           onChange={ value => onFieldChange(field.name, value) }
         />
