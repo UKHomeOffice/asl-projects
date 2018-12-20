@@ -28,28 +28,66 @@ export default {
         fields: [{
           name: 'title',
           label: 'Title',
-          type: 'text'
+          type: 'text',
+          validate: {
+            required: 'Enter a title'
+          }
         },
         {
           name: 'description',
           label: 'Describe what you will use this protocol for',
+          summary: 'Purpose of this protocol',
           type: 'textarea',
+          validate: {
+            required: 'Enter a description'
+          }
         },
         {
           name: 'severity',
           label: 'What\'s the prospective severity classification of this protocol?',
+          summary: 'Severity classification',
           type: 'radio',
           options: [
             'Mild',
             'Moderate',
             'Severe',
             'Non-recovery'
-          ]
+          ],
+          validate: {
+            required: 'Select a severity classification'
+          }
         }],
         species: {
           name: 'species',
           title: 'Species',
           fields: [{
+            name: 'life-stages',
+            label: 'Which life stages will apply to animals used during this protocol?',
+            hint: 'Select all that apply',
+            type: 'checkbox',
+            options: [
+              'Embryo and egg',
+              'Neonate',
+              'Juvenile',
+              'Adult',
+              'Pregnant adult'
+            ]
+          },
+          {
+            name: 'amount',
+            label: 'How many animals will be used in this protocol',
+            type: 'text'
+          },
+          {
+            name: 'more-than-once',
+            label: 'Will any of these animals go through this protocol more than once?',
+            type: 'radio',
+            options: [
+              'Yes',
+              'No'
+            ]
+          },
+          {
             name: 'species',
             label: 'Which species will be used in this protocol',
             type: 'radio',

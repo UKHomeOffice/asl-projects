@@ -25,6 +25,10 @@ p.control-panel {
   }
 }
 
+details summary {
+  color: $blue;
+}
+
 table {
   .govuk-button {
     margin: 0;
@@ -136,4 +140,35 @@ hr {
 .panel {
   padding: $govuk-gutter;
   background-color: $mid-grey;
+  border-color: transparent;
+
+  &.step {
+    margin-bottom: $govuk-gutter;
+  }
+
+  &.white {
+    background-color: $white;
+  }
+
+  &.active {
+    border: 4px solid $green;
+  }
 }
+
+// .panel-enter {
+//   opacity: 0.01;
+// }
+//
+// .alert-enter.alert-enter-active {
+//   opacity: 1;
+//   transition: opacity 100ms ease-in;
+// }
+//
+// .alert-leave {
+//   opacity: 1;
+// }
+//
+// .alert-leave.alert-leave-active {
+//   opacity: 0.01;
+//   transition: opacity 500ms ease-out;
+// }
