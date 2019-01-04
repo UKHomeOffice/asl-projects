@@ -1,7 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import { Button } from '@ukhomeoffice/react-components';
-import noop from 'lodash/noop';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class Repeater extends Component {
   constructor(props) {
@@ -9,17 +7,18 @@ class Repeater extends Component {
     this.addItem = this.addItem.bind(this);
     this.updateItem = this.updateItem.bind(this);
     this.removeItem = this.removeItem.bind(this);
+    this.moveUp = this.moveUp.bind(this);
+    this.moveDown = this.moveDown.bind(this);
     this.update = this.update.bind(this);
     this.save = this.save.bind(this);
     this.state = {
       items: this.props.items || []
     }
-    console.log('items', this.state.items)
   }
 
   componentDidMount() {
-    if (this.props.addOnInit && !this.state.items.length) {
-      this.addItem();
+    if (!this.props.initCollapsed && !this.state.items.length) {
+      this.setState({ items: [{}] });
     }
   }
 
@@ -57,13 +56,35 @@ class Repeater extends Component {
     this.props.onSave(this.state.items);
   }
 
+  moveUp(index) {
+    if (index > 0) {
+      const items = this.state.items;
+      const item = items[index];
+      const swap = items[index - 1];
+      items[index] = swap;
+      items[index - 1] = item;
+      this.update(items);
+    }
+  }
+
+  moveDown(index) {
+    if (index + 1 < this.state.items.length) {
+      const items = this.state.items;
+      const item = items[index];
+      const swap = items[index + 1];
+      items[index] = swap;
+      items[index + 1] = item;
+      this.update(items);
+    }
+  }
+
   render() {
+    const addButton = <Button className="block button-secondary" onClick={this.addItem}>{`Add another ${this.props.type}`}</Button>
     return (
-      <ReactCSSTransitionGroup
-        transitionName="added"
-        transitionEnterTimeout={500}
-        transitionLeaveTimeout={500}
-        >
+      <Fragment>
+        {
+          this.props.addButtonBefore && addButton
+        }
         {
           this.state.items.map((item, index) =>
             React.Children.map(this.props.children, child => {
@@ -72,21 +93,26 @@ class Repeater extends Component {
                 ...child.props,
                 index,
                 updateItem,
-                active: this.state.items.length === index + 1,
                 removeItem: () => this.removeItem(index),
-                values: item
+                moveUp: () => this.moveUp(index),
+                moveDown: () => this.moveDown(index),
+                values: item,
+                length: this.state.items.length
               })
             })
           )
         }
-        <Button className="block" onClick={this.addItem}>{`Add ${this.state.items.length ? 'another' : 'item'}`}</Button>
-      </ReactCSSTransitionGroup>
+        {
+          !this.props.addButtonBefore && addButton
+        }
+      </Fragment>
     );
   }
 }
 
 Repeater.defaultProps = {
-  addOnInit: false,
+  type: 'item',
+  initCollapsed: false,
   onBeforeAdd: () => Promise.resolve(),
   onAfterAdd: () => Promise.resolve(),
   onBeforeRemove: () => Promise.resolve(),

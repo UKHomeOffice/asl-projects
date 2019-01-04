@@ -2,13 +2,14 @@ import React from 'react';
 import { Button } from '@ukhomeoffice/react-components';
 
 export default ({
-  advance,
-  exit,
+  onContinue,
+  onExit,
   advanceLabel = 'Save and continue',
-  exitLabel = 'Save and exit'
+  exitLabel = 'Save and exit',
+  exitClassName = 'button-secondary'
 }) => (
   <p className="control-panel">
-    <Button onClick={advance}>{advanceLabel}</Button>
-    <Button onClick={exit} className="button-secondary">{exitLabel}</Button>
+    <Button onClick={onContinue}>{advanceLabel}</Button>
+    <Button onClick={onExit} className={exitClassName}>{exitLabel}</Button>
   </p>
 )

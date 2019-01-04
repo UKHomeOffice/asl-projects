@@ -42,6 +42,7 @@ class Section extends React.Component {
   render() {
     if (this.props.component) {
       const { values, fields, title, step, ...rest } = this.props;
+
       const Section = this.props.component;
       return <Section
         { ...this.props }

@@ -20,16 +20,11 @@ class Review extends React.Component {
     return <p><em>No answer provided</em></p>;
   }
 
-  edit(e) {
-    e.preventDefault();
-    this.props.onEdit && this.props.onEdit();
-  }
-
   render() {
     return <div className="review">
       <h3>{ this.props.label }</h3>
       { this.replay() }
-      <p><a onClick={ e => this.props.onEdit(e) } href="#" >Edit</a></p>
+      <p><a onClick={ e => this.props.onEdit(e) } href={`#${this.props.name}`} >Edit</a></p>
       <hr />
     </div>;
   }

@@ -1,5 +1,7 @@
 import ExperimentalDesign from './pages/sections/experimental-design';
 import Protocols from './pages/sections/protocols'
+import every from 'lodash/every';
+import { COMPLETE, INCOMPLETE, PARTIALLY_COMPLETE } from './constants/completeness';
 
 export default {
   introduction: {
@@ -25,100 +27,203 @@ export default {
         title: 'Protocols',
         name: 'protocols',
         component: Protocols,
-        fields: [{
-          name: 'title',
-          label: 'Title',
-          type: 'text',
-          validate: {
-            required: 'Enter a title'
+        complete: values => {
+          if (!values.protocols) {
+            return INCOMPLETE;
           }
+          if (values.protocols.length && every(values.protocols, p => p.complete)) {
+            return COMPLETE;
+          }
+          return PARTIALLY_COMPLETE;
         },
-        {
-          name: 'description',
-          label: 'Describe what you will use this protocol for',
-          summary: 'Purpose of this protocol',
-          type: 'textarea',
-          validate: {
-            required: 'Enter a description'
-          }
-        },
-        {
-          name: 'severity',
-          label: 'What\'s the prospective severity classification of this protocol?',
-          summary: 'Severity classification',
-          type: 'radio',
-          options: [
-            'Mild',
-            'Moderate',
-            'Severe',
-            'Non-recovery'
-          ],
-          validate: {
-            required: 'Select a severity classification'
-          }
-        }],
-        species: {
-          name: 'species',
-          title: 'Species',
+        setup: {
           fields: [{
-            name: 'life-stages',
-            label: 'Which life stages will apply to animals used during this protocol?',
-            hint: 'Select all that apply',
-            type: 'checkbox',
-            options: [
-              'Embryo and egg',
-              'Neonate',
-              'Juvenile',
-              'Adult',
-              'Pregnant adult'
-            ]
-          },
-          {
-            name: 'amount',
-            label: 'How many animals will be used in this protocol',
-            type: 'text'
-          },
-          {
-            name: 'more-than-once',
-            label: 'Will any of these animals go through this protocol more than once?',
+            name: 'gaas',
+            label: 'Will you use genetically-altered animals (GAAs) in this project?',
             type: 'radio',
+            className: [
+              'inline',
+              'smaller'
+            ],
             options: [
               'Yes',
               'No'
             ]
           },
           {
-            name: 'species',
-            label: 'Which species will be used in this protocol',
+            name: 'quantitative',
+            label: 'Will this project generate quantitative data',
             type: 'radio',
+            className: [
+              'inline',
+              'smaller'
+            ],
             options: [
-              'Mice',
-              'Rats'
+              'Yes',
+              'No'
+            ]
+          },
+          {
+            name: 'anaesthesia',
+            label: 'Will you be using anaesthesia during this project',
+            type: 'radio',
+            className: [
+              'inline',
+              'smaller'
+            ],
+            options: [
+              'Yes',
+              'No'
+            ]
+          },
+          {
+            name: 'substances',
+            label: 'Will you be using substances for testing or physiological effects during this project?',
+            type: 'radio',
+            className: [
+              'inline',
+              'smaller'
+            ],
+            options: [
+              'Yes',
+              'No'
             ]
           }]
         },
-        steps: {
-          name: 'steps',
-          title: 'Step',
-          fields: [{
+        fields: [
+          {
             name: 'title',
             label: 'Title',
             type: 'text'
           },
-          {
-            name: 'description',
-            label: 'Please describe the step',
-            type: 'textarea'
-          },
-          {
-            name: 'optional',
-            label: 'Is this step optional?',
-            type: 'radio',
-            options: [
-              'Yes',
-              'No'
+        ],
+        sections: {
+          details: {
+            title: 'Protocol details',
+            fields: [
+              {
+                name: 'description',
+                label: 'Briefly describe the scientific purposes of this protocol',
+                hint: 'Information about protocol steps should be added later',
+                type: 'textarea'
+              },
+              {
+                name: 'severity',
+                label: 'What is the prospective severity of this protocol?',
+                type: 'radio',
+                options: [
+                  'Mild',
+                  'Moderate',
+                  'Severe',
+                  'Non-recovery'
+                ],
+                className: 'smaller'
+              }
             ]
-          }]
+          },
+          quantitative: {
+            title: 'Quantitative data',
+            fields: [
+              {
+                name: 'control-groups',
+                label: 'How will you use control groups?',
+                type: 'textarea'
+              },
+              {
+                name: 'control-groups-size',
+                label: 'How will you determine the size of these groups?',
+                type: 'textarea'
+              },
+              {
+                name: 'effect-size',
+                label: 'What \'effect size\' will you need for this protocol and why?',
+                type: 'textarea'
+              }
+            ]
+          },
+          animals: {
+            title: 'Animals used in this protocol',
+            fields: [
+              {
+                name: 'animals',
+                label: 'Which types of animals would you like to add to this protocol?',
+                type: 'checkbox',
+                optionsFromKey: 'animals'
+              }
+            ]
+          },
+          steps: {
+            title: 'Steps',
+            hint: 'Step numbers are for reference only, and you will be able to reorder them at any time before you submit you project licence application.',
+            fields: [
+              {
+                name: 'title',
+                type: 'textarea',
+                label: 'To ensure that an adequate harm benifit assessment can be performed for your project, please provide clear and explicit information for each step.'
+              },
+              {
+                name: 'anaesthesia',
+                label: 'Does this step involve the administration of anaesthesia?',
+                type: 'radio',
+                className: [
+                  'smaller',
+                  'inline'
+                ],
+                options: [
+                  'Yes',
+                  'No'
+                ]
+              },
+              {
+                name: 'optional',
+                label: 'Is this step optional?',
+                type: 'radio',
+                className: [
+                  'smaller',
+                  'inline'
+                ],
+                options: [
+                  'Yes',
+                  'No'
+                ]
+              }
+            ],
+            additional: {
+              title: 'Additional information',
+              fields: [
+                {
+                  name: 'adverse',
+                  label: 'Do you expect this step to have any adverse effects for the animals?',
+                  type: 'radio',
+                  className: [
+                    'smaller',
+                    'inline'
+                  ],
+                  options: [
+                    'Yes',
+                    'No'
+                  ]
+                },
+                {
+                  name: 'endpoints',
+                  label: 'What are the humane endpoints for this step?',
+                  type: 'textarea'
+                }
+              ]
+            }
+          },
+          experience: {
+            title: 'Animal experience',
+            fields: []
+          },
+          justification: {
+            title: 'Protocol justification',
+            fields: []
+          },
+          fate: {
+            title: 'Fate of animals',
+            fields: []
+          }
         }
       }
     }

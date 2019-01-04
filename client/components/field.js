@@ -11,6 +11,8 @@ class Field extends React.Component {
   render() {
     if (this.props.type === 'select') {
       return <Select
+        className={ this.props.className }
+        hint={ this.props.hint }
         name={ this.props.name }
         label={ this.props.label }
         options={ this.props.options }
@@ -21,6 +23,8 @@ class Field extends React.Component {
     }
     if (this.props.type === 'radio') {
       return <RadioGroup
+        className={ this.props.className }
+        hint={ this.props.hint }
         name={ this.props.name }
         label={ this.props.label }
         options={ this.props.options }
@@ -31,6 +35,8 @@ class Field extends React.Component {
     }
     if (this.props.type === 'checkbox') {
       return <CheckboxGroup
+        className={ this.props.className }
+        hint={ this.props.hint }
         name={ this.props.name }
         label={ this.props.label }
         options={ this.props.options }
@@ -47,6 +53,8 @@ class Field extends React.Component {
     }
     if (this.props.type === 'textarea') {
       return <TextArea
+        className={ this.props.className }
+        hint={ this.props.hint }
         name={ this.props.name }
         label={ this.props.label }
         value={ this.props.value || '' }
@@ -55,6 +63,8 @@ class Field extends React.Component {
       />;
     }
     return <Input
+      className={ this.props.className }
+      hint={ this.props.hint }
       name={ this.props.name }
       label={ this.props.label }
       value={ this.props.value || '' }
