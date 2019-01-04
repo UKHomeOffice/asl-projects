@@ -27,7 +27,7 @@
   "homepage": "https://github.com/UKHomeOffice/peephole#readme",
   "dependencies": {
     "@ukhomeoffice/frontend-toolkit": "^2.2.2",
-    "@ukhomeoffice/react-components": "^0.5.2",
+    "@ukhomeoffice/react-components": "^0.5.3",
     "babel-loader": "^7.1.5",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
