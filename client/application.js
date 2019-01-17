@@ -45,13 +45,21 @@ export default {
                     hint: 'This can include genetically-altered or surgically prepared animals.'
                   },
                   {
+<<<<<<< HEAD
                     label: 'To produce or support the production of blood products, vaccines, or medicines for medical or veterinary use.',
+=======
+                    label: 'To produce or support the production of blood products, vaccines, or medicines for medical or veterinary use',
+>>>>>>> minor text changes
                     value: 'blood-products'
                   },
                   {
-                    label: 'To generate testing or screening data.',
+                    label: 'To generate testing or screening data',
                     value: 'screening-data',
+<<<<<<< HEAD
                     hint: 'This can be for yourself or for others, for regulatory (GLP work) or non-regulatory use.',
+=======
+                    hint: 'This can be for yourself or for others, for regulatory (GLP) or non-regulatory use.',
+>>>>>>> minor text changes
                     reveal: {
                       name: 'main-output-testing-screening',
                       label: 'Why will you be generating testing or screening data?',
@@ -63,9 +71,13 @@ export default {
                           hint: 'This can include genetically-altered or surgically prepared animals.'
                         },
                         {
-                          label: 'Non regulatory use',
+                          label: 'Non-regulatory use',
                           value: 'non-regulatory-use',
+<<<<<<< HEAD
                           hint: 'If data is provided to others, the models and methods used are likely to be tailored to the needs of that particular client.'
+=======
+                          hint: 'If done for others, the models and methods used are likely to be tailored to the needs of one particular client.'
+>>>>>>> minor text changes
                         }
                       ]
                     }
@@ -932,7 +944,7 @@ export default {
                     value: true,
                     reveal: {
                       name: 'reuse-details',
-                      label: 'Give details',
+                      label: 'Which protocols or projects?',
                       type: 'textarea'
                     }
                   },
@@ -1191,7 +1203,11 @@ export default {
               },
               {
                 name: 'substances-suitibility',
+<<<<<<< HEAD
                 label: 'How will you assess the suitability of substances given to the particular strain or type of animal you will be using?',
+=======
+                label: 'How will you assess the suitability of substances given to the particular strain/type of animal you will be using?',
+>>>>>>> minor text changes
                 hint: 'For example, you may need to evaluate the toxicity, efficacy, and sterility of these substances.',
                 type: 'textarea',
                 conditional: {
