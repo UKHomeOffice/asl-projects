@@ -72,6 +72,14 @@ export default {
                     hint: 'For example, microsurgery, or to use animals as part of a higher education course such as physiology.'
                   }
                 ]
+              },
+              {
+                name: 'primary-establishment',
+                playback: 'Primary establishment',
+                label: 'What is the primary establishment for this project?',
+                type: 'radio',
+                className: 'smaller',
+                optionsFromSettings: 'establishments'
               }
             ]
           },
@@ -211,6 +219,42 @@ export default {
             label: 'Have you secured funding for this type of work before?',
             hint: 'If you have, briefly describe your track record in securing funding for previous projects.',
             type: 'texteditor'
+          }
+        ]
+      }
+    }
+  },
+  projectLocation: {
+    title: 'Project location',
+    subsections: {
+      establishments: {
+        title: 'Establishments',
+        playback: 'primary-establishment',
+        fields: [
+          {
+            name: 'other-establishments',
+            label: 'Will your project use any other establishments?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'Yes',
+                value: true,
+                reveal: {
+                  name: 'other-establishments-list',
+                  label: '',
+                  type: 'checkbox',
+                  className: 'smaller',
+                  optionsFromSettings: 'establishments',
+                  without: 'primary-establishment'
+                }
+              },
+              {
+                label: 'No',
+                value: false
+              }
+            ]
           }
         ]
       }

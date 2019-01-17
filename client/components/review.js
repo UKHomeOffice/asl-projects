@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { connectProject } from '../helpers';
+import { connectProject, connectSettings } from '../helpers';
 import { ReviewTextEditor } from './editor';
 import speciesOptions from '../constants/species';
 
@@ -12,7 +12,10 @@ class Review extends React.Component {
   replay() {
     let value = this.props.value;
     if (this.props.type === 'radio' && !isUndefined(value)) {
-      value = this.props.options.find(option => option.value === value)
+      const options = this.props.optionsFromSettings
+        ? this.props.settings[this.props.optionsFromSettings]
+        : this.props.options;
+      value = options.find(option => option.value ? option.value === value : option === value)
     }
 
     if (value && this.props.type === 'duration') {
@@ -117,4 +120,4 @@ class Review extends React.Component {
   }
 }
 
-export default connectProject(Review);
+export default connectSettings(connectProject(Review));
