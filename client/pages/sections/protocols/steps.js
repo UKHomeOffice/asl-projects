@@ -1,9 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import { connectProject } from '../../../helpers';
 import classnames from 'classnames'
+import { Button } from '@ukhomeoffice/react-components';
 
 import isBoolean from 'lodash/isBoolean';
 import every from 'lodash/every';
+import isUndefined from 'lodash/isUndefined';
+import isNull from 'lodash/isNull';
 
 import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';
@@ -20,7 +23,8 @@ const fieldIncluded = (field, values) => {
 };
 
 const allFieldsCompleted = (fields, values) => {
-  return every(fields, field => values[field.name])
+  console.log(fields, values)
+  return every(fields, field => !isNull(values[field.name]) && !isUndefined(values[field.name]) && values[field.name] !== '')
 };
 
 const filterByFieldIncluded = (fields, values) => {
@@ -30,7 +34,7 @@ const filterByFieldIncluded = (fields, values) => {
 class Step extends Component {
   state = {
     editing: !allFieldsCompleted(filterByFieldIncluded(this.props.fields, this.props.project), this.props.values),
-    expanded: false
+    expanded: this.props.expanded || false
   }
 
   toggleEditing = active => {
@@ -121,19 +125,50 @@ class Step extends Component {
   }
 }
 
+// const allCollapsed = every(values.steps, step => {
+//
+// });
+
+const stepIsExpanded = (step, fields) => {
+  return every(fields, field => !isUndefined(step[field.name]) && !isNull(step[field.name]) && step[field.name] !== '')
+}
+
+const getFields = (fields, values) => fields.filter(f => !f.show || f.show(values))
+
 class Steps extends Component {
+  state = {
+    expanded: this.props.values.steps.map(step => stepIsExpanded(step, getFields(this.props.fields, this.props.project)))
+  }
+
+  expandAll = () => {
+    this.setState({
+      expanded: this.state.expanded.map(() => true)
+    })
+  }
+
   render() {
     const { values, updateItem, index, name, ...props } = this.props;
     const prefix = `${name}-${index}-`;
+
     return (
-      <Repeater
-        type="step"
-        items={values.steps}
-        onSave={steps => updateItem({ steps })}
-        {...props}
-      >
-        <Step prefix={prefix} values={values.steps} { ...props } />
-      </Repeater>
+      <Fragment>
+        <Repeater
+          type="step"
+          items={values.steps}
+          onSave={steps => updateItem({ steps })}
+          {...props}
+        >
+          <Step
+            prefix={prefix}
+            values={values.steps}
+            { ...props }
+            map={{ expanded: this.state.expanded }}
+          />
+        </Repeater>
+        {
+          !every(this.state.expanded) && <Button onClick={this.expandAll}>Add additional details</Button>
+        }
+      </Fragment>
     )
   }
 }
