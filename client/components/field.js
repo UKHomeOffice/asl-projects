@@ -3,6 +3,7 @@ import { connectProject, connectSettings } from '../helpers';
 
 import castArray from 'lodash/castArray';
 import every from 'lodash/every';
+import without from 'lodash/without';
 
 import { Input, Select, TextArea, RadioGroup, CheckboxGroup } from '@ukhomeoffice/react-components';
 
@@ -10,6 +11,7 @@ import SpeciesSelector from './species-selector';
 import AnimalQuantities from './animal-quantities';
 import Duration from './duration';
 import { TextEditor } from './editor';
+
 
 import Fieldset from './fieldset';
 
@@ -58,9 +60,11 @@ class Field extends Component {
     if (!this.showField()) {
       return null;
     }
-    const options = this.props.optionsFromSettings
+    let options = this.props.optionsFromSettings
       ? this.props.settings[this.props.optionsFromSettings]
-      : this.props.options
+      : this.props.options;
+
+    options = without(options, this.props.values[this.props.without]);
 
     if (this.props.type === 'animal-quantities') {
       return <AnimalQuantities

@@ -46,6 +46,8 @@ dl {
   margin-bottom: $govuk-gutter;
 }
 
+
+
 .objective {
   @extend .panel;
   margin-bottom: $govuk-gutter;
@@ -124,6 +126,12 @@ dl {
       float: left;
       clear: left;
       margin-right: $govuk-gutter-half / 2;
+    }
+
+    dd {
+      a {
+        margin-left: $govuk-gutter-half;
+      }
     }
   }
 }
@@ -572,4 +580,13 @@ input[type="number"] {
       margin-bottom: 0;
     }
   }
+
+  dl.inline {
+    padding: $govuk-gutter-half 0;
+  }
+}
+
+.establishment-review {
+  margin-top: $govuk-gutter;
+  margin-bottom: $govuk-gutter;
 }
