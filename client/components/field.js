@@ -63,8 +63,9 @@ class Field extends Component {
     let options = this.props.optionsFromSettings
       ? this.props.settings[this.props.optionsFromSettings]
       : this.props.options;
-
-    options = without(options, this.props.values[this.props.without]);
+    if (this.props.values && this.props.without) {
+      options = without(options, this.props.values[this.props.without]);
+    }
 
     if (this.props.type === 'animal-quantities') {
       return <AnimalQuantities

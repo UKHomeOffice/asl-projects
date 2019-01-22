@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Button } from '@ukhomeoffice/react-components';
+import { v4 } from 'uuid';
 
 class Repeater extends Component {
   constructor(props) {
@@ -18,14 +19,14 @@ class Repeater extends Component {
 
   componentDidMount() {
     if (!this.props.initCollapsed && !this.state.items.length) {
-      this.setState({ items: [{}] });
+      this.setState({ items: [{ id: v4() }] });
     }
   }
 
   addItem() {
     return Promise.resolve()
       .then(this.props.onBeforeAdd)
-      .then(() => this.update([ ...this.state.items, {} ]))
+      .then(() => this.update([ ...this.state.items, { id: v4() } ]))
       .then(this.props.onAfterAdd)
       .catch(err => console.log(err));
   }
