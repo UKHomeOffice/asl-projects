@@ -90,6 +90,7 @@ class Protocols extends Component {
   }
 
   render() {
+    console.log('PROTOCOLS RENDER')
     const { project } = this.props;
     if (!size(project)) {
       return null;

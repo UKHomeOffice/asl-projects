@@ -29,7 +29,13 @@ class ProtocolSections extends Component {
     this.props.onToggleActive();
   }
 
+  shouldComponentUpdate(newProps) {
+    return newProps.values.complete !== this.props.values.complete
+      || newProps.values.severity !== this.props.values.severity;
+  }
+
   render() {
+    console.log('PROTOCOLS SECTIONS RENDER')
     const {
       name,
       values,
