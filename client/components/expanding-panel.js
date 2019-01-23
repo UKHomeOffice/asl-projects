@@ -41,6 +41,10 @@ class ExpandingPanel extends Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.open !== this.props.open;
+  }
+
   render() {
     return (
       <section className={classnames('expanding-panel', { open: this.isOpen() }, this.props.className)}>

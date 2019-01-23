@@ -4,7 +4,6 @@ import { updateProject } from '../actions/projects';
 import DefaultSection from './sections';
 
 const mapStateToProps = (state, props) => {
-  const values = state.projects.find(project => project.id === parseInt(props.match.params.id, 10));
   const section = Object.values(state.application).reduce((found, section) => {
     return found || section.subsections[props.match.params.section];
   }, null);
@@ -15,7 +14,6 @@ const mapStateToProps = (state, props) => {
     id: props.match.params.id,
     step: parseInt(props.match.params.step, 10) || 0,
     section: props.match.params.section,
-    values,
     ...section
   };
 };
@@ -36,7 +34,7 @@ class Section extends React.Component {
 
   render() {
     const Component = this.props.component || DefaultSection;
-    const { values, fields, title, step, section, ...rest } = this.props;
+    const { fields, title, step, section, ...rest } = this.props;
 
     return <Component
       { ...this.props }
@@ -44,7 +42,6 @@ class Section extends React.Component {
       section={ section }
       save={ (...args) => this.props.update(...args) }
       exit={ () => this.props.history.push(`/project/${this.props.id}`) }
-      values={ values }
       fields={ fields }
       step={ step }
       { ...rest }

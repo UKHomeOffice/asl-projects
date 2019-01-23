@@ -3,6 +3,8 @@ import React, { Fragment, Component, PureComponent } from 'react';
 import some from 'lodash/some';
 import flatten from 'lodash/flatten';
 
+import { connectProject } from '../../helpers';
+
 import Wizard from '../../components/wizard';
 import Fieldset from '../../components/fieldset';
 import Controls from '../../components/controls';
@@ -35,7 +37,7 @@ class Questions extends PureComponent {
     const fields = this.props.fields;
     return fields.filter(field => {
       if (field.show && typeof field.show === 'function') {
-        return field.show(this.props.values)
+        return field.show(this.props.project)
       }
       return true;
     });
@@ -115,12 +117,12 @@ class Section extends PureComponent {
     if (!step.show) {
       return true;
     }
-    return step.show(this.props.values);
+    return step.show(this.props.project);
   }
 
   render = () => {
     const { onProgress, exit, step, ...props } = this.props;
-    if (!props.values) {
+    if (!props.project) {
       return null
     }
     const steps = props.steps || [props];
@@ -130,14 +132,14 @@ class Section extends PureComponent {
         {
           steps.filter(this.showStep).map((stepSettings, index) => {
             const Component = stepSettings.component || Questions;
-            return <Component key={index} exit={exit} step={index} {...props} {...stepSettings} />
+            return <Component values={props.project} key={index} exit={exit} step={index} {...props} {...stepSettings} />
           })
         }
 
-        <Review {...props} step={steps.length} onContinue={exit} exit={exit} />
+        <Review {...props} values={props.project} step={steps.length} onContinue={exit} exit={exit} />
       </Wizard>
     )
   }
 }
 
-export default Section
+export default connectProject(Section)

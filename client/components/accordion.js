@@ -4,7 +4,7 @@ import castArray from 'lodash/castArray';
 
 class Accordion extends React.Component {
 
-  defaultProps = {
+  static defaultProps = {
     scrollToActive: false
   }
 

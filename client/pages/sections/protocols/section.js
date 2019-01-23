@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import every from 'lodash/every';
 import flatten from 'lodash/flatten';
 import map from 'lodash/map';
@@ -55,7 +56,7 @@ class Section extends Component {
     prefix = `${prefix}${name}-${index}-`;
 
     return review
-      ? <Review fields={fields} values={values} advance={advance} onEdit={this.toggleReview} />
+      ? <Review fields={fields} values={values} advance={advance} onEdit={this.toggleReview} exit={exit} />
       : (
         <Fragment>
           {
@@ -70,4 +71,12 @@ class Section extends Component {
   }
 }
 
-export default Section;
+const mapStateToProps = (state, ownProps) => {
+  const id = parseInt(ownProps.match.params.id, 10);
+  const values = state.projects.find(p => p.id === id).protocols[ownProps.index]
+  return {
+    values
+  };
+};
+
+export default connect(mapStateToProps)(Section);

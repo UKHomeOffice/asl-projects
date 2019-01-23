@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import { connectProject } from '../../../helpers';
+import { connect } from 'react-redux';
+
 import classnames from 'classnames'
 import { Button } from '@ukhomeoffice/react-components';
 
@@ -23,7 +24,6 @@ const fieldIncluded = (field, values) => {
 };
 
 const allFieldsCompleted = (fields, values) => {
-  console.log(fields, values)
   return every(fields, field => !isNull(values[field.name]) && !isUndefined(values[field.name]) && values[field.name] !== '')
 };
 
@@ -125,10 +125,6 @@ class Step extends Component {
   }
 }
 
-// const allCollapsed = every(values.steps, step => {
-//
-// });
-
 const stepIsExpanded = (step, fields) => {
   return every(fields, field => !isUndefined(step[field.name]) && !isNull(step[field.name]) && step[field.name] !== '')
 }
@@ -137,7 +133,7 @@ const getFields = (fields, values) => fields.filter(f => !f.show || f.show(value
 
 class Steps extends Component {
   state = {
-    expanded: this.props.values.steps.map(step => stepIsExpanded(step, getFields(this.props.fields, this.props.project)))
+    expanded: false
   }
 
   expandAll = () => {
@@ -173,4 +169,13 @@ class Steps extends Component {
   }
 }
 
-export default connectProject(Steps);
+const mapStateToProps = (state, ownProps) => {
+  const project = state.projects.find(p => p.id === parseInt(ownProps.match.params.id, 10));
+  const values = project.protocols[ownProps.index];
+  return {
+    project,
+    values
+  }
+}
+
+export default connect(mapStateToProps)(Steps);

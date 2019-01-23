@@ -1,13 +1,16 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, PureComponent, Fragment } from 'react';
+import { connect } from 'react-redux';
 import classnames from 'classnames';
 
-import Completable from '../../../components/completable';
-import Expandable from '../../../components/expandable';
+import size from 'lodash/size';
+
+import { connectProject } from '../../../helpers';
+
+import ProtocolSections from './protocol-sections';
+
 import Fieldset from '../../../components/fieldset';
 import Repeater from '../../../components/repeater';
 import Controls from '../../../components/controls';
-
-import Sections from './sections.js';
 import Complete from '../../../components/complete';
 
 class Form extends Component {
@@ -39,74 +42,9 @@ class Form extends Component {
   }
 }
 
-class ProtocolSections extends Component {
-  state = {
-    expanded: !this.props.values.complete
-  }
-
-  setCompleted = value => {
-    this.props.updateItem({ complete: value });
-    this.setState({ expanded: !value })
-  }
-
-  toggleExpanded = () => {
-    this.setState({
-      expanded: !this.state.expanded
-    })
-  }
-
-  toggleActive = e => {
-    e.preventDefault();
-    this.props.onToggleActive();
-  }
-
-  render() {
-    const {
-      name,
-      values,
-      sections,
-      index,
-      save,
-      updateItem,
-      exit
-    } = this.props;
-
-    const severityField = sections.details.fields.find(field => field.name === 'severity');
-    const severityOption = severityField.options.find(option => option.value === values.severity);
-
-    return (
-      <section className={classnames('protocol', { complete: values.complete })}>
-        <Expandable expanded={this.state.expanded} onHeaderClick={this.toggleExpanded}>
-          <Completable status={values.complete ? 'complete' : 'incomplete'}>
-            <h2 className="title"><span className="larger">{index + 1}. </span>{values.title}</h2>
-            <dl className="inline">
-              <dt>Severity category: </dt>
-              <dd className="grey">{ severityOption ? severityOption.label : 'Not set' }</dd>
-            </dl>
-            <a href="#" onClick={this.toggleActive}>Edit title</a>
-          </Completable>
-          <div>
-            <Sections
-              name={name}
-              index={index}
-              sections={sections}
-              values={values}
-              updateItem={updateItem}
-              exit={exit}
-              onFieldChange={(key, value) => updateItem({ [key]: value })}
-              save={save}
-            />
-            <Complete type="protocol" completed={values.complete} onChange={this.setCompleted} buttonClassName="button-secondary" />
-          </div>
-        </Expandable>
-      </section>
-    )
-  }
-}
-
 class Protocol extends Component {
   state = {
-    active: this.props.active || !this.props.values.title,
+    active: !this.props.values.title,
     complete: false
   }
 
@@ -115,14 +53,26 @@ class Protocol extends Component {
   }
 
   render() {
-    const { steps, updateItem, ...props } = this.props;
+    const { steps, exit, save, updateItem, sections, values, fields, index, length } = this.props;
 
     return this.state.active
-      ? <Form {...props} updateItem={updateItem} toggleActive={this.toggleActive} />
+      ? <Form
+        values={values}
+        updateItem={updateItem}
+        fields={fields}
+        index={index}
+        length={length}
+        toggleActive={this.toggleActive}
+      />
       : <ProtocolSections
-          {...props}
+          index={index}
+          length={length}
+          sections={sections}
+          values={values}
           onToggleActive={this.toggleActive}
           updateItem={updateItem}
+          save={save}
+          exit={exit}
           steps={steps}
         />
   }
@@ -133,9 +83,15 @@ class Protocols extends Component {
     this.props.save({ protocols });
   }
 
+  shouldComponentUpdate(nextProps) {
+    const { project: { protocols: { length = 0 } = {} } } = this.props
+    const { project: { protocols: { length: nextLength = 0 } = {} } } = nextProps;
+    return length !== nextLength;
+  }
+
   render() {
-    const { values, name } = this.props;
-    if (!values) {
+    const { project } = this.props;
+    if (!size(project)) {
       return null;
     }
     return <Fragment>
@@ -143,7 +99,8 @@ class Protocols extends Component {
       <p>Please enter the details of the protocols that make up this project.</p>
       <Repeater
         type="protocol"
-        items={values[name]}
+        name="protocols"
+        items={project.protocols}
         onSave={this.save}
         addButtonBefore={true}
         onAfterAdd={() => {
@@ -159,4 +116,4 @@ class Protocols extends Component {
   }
 }
 
-export default Protocols;
+export default connectProject(Protocols);

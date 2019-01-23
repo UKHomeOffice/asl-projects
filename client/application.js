@@ -837,32 +837,32 @@ export default {
               {
                 name: 'control-groups',
                 label: 'How will you use control groups?',
-                type: 'textarea'
+                type: 'texteditor'
               },
               {
                 name: 'control-groups-size',
                 label: 'How will you determine the size of these groups?',
-                type: 'textarea'
+                type: 'texteditor'
               },
               {
                 name: 'effect-size',
                 label: 'What \'effect size\' will you need for this protocol and why?',
-                type: 'textarea'
+                type: 'texteditor'
               },
               {
                 name: 'maximize-effectiveness',
                 label: 'How will you maximize the effectiveness of your findings and the animals that you use in this protocol?​',
-                type: 'textarea'
+                type: 'texteditor'
               },
               {
                 name: 'reproducibility',
                 label: 'How will you minimise variables to ensure reproducibility?',
-                type: 'textarea'
+                type: 'texteditor'
               },
               {
                 name: 'randomised',
                 label: 'Will studies in this protocol be randomised or blinded? If so, how?​',
-                type: 'textarea'
+                type: 'texteditor'
               }
             ]
           },
@@ -924,7 +924,7 @@ export default {
                       name: 'continued-use-sourced',
                       label: 'Where will these animals be sourced from?',
                       hint: 'This could be another protocol in this licence, another project licence, or somewhere else.',
-                      type: 'textarea'
+                      type: 'texteditor'
                     }
                   },
                   {
@@ -946,7 +946,7 @@ export default {
                     reveal: {
                       name: 'reuse-details',
                       label: 'Which protocols or projects?',
-                      type: 'textarea'
+                      type: 'texteditor'
                     }
                   },
                   {
@@ -960,7 +960,7 @@ export default {
               {
                 name: 'gaas',
                 label: 'Which general types or strains of GAAs will you be using and why?​',
-                type: 'textarea',
+                type: 'texteditor',
                 conditional: {
                   gaas: true
                 }
@@ -977,12 +977,12 @@ export default {
                       {
                         name: 'why',
                         label: 'Why are each of these phenotypes scientifically necessary?',
-                        type: 'textarea'
+                        type: 'texteditor'
                       },
                       {
                         name: 'how',
                         label: 'How will you control the harms associated with these phenotypes?',
-                        type: 'textarea'
+                        type: 'texteditor'
                       }
                     ]
                   },
@@ -1086,18 +1086,18 @@ export default {
                           name: 'adverse-effects',
                           label: 'What are the likely adverse effects of this step?​',
                           hint: 'State the signs of each adverse effect, including the anticipated degree and duration of suffering.',
-                          type: 'textarea'
+                          type: 'texteditor'
                         },
                         {
                           name: 'prevent-adverse-effects',
                           label: 'How will you attempt to prevent any of these adverse effects?​',
                           hint: 'If adverse effects can\'t be prevented, how will you attempt to ameliorate their initial signs?',
-                          type: 'textarea'
+                          type: 'texteditor'
                         },
                         {
                           name: 'minimise-suffering',
                           label: 'How do you intend to prevent or minimise the suffering of any animal experiencing adverse effects?​',
-                          type: 'textarea'
+                          type: 'texteditor'
                         }
                       ]
                     },
@@ -1110,7 +1110,7 @@ export default {
                 {
                   name: 'endpoints',
                   label: 'What are the humane endpoints for this step?',
-                  type: 'textarea'
+                  type: 'texteditor'
                 }
               ]
             }
@@ -1123,13 +1123,13 @@ export default {
                 {
                   name: 'typical-steps',
                   label: 'Describe the typical series of steps that an animal will experience during this protocol.​',
-                  type: 'textarea'
+                  type: 'texteditor'
                 },
                 {
                   name: 'typical-effects',
                   label: 'If an animal experiences this typical series of steps, what cumulative impacts or adverse effects do you anticipate?',
                   hint: 'Examples may include pain, inactivity, or abnormal behaviour. You should also state the estimated duration of these effects on an animal.',
-                  type: 'textarea'
+                  type: 'texteditor'
                 },
                 {
                   name: 'typical-percentage',
@@ -1146,13 +1146,13 @@ export default {
                   name: 'maximal-steps',
                   label: 'Describe the potential series of steps in this protocol that will cause the greatest suffering to an animal.',
                   hint: 'Include information about the potential intensity of suffering.',
-                  type: 'textarea'
+                  type: 'texteditor'
                 },
                 {
                   name: 'maximal-effects',
                   label: 'If an animal experiences this maximal series of steps, what cumulative impacts or adverse effects do you anticipate?',
                   hint: 'Examples may include pain, inactivity, or abnormal behaviour. You should also state the estimated duration of these effects on an animal.',
-                  type: 'textarea'
+                  type: 'texteditor'
                 },
                 {
                   name: 'maximal-percentage',
@@ -1170,34 +1170,34 @@ export default {
               {
                 name: 'most-appropriate',
                 label: 'a) the most appropriate for your scientific objectives?​',
-                type: 'textarea'
+                type: 'texteditor'
               },
               {
                 name: 'most-refined',
                 label: 'b) the most refined?',
-                type: 'textarea'
+                type: 'texteditor'
               },
               {
                 name: 'scientific-endpoints',
                 label: 'What are the scientific endpoints for each model or technique in this protocol?',
                 hint: 'Include any clinical signs that you expect to see for each one.​',
-                type: 'textarea'
+                type: 'texteditor'
               },
               {
                 name: 'scientific-endpoints-justification',
                 label: 'Why can\'t you achieve your objectives by using an earlier scientific endpoint that would reduce the degree of harm experienced by an animal?',
                 hint: 'Take into account any phenotypic adverse effects if relevant.',
-                type: 'textarea'
+                type: 'texteditor'
               },
               {
                 name: 'minimise-duration',
                 label: 'How will you minimise the duration and intensity of suffering for animals in this protocol?',
-                type: 'textarea'
+                type: 'texteditor'
               },
               {
                 name: 'monitor-pain',
                 label: 'How will you monitor animals for pain and provide appropriate levels of analgesia?​',
-                type: 'textarea'
+                type: 'texteditor'
               },
               {
                 name: 'substances-suitibility',
@@ -1207,7 +1207,7 @@ export default {
                 label: 'How will you assess the suitability of substances given to the particular strain/type of animal you will be using?',
 >>>>>>> minor text changes
                 hint: 'For example, you may need to evaluate the toxicity, efficacy, and sterility of these substances.',
-                type: 'textarea',
+                type: 'texteditor',
                 conditional: {
                   substances: true
                 }
@@ -1216,7 +1216,7 @@ export default {
                 name: 'dosing-regimen',
                 label: 'How will you determine an appropriate dosing regimen?​',
                 hint: 'Explain how you considered the routes, dose volumes, frequencies, and overall duration of a dosing regimen.',
-                type: 'textarea',
+                type: 'texteditor',
                 conditional: {
                   substances: true
                 }
@@ -1229,7 +1229,7 @@ export default {
               {
                 name: 'repetitions-justification',
                 label: 'How have you estimated the maximum number of times you will need to repeat this protocol using the same animal?',
-                type: 'textarea'
+                type: 'texteditor'
               }
             ]
           },
@@ -1283,7 +1283,7 @@ export default {
                           reveal: {
                             name: 'method-and-justification',
                             label: 'State the method of killing that you will use along with your justification for using it.​',
-                            type: 'textarea'
+                            type: 'texteditor'
                           }
                         }
                       ]
