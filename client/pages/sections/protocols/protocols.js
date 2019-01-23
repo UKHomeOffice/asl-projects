@@ -1,5 +1,4 @@
-import React, { Component, PureComponent, Fragment } from 'react';
-import { connect } from 'react-redux';
+import React, { Component, Fragment } from 'react';
 import classnames from 'classnames';
 
 import size from 'lodash/size';
@@ -11,7 +10,6 @@ import ProtocolSections from './protocol-sections';
 import Fieldset from '../../../components/fieldset';
 import Repeater from '../../../components/repeater';
 import Controls from '../../../components/controls';
-import Complete from '../../../components/complete';
 
 class Form extends Component {
   removeItem = e => {
@@ -90,7 +88,6 @@ class Protocols extends Component {
   }
 
   render() {
-    console.log('PROTOCOLS RENDER')
     const { project } = this.props;
     if (!size(project)) {
       return null;

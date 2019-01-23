@@ -8,8 +8,6 @@ import Controls from '../../../components/controls';
 import Expandable from '../../../components/expandable';
 import Repeater from '../../../components/repeater';
 
-import { connectProject } from '../../../helpers';
-
 import Review from './review';
 
 import SpeciesSelector from '../../../components/species-selector';

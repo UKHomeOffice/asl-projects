@@ -41,7 +41,7 @@ class ExpandingPanel extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     return nextProps.open !== this.props.open;
   }
 
