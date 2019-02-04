@@ -279,7 +279,7 @@ export default {
               },
               {
                 name: 'establishment-supervisor',
-                label: 'Who will be supervising your work at this establishment?',
+                label: 'Who will be responsible for supervising your work at this establishment?',
                 type: 'texteditor',
                 repeats: true
               }
@@ -304,7 +304,7 @@ export default {
                     value: false,
                     reveal: {
                       name: 'establishments-care-conditions-justification',
-                      label: 'If any of your establishments do not meet these requirements, explain how and why.',
+                     label: 'If any of your establishments do not meet requirements, explain how you will ensure that housing, husbandry and care conditions will be appropriate for your project.',
                       type: 'texteditor'
                     }
                   }
@@ -410,7 +410,7 @@ export default {
             fields: [
               {
                 name: 'poles-inspection',
-                label: 'How will you ensure that these POLEs can be adequately inspected?',
+                label: 'How will you ensure that procedures taking place at these POLEs can be inspected?',
                 hint: 'For example, you may need to consent from the landowner.',
                 type: 'texteditor'
               },
@@ -753,7 +753,7 @@ export default {
           },
           {
             name: 'substances',
-            label: 'Will you be administering substances for testing or to cause physiological effects during this project?',
+            label: 'Will you be administering substances for testing that will alter an animal\'s physiology during this project?',
             type: 'radio',
             inline: true,
             className: 'smaller',
@@ -911,6 +911,10 @@ export default {
                   {
                     label: 'Pregnant adult',
                     value: 'pregnant'
+                  },
+                  {
+                    label: 'Aged animal',
+                    value: 'aged'
                   }
                 ]
               },
@@ -1092,7 +1096,7 @@ export default {
                         {
                           name: 'adverse-effects',
                           label: 'What are the likely adverse effects of this step?​',
-                          hint: 'State the signs of each adverse effect, including the anticipated degree and duration of suffering.',
+                          hint: 'State the signs of each adverse effect, including the likely incidence, and the anticipated degree and duration of suffering.',
                           type: 'texteditor'
                         },
                         {
@@ -1114,7 +1118,7 @@ export default {
                     }
                   ]
                 },
-                
+
               ]
             }
           },
@@ -1182,8 +1186,7 @@ export default {
               },
               {
                 name: 'scientific-endpoints',
-                label: 'What are the scientific endpoints for each model or technique in this protocol?',
-                hint: 'Include any clinical signs that you expect to see for each one.​',
+                label: 'What is the scientific need for the expected clinical signs for each experimental model in this protocol?',
                 type: 'texteditor'
               },
               {
