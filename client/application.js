@@ -1787,7 +1787,7 @@ export default {
           {
             name: 'keeping-animals-alive-determine',
             label: 'Which animals do you propose to keep alive?',
-	          hint: 'For example, animals that have suffered actual severity that is no more than mild'.',
+	          hint: 'For example, animals that have suffered actual severity that is no more than mild.',
 	          type: 'texteditor'
           },
           {
