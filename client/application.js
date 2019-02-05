@@ -110,8 +110,8 @@ export default {
               },
               {
                 name: 'permissible-purpose',
-                label: 'Which permissible purpose applies to this project?',
-                type: 'radio',
+                label: 'Which permissible purposes apply to this project?',
+                type: 'checkbox',
                 className: 'smaller',
                 options: [
                   {
@@ -121,6 +121,10 @@ export default {
                   {
                     label: 'Translational and applied research',
                     value: 'translational-research'
+                  },
+                  {
+                    label: 'Regulatory use and routine production',
+                    value: 'regulatory-use'
                   },
                   {
                     label: 'Protection of the natural environment in the interests of the health or welfare of human beings or animals',
@@ -660,7 +664,7 @@ export default {
                     value: false,
                     reveal: {
                       name: 'experimental-design-sexes-justification',
-                      label: 'Why will you not use animals of both sexes?',
+                      label: 'Why can\'t you use animals of both sexes?',
                       type: 'texteditor'
                     }
                   }
@@ -1704,8 +1708,7 @@ export default {
                 reveal: {
                   name: 'feral-animals-justification',
                   label: 'Why can’t you achieve your objectives without using feral animals?',
-                  hint: 'For example, it may be essential to use feral animals to protect the health and welfare of a species, or avoid a threat to the health of other animals, humans, or the environment.',
-                  type: 'texteditor'
+                  hint: 'For example, it may be essential to use feral animals to protect the health or welfare of a particular species, or to avoid a serious threat to human or animal health or the environment.'
                 }
               },
               {
@@ -1783,14 +1786,15 @@ export default {
         fields: [
           {
             name: 'keeping-animals-alive-determine',
-            label: 'How will you determine whether animals can be kept alive at the end of the project?',
-            type: 'texteditor'
+            label: 'Which animals do you propose to keep alive?',
+	          hint: 'For example, animals that have suffered actual severity that is no more than mild'.',
+	          type: 'texteditor'
           },
           {
             name: 'keeping-animals-alive-supervised',
-            label: 'Will animals that have been kept alive be held and supervised by a veterinary surgeon?',
-            hint: 'If they will be, include any limitations on the length of time that certain animals can be held and monitored.',
-            type: 'texteditor'
+            label: 'What criteria will be used by the veterinary surgeon to determine that animals can be kept alive? ',
+	          hint: 'Include any limitations on the period of time that animals will be held under the supervision of veterinary surgeon.',
+	          type: 'texteditor'
           }
         ]
       },
