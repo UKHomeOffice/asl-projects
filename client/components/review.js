@@ -79,11 +79,13 @@ class Review extends React.Component {
       const species = [
         ...(this.props.project.species || []),
         ...(this.props.project['species-other'] || [])
-      ].map(s => ({
+      ].map(s => {
+      const opt = flatten(values(speciesOptions)).find(species => species.value === s);
+      return {
         key: species && species.value,
-        title: flatten(values(speciesOptions)).find(species => species.value === s).label,
+        title: opt ? opt.label : s,
         value: this.props.project[`${this.props.name}-${s}`]
-      }))
+      }})
 
       if (!species.length) {
         return <p>
