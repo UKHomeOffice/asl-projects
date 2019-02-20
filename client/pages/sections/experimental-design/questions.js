@@ -8,8 +8,7 @@ const Questions = ({
   values,
   step,
   save,
-  advance,
-  exit
+  advance
 }) => (
   <Fragment>
     <h1>{ title }</h1>
@@ -20,7 +19,6 @@ const Questions = ({
     />
     <p className="control-panel">
       <Button onClick={advance}>Save and continue</Button>
-      <Button onClick={exit} className="button-secondary">Save and exit</Button>
     </p>
   </Fragment>
 );
