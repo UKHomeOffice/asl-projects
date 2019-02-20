@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 
 import size from 'lodash/size';
-import { Button } from '@ukhomeoffice/react-components';
 import ProtocolSections from './protocol-sections';
 
 import ReviewFields from '../../../components/review-fields';
@@ -131,7 +130,6 @@ class Protocols extends Component {
       >
         <Protocol {...this.props} />
       </Repeater>
-      <Button className="button-secondary" onClick={this.props.exit}>Save and exit</Button>
     </div>
   }
 }
