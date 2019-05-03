@@ -196,7 +196,15 @@ const mapStateToProps = ({ project, settings }, { name, conditional, optionsFrom
   };
 }
 
-const ConnectedField = connect(mapStateToProps, { addChange })(Field);
+const mapDispatchToProps = dispatch => {
+  return {
+    addChange: change => {
+      return Promise.resolve().then(() => dispatch(addChange(change)))
+    }
+  }
+}
+
+const ConnectedField = connect(mapStateToProps, mapDispatchToProps)(Field);
 
 const FieldGroup = props => {
   return (
