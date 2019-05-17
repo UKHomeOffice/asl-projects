@@ -80,7 +80,10 @@ class Diff extends ReviewTextEditor {
         const length = text.text.length;
         return diff.filter(d => {
           const end = d.start + d.count;
-          return (d.start >= start && d.start < start + length) || (end > start && end <= start + length);
+          const startsInside = d.start >= start && d.start < start + length;
+          const endsInside = end > start && end <= start + length;
+          const wrapsAround = d.start < start && end > start + length;
+          return startsInside || endsInside || wrapsAround;
         });
       };
 
@@ -123,7 +126,6 @@ class Diff extends ReviewTextEditor {
       return <span className="diff" {...attributes}>{ children }</span>;
     }
     if (decoration.type === 'diff-removed') {
-      console.log(decoration.data.get('value'));
       return <span className="diff removed" {...attributes}>{ decoration.data.get('value') }{ children }</span>;
     }
     return next();
