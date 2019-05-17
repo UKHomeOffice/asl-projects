@@ -120,8 +120,13 @@
   }
 
   .diff {
-    border-bottom: 3px solid #ffbf47;
-    background-color: #fff2d3;
+    border-bottom: 3px solid #47ff47;
+    background-color: #d3ffd3;
+    &.removed {
+      text-decoration: line-through;
+      border-bottom: 3px solid #ff4747;
+      background-color: #ffd3d3;
+    }
   }
 
 }

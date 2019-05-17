@@ -33,7 +33,9 @@ const initialValue = JSON.stringify({
       }
     ]
   }
-})
+});
+
+const before = Value.fromJSON(JSON.parse(initialValue));
 
 class Diff extends ReviewTextEditor {
 
@@ -51,18 +53,21 @@ class Diff extends ReviewTextEditor {
   }
 
   diff(node) {
-    const before = Value.fromJSON(JSON.parse(this.props.before || initialValue));
+    const diff = diffChars(before.document.text, node.text);
 
-    return diffChars(before.document.text, node.text)
-      .filter(d => !d.removed)
+    return diff
       .reduce((arr, d, i) => {
         if (i > 0) {
+          if (d.removed) {
+            const start = arr[i - 1].start + arr[i - 1].count;
+            return [...arr, { ...d, start, count: 0 }];
+          }
           const start = arr[i - 1].start + arr[i - 1].count;
           return [...arr, { ...d, start }];
         }
         return [{ ...d, start: 0 }];
       }, [])
-      .filter(d => d.added);
+      .filter(d => d.added || d.removed);
   }
 
   decorateNode(node, editor, next) {
@@ -86,7 +91,10 @@ class Diff extends ReviewTextEditor {
         const localDiffs = getDiffs(text);
         localDiffs.forEach(d => {
           decorations.push({
-            type: 'diff',
+            type: d.removed ? 'diff-removed' : 'diff',
+            data: {
+              value: d.value
+            },
             anchor: {
               path,
               key: text.key,
@@ -107,14 +115,16 @@ class Diff extends ReviewTextEditor {
 
     }
 
-
-
   }
 
   renderDecoration(props, editor, next) {
     const { children, decoration, attributes } = props;
     if (decoration.type === 'diff') {
       return <span className="diff" {...attributes}>{ children }</span>;
+    }
+    if (decoration.type === 'diff-removed') {
+      console.log(decoration.data.get('value'));
+      return <span className="diff removed" {...attributes}>{ decoration.data.get('value') }{ children }</span>;
     }
     return next();
   }
@@ -142,7 +152,6 @@ class Index extends React.Component {
   render () {
     return <Fragment>
       <h1>Diff spike</h1>
-      <TextEditor value={initialValue} onSave={value => this.setState({ before: value })}/>
       <TextEditor value={initialValue} onSave={value => this.setState({ after: value })}/>
       <Diff before={this.state && this.state.before} after={this.state && this.state.after} />
     </Fragment>
