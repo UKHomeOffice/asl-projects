@@ -31,8 +31,6 @@ class Editor extends Component {
     focus: false
   };
 
-
-
   renderNode = (props, editor, next) => {
     const { attributes, children, node, isFocused } = props;
     switch (node.type) {

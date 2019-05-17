@@ -278,7 +278,7 @@ class TextEditor extends RTEditor {
             value={this.state.value}
             onChange={this.onChange}
             onKeyDown={this.onKeyDown}
-            renderNode={this.renderNode}
+            renderBlock={this.renderNode}
             renderMark={this.renderMark}
             onFocus={this.onFocus}
             onBlur={this.onBlur}

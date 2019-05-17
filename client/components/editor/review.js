@@ -9,7 +9,7 @@ class ReviewTextEditor extends RTEditor {
         <Editor
           value={this.state.value}
           renderMark={this.renderMark}
-          renderNode={this.renderNode}
+          renderBlock={this.renderNode}
           readOnly
         />
       </div>
