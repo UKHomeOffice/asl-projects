@@ -134,7 +134,7 @@ class Review extends React.Component {
       return <ReviewTextEditor {...this.props} />;
     }
     if (!isUndefined(value) && !isNull(value) && value !== '') {
-      return <p>{value.label || value}</p>;
+      return <p>{value.review || value.label || value}</p>;
     }
     return (
       <p>

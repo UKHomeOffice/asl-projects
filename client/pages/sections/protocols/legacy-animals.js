@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from '@ukhomeoffice/react-components';
 import Fieldset from '../../../components/fieldset';
@@ -21,7 +21,11 @@ const getFields = fields => {
   }]
 }
 
-const LegacyAnimals = ({ onFieldChange, values, fields, prefix, advance, editable }) => (
+class LegacyAnimals extends Component {
+  rendee () {
+    const { onFieldChange, values, fields, prefix, advance, editable } = this.props;
+  }
+} () => (
   <Fragment>
     {
       editable

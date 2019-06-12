@@ -10,6 +10,7 @@ import configureStore from './store';
 
 const renderApp = ({ basename, onUpdate, onComplete }, initialState) => {
   const store = configureStore(initialState);
+  console.log(store.getState());
   render(
     <Provider store={store}>
       <React.Fragment>
