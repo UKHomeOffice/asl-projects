@@ -6,15 +6,14 @@ class PhaseBanner extends React.Component {
     return <div className="govuk-phase-banner">
       <div className="govuk-width-container">
         <h1>This service will be retired on 31st October 2019.</h1>
-        <h2>
-          If you have applications you wish to continue working on, please back them up using the links provided.
-        </h2>
-        <h2>
-          The .ppl files can be uploaded to the new service
-          at <br />
-          <a href="http://external.aspel.homeoffice.gov.uk">external.aspel.homeoffice.gov.uk</a> <br />
-          where you can resume drafting your project application.
-        </h2>
+        <p>
+          If you have applications you wish to continue working on, please download them using the &quot;Backup(.ppl)&quot; link.
+        </p>
+        <p>
+          Upload the .ppl files to the new ASPeL at
+          <a href="http://external.aspel.homeoffice.gov.uk">external.aspel.homeoffice.gov.uk</a> where you can resume
+          drafting your application.
+        </p>
       </div>
     </div>;
   }
