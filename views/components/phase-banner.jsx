@@ -5,7 +5,7 @@ class PhaseBanner extends React.Component {
   render() {
     return <div className="govuk-phase-banner">
       <div className="govuk-width-container">
-        <h1>This service will be retired on 23/10/2019.</h1>
+        <h1>This service will be retired on 31st October 2019.</h1>
         <h2>
           If you have applications you wish to continue working on, please back them up using the links provided.
         </h2>
