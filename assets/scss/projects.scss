@@ -24,6 +24,19 @@ $pink: #ff1493;
   padding-left: $govuk-gutter-half;
 }
 
+.govuk-phase-banner {
+  background-color: govuk-colour('red');
+  padding: $govuk-gutter 0;
+
+  h2 {
+    margin-top: $govuk-gutter;
+  }
+
+  a {
+    color: $white;
+  }
+}
+
 html.modal-open, html.modal-open body {
   overflow: hidden;
 }
