@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import PhaseBanner from './components/phase-banner';
 
 class Layout extends React.Component {
@@ -49,7 +48,7 @@ class Layout extends React.Component {
             </div>
           </header>
 
-          <PhaseBanner content="This is a new service. Your feedback will help us improve it." />
+          <PhaseBanner />
 
           {this.props.children}
 

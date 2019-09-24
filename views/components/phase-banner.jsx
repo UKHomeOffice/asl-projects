@@ -2,25 +2,21 @@ import React from 'react';
 
 class PhaseBanner extends React.Component {
 
-  renderContent() {
-    if (this.props.content) {
-      return this.props.content;
-    } else if (this.props.feedbackUrl) {
-      return <span className="govuk-phase-banner__text">
-        This is a new service – your <a href={this.props.feedbackUrl} className="govuk-link">feedback</a> will help us to improve it.
-      </span>;
-    }
-  }
-
   render() {
-    return <div className="govuk-phase-banner">
-      <div className="govuk-width-container">
-        <p className="govuk-phase-banner__content">
-          <strong className="govuk-tag govuk-phase-banner__content__tag">{this.props.phase}</strong>
-          { this.renderContent() }
-        </p>
+    return (
+      <div className="govuk-phase-banner">
+        <div className="govuk-width-container">
+          <h1>This service will no longer be available from 31st October 2019.</h1>
+          <p>
+            If you have applications you wish to continue working on, please download them using the &quot;Backup(.ppl)&quot; link.
+          </p>
+          <p>
+            You can then upload your .ppl file to <a href="http://external.aspel.homeoffice.gov.uk">external.aspel.homeoffice.gov.uk</a> where
+            you can resume drafting your application.
+          </p>
+        </div>
       </div>
-    </div>;
+    );
   }
 
 }
