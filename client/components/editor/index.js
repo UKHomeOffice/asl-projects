@@ -1,19 +1,21 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
 import ReactMarkdown from 'react-markdown';
 
-import get from 'lodash/get';
 import defer from 'lodash/defer';
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
 
 import { throwError } from '../../actions/messages';
 
+import ReadOnlyTextEditor from './readonly';
+
+import { normaliseValue, serialiseValue } from './lib';
+
 import FormatToolbar from './format-toolbar';
-import initialValue from './initial-value'
 import Blocks from './blocks';
 import Marks from './marks';
 import Image from './image';
@@ -31,34 +33,8 @@ const plugins = [
   tablePlugin
 ];
 
-const serialiseValue = value => {
-  const jsonVal = JSON.stringify(value.toJSON());
-  if (jsonVal === JSON.stringify(Value.fromJSON(initialValue('')))) {
-    return null;
-  }
-  return jsonVal;
-};
-
-const normaliseValue = value => {
-  // if value is falsy, init with empty value
-  if (!value) {
-    return initialValue('');
-  }
-  try {
-    // try and parse value
-    value = JSON.parse(value)
-  } catch(e) {
-    // if value is unable to be JSON parsed, set it as a single text node
-    value = initialValue(value);
-  }
-  // if structure is empty and incomplete, init with empty value
-  if (get(value, 'document.nodes.length') === 0) {
-    value = initialValue('');
-  }
-  return value;
-}
-
 class TextEditor extends Component {
+
   constructor(props) {
     super(props);
     const value = normaliseValue(this.props.value);
@@ -114,10 +90,12 @@ class TextEditor extends Component {
   }
 
   render() {
-    const { value } = this.state;
-    if (this.props.readOnly && !serialiseValue(value)) {
-      return <p><em>No answer provided</em></p>;
+    if (this.props.readOnly) {
+      return <ReadOnlyTextEditor {...this.props} />
     }
+
+    const { value } = this.state;
+
     return (
       <div
         className={classnames(
@@ -126,40 +104,30 @@ class TextEditor extends Component {
           this.props.className
         )}
       >
+        <label className='govuk-label' htmlFor={this.props.name}>
+          {this.props.label}
+        </label>
         {
-          !this.props.readOnly && (
-            <Fragment>
-              <label className='govuk-label' htmlFor={this.props.name}>
-                {this.props.label}
-              </label>
-              {
-                this.props.hint && (
-                  <span id={`${this.props.name}-hint`} className='govuk-hint'>
-                    <ReactMarkdown source={this.props.hint} />
-                  </span>
-                )
-              }
-              {
-                this.props.error && (
-                  <span id={`${this.props.name}-error`} className='govuk-error-message'>
-                    {this.props.error}
-                  </span>
-                )
-              }
-            </Fragment>
+          this.props.hint && (
+            <span id={`${this.props.name}-hint`} className='govuk-hint'>
+              <ReactMarkdown source={this.props.hint} />
+            </span>
           )
         }
-        <div id={this.props.name} className={classnames('editor', { focus: this.state.focus, readonly: this.props.readOnly })}>
-          {
-            !this.props.readOnly && (
-              <FormatToolbar
-                value={this.state.value}
-                inTable={tablePlugin.queries.isSelectionInTable(value)}
-                query={this.query}
-                command={this.command}
-              />
-            )
-          }
+        {
+          this.props.error && (
+            <span id={`${this.props.name}-error`} className='govuk-error-message'>
+              {this.props.error}
+            </span>
+          )
+        }
+        <div id={this.props.name} className={classnames('editor', { focus: this.state.focus })}>
+          <FormatToolbar
+            value={this.state.value}
+            inTable={tablePlugin.queries.isSelectionInTable(value)}
+            query={this.query}
+            command={this.command}
+          />
           <Editor
             spellCheck
             placeholder=''
@@ -169,7 +137,7 @@ class TextEditor extends Component {
             onChange={this.onChange}
             name={this.props.name}
             key={this.props.name}
-            readOnly={this.props.readOnly}
+            readOnly={false}
             decorateNode={this.props.decorateNode}
             renderDecoration={this.props.renderDecoration}
             onFocus={this.onFocus}

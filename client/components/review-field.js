@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from '@asl/components';
-import TextEditor from './editor';
+import TextEditor from './editor/readonly';
 import speciesOptions from '../constants/species';
 import { getLegacySpeciesLabel, mapSpecies } from '../helpers';
 
