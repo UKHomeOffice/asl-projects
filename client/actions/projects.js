@@ -1,4 +1,3 @@
-import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
 import cloneDeep from 'lodash/cloneDeep';
 import isEqual from 'lodash/isEqual';
@@ -35,30 +34,6 @@ export function setProject(project) {
     type: types.SET_PROJECT,
     project
   }
-}
-
-export function createProject(project) {
-  return dispatch => {
-    return database()
-      .then(db => db.create(project))
-      .then(project => {
-        dispatch({ type: types.CREATE_PROJECT, project });
-        dispatch(showMessage('Project created!'));
-        return project;
-      })
-      .catch(error => dispatch({ type: types.ERROR, error }));
-  };
-}
-
-export function importProject(project) {
-  project = omit(project, 'id');
-  return dispatch => {
-    return database()
-      .then(db => db.create(project))
-      .then(project => dispatch({ type: types.CREATE_PROJECT, project }))
-      .then(() => dispatch(showMessage('Project imported!')))
-      .catch(error => dispatch({ type: types.ERROR, error }));
-  };
 }
 
 export function deleteProject(id) {

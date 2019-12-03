@@ -6,7 +6,7 @@ class PhaseBanner extends React.Component {
     return (
       <div className="govuk-phase-banner">
         <div className="govuk-width-container">
-          <h1>This service will no longer be available from 31st October 2019.</h1>
+          <h1>This service will no longer be available from 31st January 2020.</h1>
           <p>
             If you have applications you wish to continue working on, please download them using the &quot;Backup(.ppl)&quot; link.
           </p>
