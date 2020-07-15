@@ -198,7 +198,7 @@ export default () => ({
                 name: 'transferToEstablishment',
                 label: 'What is the primary establishment for this licence?',
                 type: 'establishment-selector',
-                show: application => application.project && application.project.status !== 'inactive' && !application.isFullApplication
+                show: application => application.project && !application.isFullApplication
               },
               {
                 name: 'other-establishments',

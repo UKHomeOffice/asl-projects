@@ -1,7 +1,8 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { RadioGroup, Warning } from '@ukhomeoffice/react-components';
 import { Details, Inset, Markdown } from '@asl/components';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { transferDraftProject } from '../actions/projects';
 
 const revealContent = `To change the primary establishment you must:
 
@@ -26,6 +27,7 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
   }
 
   const [localValue, setLocalValue] = useState(value);
+  const dispatch = useDispatch();
 
   const canUpdateEstablishment = canTransfer && establishments.length > 1 && !transferInProgress;
   const draft = project.status === 'inactive';
@@ -44,7 +46,7 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
   }));
 
   useEffect(() => {
-    if (onFieldChange && localValue !== value) {
+    if (onFieldChange && localValue !== value && !draft) {
       onFieldChange({
         'transfer-of-animals-complete': false,
         'protocols-complete': false,
@@ -53,6 +55,31 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
       });
     }
   }, [localValue]);
+
+  function onChange(e) {
+    const targetValue = parseInt(e.target.value, 10);
+
+    // drafts can be immediately transferred to the requested establishment
+    if (draft && targetValue !== establishment.id) {
+      const targetEstablishment = establishments.find(e => e.id === targetValue);
+      const warningMsg = `Changing the primary establishment will immediately transfer this draft project to ${targetEstablishment.name}, removing it from ${establishment.name}. Are you sure you wish to continue?`;
+
+      if (window.confirm(warningMsg)) {
+        return Promise.resolve()
+          .then(() => setLocalValue(targetValue)) // render the radiobutton change
+          .then(() => dispatch(transferDraftProject(targetValue)))
+          .then(url => {
+            window.location.href = url;
+          });
+      } else {
+        e.preventDefault();
+        setLocalValue(establishment.id);
+      }
+      return;
+    }
+
+    setLocalValue(targetValue);
+  }
 
   const displayEstablishment = localValue
     ? establishments.find(e => e.id === localValue) || {}
@@ -70,7 +97,7 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
               type="radio"
               options={options}
               value={localValue || establishment.id}
-              onChange={e => setLocalValue(parseInt(e.target.value, 10))}
+              onChange={onChange}
             />
           )
           : (

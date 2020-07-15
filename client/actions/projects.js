@@ -378,3 +378,24 @@ export const ajaxSync = props => {
     return debouncedSyncProject(dispatch, getState);
   };
 };
+
+export function transferDraftProject(targetEstablishmentId) {
+  return (dispatch, getState) => {
+    const state = getState();
+    const project = state.application.project;
+
+    const params = {
+      method: 'PUT',
+      url: `/establishments/${project.establishmentId}/projects/${project.id}/transfer-draft`,
+      data: { targetEstablishmentId }
+    };
+
+    return Promise.resolve()
+      .then(() => sendMessage(params))
+      .then(json => {
+        console.log('api response json:', json);
+        return json.url;
+      })
+      .catch(error => dispatch({ type: types.ERROR, error }));
+  }
+}
