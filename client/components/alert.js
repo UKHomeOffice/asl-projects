@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import { hideMessage } from '../actions/messages';
 
 const mapStateToProps = state => {
@@ -25,13 +25,13 @@ class Create extends React.Component {
   }
 
   render() {
-    return <ReactCSSTransitionGroup
+    return <CSSTransitionGroup
       transitionName="alert"
       transitionEnterTimeout={100}
       transitionLeaveTimeout={500}
       >
       { this.alert() }
-    </ReactCSSTransitionGroup>;
+    </CSSTransitionGroup>;
   }
 
 }
