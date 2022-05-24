@@ -27,7 +27,7 @@ class Complete extends Component {
     if (this.props.legacy) {
       return <Button onClick={() => this.props.history.push('/')}>Continue</Button>;
     }
-    const { children, label = 'Mark this protocol as complete' } = this.props;
+    const { children, label = 'Mark this protocol as complete', name = 'complete' } = this.props;
     return (
       <div className="panel">
         {
@@ -35,7 +35,7 @@ class Complete extends Component {
         }
         <CheckboxGroup
           label=""
-          name="complete"
+          name={name}
           className="smaller"
           options={[{
             value: true,

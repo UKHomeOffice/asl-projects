@@ -102,7 +102,6 @@ class Protocols extends PureComponent {
     if (this.props.readonly) {
       return;
     }
-
     this.props.save({ protocols });
   }
 
@@ -164,10 +163,12 @@ class Protocols extends PureComponent {
         onAfterDuplicate={(item, id) => {
           const index = items.findIndex(i => i.id === id);
           const protocol = document.querySelectorAll('.protocols-section .protocol')[index];
-          window.scrollTo({
-            top: protocol.offsetTop,
-            left: 0
-          });
+          if (protocol) {
+            window.scrollTo({
+              top: protocol.offsetTop,
+              left: 0
+            });
+          }
         }}
       >
         <Protocol {...this.props} />

@@ -162,6 +162,7 @@ class ProtocolSections extends PureComponent {
                 <Fragment>
                   <Complete
                     type="protocol"
+                    name={`complete-${values.id}`}
                     complete={values.complete}
                     onChange={this.setCompleted}
                     buttonClassName="button-secondary"
