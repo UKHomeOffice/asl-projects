@@ -1,10 +1,14 @@
 import { isTrainingLicence } from '../../helpers';
 
+const IS_TRAINING_LICENCE = '"Is this project for higher education and training purposes?" selected "Yes"';
+const NOT_TRAINING_LICENCE = '"Is this project for higher education and training purposes?" selected "No"';
+
 export default {
   title: 'Experience',
   fields: [
     {
       name: 'experience-projects',
+      showSummary: NOT_TRAINING_LICENCE,
       show: values => !isTrainingLicence(values),
       label: 'Have you managed similar work in this field before?',
       alt: {
@@ -34,6 +38,7 @@ export default {
     },
     {
       name: 'training-has-delivered',
+      showSummary: IS_TRAINING_LICENCE,
       show: values => isTrainingLicence(values),
       label: 'Have you previously delivered courses that required a higher education and training licence?',
       alt: {
@@ -63,6 +68,7 @@ export default {
     },
     {
       name: 'experience-knowledge',
+      showSummary: NOT_TRAINING_LICENCE,
       show: values => !isTrainingLicence(values),
       label: 'What relevant scientific knowledge or education do you have?',
       alt: {
@@ -72,6 +78,7 @@ export default {
     },
     {
       name: 'training-knowledge',
+      showSummary: IS_TRAINING_LICENCE,
       show: values => isTrainingLicence(values),
       label: 'What education, knowledge, or experience do you have that\'s relevant to the course subject matter?',
       alt: {
@@ -81,6 +88,7 @@ export default {
     },
     {
       name: 'experience-animals',
+      showSummary: NOT_TRAINING_LICENCE,
       show: values => !isTrainingLicence(values),
       label: 'What experience do you have of using the types of animals and experimental models stated in this licence application?',
       alt: {
@@ -90,6 +98,7 @@ export default {
     },
     {
       name: 'experience-experimental-design',
+      showSummary: NOT_TRAINING_LICENCE,
       show: values => !isTrainingLicence(values),
       label: 'What experimental design and data analysis training have you had?',
       alt: {
@@ -101,6 +110,7 @@ export default {
     },
     {
       name: 'training-facilities',
+      showSummary: IS_TRAINING_LICENCE,
       show: values => isTrainingLicence(values),
       label: 'What teaching facilities and equipment will you have access to?',
       alt: {

@@ -1,5 +1,6 @@
 export const transferOfAnimals = {
   title: 'Transfer and movement of animals',
+  showSummary: 'project has additional establishments, or a change of primary establishment is being carried out',
   show: values => {
     const hasAdditionalEstablishments = values['other-establishments'] && values.establishments && values.establishments.length;
     const isTransfer = !!values['transferToEstablishment'];
