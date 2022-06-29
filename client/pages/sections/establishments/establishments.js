@@ -43,7 +43,7 @@ function Establishment(props) {
           editable && <a href="#" className={classnames('inline-block float-right', { restore: values.deleted })} onClick={values.deleted ? restoreItem : removeItem}>{values.deleted ? 'Restore' : 'Remove'}</a>
         }
         <h2>{`Additional establishment ${number + 1}`}</h2>
-        <Warning className="larger">This establishment will also need to conduct an AWERB review of this application before it can be submitted.</Warning>
+        { props.actualProject && <Warning className="larger">This establishment will also need to conduct an AWERB review of this application before it can be submitted.</Warning> }
         {
           (values.deleted || !editable)
             ? <ReviewFields
