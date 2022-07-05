@@ -2,7 +2,6 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { RadioGroup, Warning } from '@ukhomeoffice/react-components';
 import { Details, Inset, Markdown, Link } from '@asl/components';
 import { useSelector, shallowEqual } from 'react-redux';
-import classNames from "classnames";
 
 const revealContent = `To change the primary establishment you must:
 
@@ -10,7 +9,7 @@ const revealContent = `To change the primary establishment you must:
 * take the application through the AWERB review process at the new establishment (and any additional establishments)
 * review any related sections of the application that appear as ‘incomplete'`
 
-export default function EstablishmentSelector({ value, onFieldChange, review, diff, larger, ...props }) {
+export default function EstablishmentSelector({ value, onFieldChange, review, diff, ...props }) {
   const {
     establishments,
     canTransfer,
@@ -75,10 +74,10 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
       <div className="govuk-form-group">
         <fieldset className="govuk-fieldset inline smaller">
           <legend className="govuk-fieldset__legend">
-            <h2 className={classNames('govuk-fieldset__heading', 'govuk-heading-l', {larger})}>Primary establishment</h2>
+            <h2 className="govuk-fieldset__heading govuk-heading-l">Primary establishment</h2>
           </legend>
-          <p className={classNames({larger})}>{establishmentName}</p>
-          <p className={classNames({larger})}><Link page="project.transferDraft" label="Change" establishmentId={establishment.id} projectId={project.id} /></p>
+          <p>{establishmentName}</p>
+          <p><Link page="project.transferDraft" label="Change" establishmentId={establishment.id} projectId={project.id} /></p>
         </fieldset>
       </div>
     );
