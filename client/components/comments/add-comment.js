@@ -9,7 +9,8 @@ class AddComment extends Component {
 
   state = {
     comment: '',
-    adding: false
+    adding: false,
+    saving: false
   };
 
   onChange = e => {
@@ -20,13 +21,17 @@ class AddComment extends Component {
   }
 
   onSubmit = () => {
+    if (!this.state.comment) {
+      return;
+    }
+    this.setState({ saving: true });
     this.props.addComment({
       field: this.props.field,
       comment: this.state.comment
     })
       .then(() => {
         if (this._isMounted) {
-          this.setState({ comment: '', adding: false });
+          this.setState({ comment: '', adding: false, saving: false });
         }
       });
   }
@@ -49,7 +54,7 @@ class AddComment extends Component {
   }
 
   render() {
-    const { comment, adding } = this.state;
+    const { comment, adding, saving } = this.state;
     return adding
       ? (
         <Fragment>
@@ -62,7 +67,7 @@ class AddComment extends Component {
             autoFocus
           />
           <p className="control-panel">
-            <Button onClick={this.onSubmit}>Save</Button>
+            <Button onClick={this.onSubmit} disabled={saving}>Save</Button>
             <Button className="link" onClick={this.clear}>Discard</Button>
           </p>
         </Fragment>

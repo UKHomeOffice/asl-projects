@@ -5,7 +5,6 @@ import classnames from 'classnames';
 import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';
 import ReviewFields from '../../../components/review-fields';
-import { Warning } from '@ukhomeoffice/react-components';
 
 const getItems = (values, editable, previousAA) => {
   let items = values['establishments'];

@@ -20,7 +20,7 @@ export default class ErrorBoundary extends Component {
     const {
       message = 'Sorry, there is a problem with this question',
       content = 'Try to refresh the page, if that doesn\'t resolve the problem send the error details below to',
-      email = <a href="mailto:aspelqueries@homeoffice.gov.uk">aspelqueries@homeoffice.gov.uk</a>,
+      email = <a href="mailto:aspeltechnicalqueries@homeoffice.gov.uk">aspeltechnicalqueries@homeoffice.gov.uk</a>,
       section = false,
       details
     } = this.props;
