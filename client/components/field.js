@@ -44,6 +44,7 @@ class Field extends Component {
   }
 
   onFieldChange = value => {
+    console.log('Field.onFieldChange()', {value});
     this.setState({ value }, this.save);
   }
 

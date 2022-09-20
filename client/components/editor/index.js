@@ -1,5 +1,4 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect, Fragment } from 'react';
 import classnames from 'classnames';
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
@@ -74,132 +73,119 @@ const normaliseValue = value => {
   return value;
 };
 
-class TextEditor extends Component {
-  constructor(props) {
-    super(props);
-    const value = normaliseValue(this.props.value);
+export default function TextEditor({ value, onChange, readOnly, name, className, label, hint, decorateNode, renderDecoration, error }) {
+  const [content, setContent] = useState(Value.fromJSON(normaliseValue(value)));
+  const [editor, setEditor] = useState(null);
+  const [unsavedChanges, setUnsavedChanges] = useState(false);
+  const [focus, setFocus] = useState(false);
 
-    this.state = {
-      value: Value.fromJSON(value),
-      focus: false
-    };
-  }
-
-  ref = editor => {
-    this.editor = editor;
+  const ref = editor => {
+    setEditor(editor);
   };
 
-  save = () => {
-    const { value } = this.state;
-    this.props.onChange && this.props.onChange(serialiseValue(value));
-  };
-
-  onChange = ({ value }) => {
-    const old = this.state.value;
-    const hasChanged = () => !isEqual(old.toJSON(), value.toJSON());
-
-    this.setState({ value }, () => hasChanged() && this.save());
-  };
-
-  onFocus = (self, editor, next) => {
-    next();
-    defer(() => this.setState({ focus: true }));
-  };
-
-  onBlur = (self, editor, next) => {
-    next();
-    defer(() => this.setState({ focus: false }));
-  };
-
-  command = (func, ...args) => {
-    try {
-      this.editor[func] && this.editor[func](...args);
-    } catch (err) {
-      this.props.throwError(err.message || 'Something went wrong');
+  const save = () => {
+    if (typeof onChange === 'function') {
+      onChange(serialiseValue(content));
     }
-  }
+  };
 
-  query = (func, ...args) => {
-    if (!this.editor) {
+  const localOnChange = ({ value }) => {
+    const old = content;
+    if (!isEqual(old.toJSON(), value.toJSON())) {
+      setUnsavedChanges(true);
+    }
+    setContent(value);
+  };
+
+  useEffect(() => {
+    if (unsavedChanges) {
+      save();
+    }
+  }, [content]);
+
+  const onFocus = (self, editor, next) => {
+    next();
+    defer(() => setFocus(true));
+  };
+
+  const onBlur = (self, editor, next) => {
+    next();
+    defer(() => setFocus(false));
+  };
+
+  const command = (func, ...args) => {
+    try {
+      editor[func] && editor[func](...args);
+    } catch (err) {
+      throwError(err.message || 'Something went wrong');
+    }
+  };
+
+  const query = (func, ...args) => {
+    if (!editor) {
       return false;
     }
-    if (!this.editor[func]) {
+    if (!editor[func]) {
       throw new Error(`Query "${func}" is not defined`);
     }
-    return this.editor[func](...args);
+    return editor[func](...args);
+  };
+
+  if (readOnly && !serialiseValue(content)) {
+    return <p><em>No answer provided</em></p>;
   }
 
-  render() {
-    const { value } = this.state;
-    if (this.props.readOnly && !serialiseValue(value)) {
-      return <p><em>No answer provided</em></p>;
-    }
-    return (
-      <div
-        className={classnames(
-          'govuk-form-group',
-          { 'govuk-form-group--error': this.props.error },
-          this.props.className
-        )}
-      >
+  return (
+    <div className={classnames('govuk-form-group', { 'govuk-form-group--error': error }, className)}>
+      {
+        !readOnly &&
+          <Fragment>
+            <label className='govuk-label' htmlFor={name}>{label}</label>
+            {
+              hint &&
+                <span id={`${name}-hint`} className='govuk-hint'>
+                  {
+                    typeof hint === 'string'
+                      ? <Markdown links={true}>{ hint }</Markdown>
+                      : hint
+                  }
+                </span>
+            }
+            {
+              error &&
+                <span id={`${name}-error`} className='govuk-error-message'>
+                  {error}
+                </span>
+            }
+          </Fragment>
+      }
+      <div id={name} className={classnames('editor', { focus, readonly: readOnly })}>
         {
-          !this.props.readOnly && (
-            <Fragment>
-              <label className='govuk-label' htmlFor={this.props.name}>
-                {this.props.label}
-              </label>
-              {
-                this.props.hint && (
-                  <span id={`${this.props.name}-hint`} className='govuk-hint'>
-                    {
-                      typeof this.props.hint === 'string'
-                        ? <Markdown links={true}>{ this.props.hint }</Markdown>
-                        : this.props.hint
-                    }
-                  </span>
-                )
-              }
-              {
-                this.props.error && (
-                  <span id={`${this.props.name}-error`} className='govuk-error-message'>
-                    {this.props.error}
-                  </span>
-                )
-              }
-            </Fragment>
-          )
+          !readOnly &&
+            <FormatToolbar
+              value={content}
+              inTable={tablePlugin.queries.isSelectionInTable(content)}
+              query={query}
+              command={command}
+            />
         }
-        <div id={this.props.name} className={classnames('editor', { focus: this.state.focus, readonly: this.props.readOnly })}>
-          {
-            !this.props.readOnly && (
-              <FormatToolbar
-                value={this.state.value}
-                inTable={tablePlugin.queries.isSelectionInTable(value)}
-                query={this.query}
-                command={this.command}
-              />
-            )
-          }
-          <Editor
-            spellCheck
-            placeholder=''
-            ref={this.ref}
-            plugins={plugins}
-            value={value}
-            onChange={this.onChange}
-            name={this.props.name}
-            key={this.props.name}
-            readOnly={this.props.readOnly}
-            decorateNode={this.props.decorateNode}
-            renderDecoration={this.props.renderDecoration}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
-            schema={schema}
-          />
-        </div>
+        <Editor
+          spellCheck
+          placeholder=''
+          ref={ref}
+          plugins={plugins}
+          value={content}
+          onChange={localOnChange}
+          name={name}
+          key={name}
+          readOnly={readOnly}
+          decorateNode={decorateNode}
+          renderDecoration={renderDecoration}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          schema={schema}
+        />
       </div>
-    );
-  }
+    </div>
+  );
 }
-
-export default connect(null, { throwError })(TextEditor);

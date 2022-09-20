@@ -9,9 +9,9 @@ export default function List() {
   return {
     ...core,
     renderBlock,
-    shouldNodeComponentUpdate: props => {
-      // To update the highlighting of nodes inside the selection
-      return props.node.type === 'list-item';
-    }
+    // shouldNodeComponentUpdate: props => {
+    //   // To update the highlighting of nodes inside the selection
+    //   return props.node.type === 'list-item';
+    // }
   };
 }
