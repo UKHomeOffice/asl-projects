@@ -344,7 +344,7 @@ For studies requested for other worldwide authorities, for example the US Food a
         {
           title: 'Reporting requirement',
           requiresEditing: true,
-          content: 'A report in writing to [ASRUComplianceAssurance@homeoffice.gov.uk](ASRUComplianceAssurance@homeoffice.gov.uk) or orally to <<<INSERT name of assigned inspector HERE>>>  on the project shall be made by <<<INSERT date HERE>>>  or after <<<INSERT number HERE>>> animals have been used, whichever is the sooner. The report shall contain <<<INSERT required content of report HERE>>>.'
+          content: 'A report in writing to [ASRUComplianceAssurance@homeoffice.gov.uk](mailto:ASRUComplianceAssurance@homeoffice.gov.uk) or orally to <<<INSERT name of assigned inspector HERE>>>  on the project shall be made by <<<INSERT date HERE>>>  or after <<<INSERT number HERE>>> animals have been used, whichever is the sooner. The report shall contain <<<INSERT required content of report HERE>>>.'
         }
       ]
     },
