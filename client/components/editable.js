@@ -66,6 +66,8 @@ function Editable({ edited,
         value={state.content}
         onChange={onContentChange}
         autoExpand={true}
+        // set the rows to fit the default text, 72 has no inherent value it just works as a good average character length
+        rows={Math.ceil((state.content.length) / 72)}
       />
 
       {
