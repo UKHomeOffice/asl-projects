@@ -126,8 +126,10 @@ function Conditions({ updating, editConditions, conditions, saveConditions, show
           ...data
         };
       }
+      console.log(condition);
       return condition;
     });
+    console.log(conditionsToSave);
     return saveConditions(conditionsToSave)
       .then(() => setState({ updating: false }));
   };

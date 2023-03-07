@@ -32,6 +32,7 @@ function ConditionsPage({
     .filter(condition => editConditions || !condition.deleted);
 
   function save(vals) {
+    console.log('save');
     setAdding(false);
     props.saveConditions([ ...conditions, ...vals ]);
   }

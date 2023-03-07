@@ -187,7 +187,7 @@ const conditionsToSync = (state) => {
   }, null);
 };
 
-const getConditionsToSync = (project, protocolId) => {
+export const getConditionsToSync = (project, protocolId) => {
   if (protocolId) {
     const protocol = project.protocols.find(p => p.id === protocolId);
     return {
@@ -250,7 +250,7 @@ const shouldSyncProject = state => {
   return !isEqual(state.savedProject, state.project);
 };
 
-const onSyncError = (func, error, dispatch, getState, ...args) => {
+export const onSyncError = (func, error, dispatch, getState, ...args) => {
   dispatch(doneSyncing());
   dispatch(syncError());
   const errorCount = getState().application.errorCount;
