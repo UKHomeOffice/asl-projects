@@ -1774,13 +1774,15 @@ each other.`,
               {
                 name: 'maximum-animals',
                 label: 'What is the maximum number of animals that will be used on this protocol?',
-                type: 'text'
+                type: 'text',
+                hint: 'Please only enter numbers, e.g. 40'
               },
               {
                 name: 'maximum-times-used',
                 label: 'What is the maximum number of uses of this protocol per animal?',
-                hint: 'For example, if some animals will go through this protocol three more times after their first use, the number of uses will be four.\n\n If no animals will go through this protocol more than once, enter \'1\'.',
+                hint: 'For example, if some animals will go through this protocol three more times after their first use, the number of uses will be four.\n\n If no animals will go through this protocol more than once, enter \'1\'.\n\nPlease only enter numbers, e.g. 40',
                 type: 'text'
+
               }
             ]
           },
