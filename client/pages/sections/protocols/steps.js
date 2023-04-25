@@ -75,8 +75,10 @@ class Step extends Component {
   }
 
   editThisStep = e => {
+    const editFlagApplied = this.props.values.reference && this.props.values.reference.slice(-8) === '(edited)';
+    const newReference = editFlagApplied ? this.props.values.reference : `${this.props.values.reference} (edited)`;
     e.preventDefault();
-    this.props.updateItem({ completed: false, reference: `${this.props.values.reference} (edited)`, reusableStepId: uuid(), saved: false, existingValues: cloneDeep(this.props.values) });
+    this.props.updateItem({ completed: false, reference: this.props.values.reference ? newReference : null, reusableStepId: uuid(), saved: false, existingValues: cloneDeep(this.props.values) });
     this.scrollToStep();
   }
 
