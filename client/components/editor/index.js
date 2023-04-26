@@ -54,6 +54,9 @@ const serialiseValue = value => {
 };
 
 const normaliseValue = value => {
+  // bugfix ASSB-1292 - for PPL transfers between holders: when the user removes a value from the form the value is set to the string null rather than the value null
+  // this is a temporary fix so the user is unblocked whilst I look for the cause
+  if (value === 'null') value = null;
   // if value is falsy, init with empty value
   if (!value) {
     return initialValue('');
