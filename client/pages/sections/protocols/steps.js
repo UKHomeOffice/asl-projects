@@ -316,7 +316,7 @@ class Step extends Component {
                 <Button className="link no-wrap" onClick={() => onToggleExpanded(index)}>{expanded ? 'Close' : 'Open'} step</Button>
               </p>
               {values.reference ? <h3 className={'title inline'}>{values.reference}</h3> : <h3 className={'title no-wrap'}>{getStepTitle(values.title)}</h3>}
-              <h4 className="light">{values.optional === true ? 'Optional' : 'Mandatory'}{repeatedFrom ? ` - repeated from protocol ${repeatedFrom}` : ''}</h4>
+              <h4 className="light">Step {index + 1} {values.optional === true ? '(optional)' : '(mandatory)'}{repeatedFrom ? ` - repeated from protocol ${repeatedFrom}` : ''}</h4>
             </Fragment>
             {stepContent}
           </Expandable>
