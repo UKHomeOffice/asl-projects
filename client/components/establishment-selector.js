@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { RadioGroup, Warning } from '@ukhomeoffice/react-components';
-import { Details, Inset, Markdown, Link } from '@asl/components';
+import { Details, Inset, Markdown, Link } from '@ukhomeoffice/asl-components';
 import { useSelector, shallowEqual } from 'react-redux';
 
 const revealContent = `To change the primary establishment you must:

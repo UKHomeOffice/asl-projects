@@ -1,5 +1,5 @@
 import React from 'react';
-import { Markdown } from '@asl/components';
+import { Markdown } from '@ukhomeoffice/asl-components';
 
 import Repeater from '../../../components/repeater-field';
 import Controls from '../../../components/controls';

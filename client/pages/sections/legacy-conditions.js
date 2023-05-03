@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Markdown } from '@asl/components';
+import { Markdown } from '@ukhomeoffice/asl-components';
 import { updateConditions } from '../../actions/projects';
 import AddConditions from '../../components/conditions/add-conditions';
 import Condition from '../../components/conditions/condition';

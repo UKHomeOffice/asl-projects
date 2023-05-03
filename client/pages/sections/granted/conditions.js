@@ -1,5 +1,5 @@
 import React from 'react';
-import { Markdown } from '@asl/components';
+import { Markdown } from '@ukhomeoffice/asl-components';
 import Review from '../conditions';
 
 const Conditions = ({ granted, ...props }) => (

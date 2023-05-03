@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
-import { Markdown } from '@asl/components';
+import { Markdown } from '@ukhomeoffice/asl-components';
 import { getSubsections } from '../../../client/schema';
 import StaticSection from '../../../client/components/static-section';
 import RA from '../../../client/components/retrospective-assessment';

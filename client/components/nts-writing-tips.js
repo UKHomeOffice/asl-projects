@@ -1,5 +1,5 @@
 import React from 'react';
-import { Details } from '@asl/components';
+import { Details } from '@ukhomeoffice/asl-components';
 
 export default function NTSWritingTips() {
   return (

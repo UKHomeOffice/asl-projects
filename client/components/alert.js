@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import { hideMessage } from '../actions/messages';
-import { Markdown } from '@asl/components';
+import { Markdown } from '@ukhomeoffice/asl-components';
 
 const mapStateToProps = state => {
   return { ...state.message };

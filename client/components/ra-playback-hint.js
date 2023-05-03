@@ -5,7 +5,7 @@ import flatten from 'lodash/flatten';
 import get from 'lodash/get';
 import omit from 'lodash/omit';
 import ReviewFields from './review-fields';
-import { Details, Inset } from '@asl/components';
+import { Details, Inset } from '@ukhomeoffice/asl-components';
 import { getFields, isTrainingLicence } from '../helpers';
 import getSchema from '../schema';
 

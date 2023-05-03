@@ -1,5 +1,5 @@
 import React from 'react';
-import { OverflowWrapper } from '@asl/components';
+import { OverflowWrapper } from '@ukhomeoffice/asl-components';
 
 const renderBlock = (props, editor, next) => {
   const { attributes, children, node, readOnly } = props;

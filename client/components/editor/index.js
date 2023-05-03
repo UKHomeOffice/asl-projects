@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
-import { Markdown } from '@asl/components';
+import { Markdown } from '@ukhomeoffice/asl-components';
 
 import get from 'lodash/get';
 import defer from 'lodash/defer';

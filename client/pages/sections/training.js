@@ -1,7 +1,7 @@
 import React, { Fragment, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, shallowEqual } from 'react-redux';
-import { TrainingSummary } from '@asl/components';
+import { TrainingSummary } from '@ukhomeoffice/asl-components';
 import { Button } from '@ukhomeoffice/react-components';
 import Fieldset from '../../components/fieldset';
 import ReviewFields from '../../components/review-fields';

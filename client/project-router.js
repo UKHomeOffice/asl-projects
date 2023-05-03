@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useSelector, shallowEqual } from 'react-redux';
-import { DocumentHeader, Link } from '@asl/components';
+import { DocumentHeader, Link } from '@ukhomeoffice/asl-components';
 
 import ScrollToTop from './components/scroll-to-top';
 import SyncHandler from './components/sync-handler';

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 import format from 'date-fns/format';
 import { Button } from '@ukhomeoffice/react-components';
-import { Markdown } from '@asl/components';
+import { Markdown } from '@ukhomeoffice/asl-components';
 import { deleteComment } from '../../actions/comments';
 
 import { DATE_FORMAT } from '../../constants';

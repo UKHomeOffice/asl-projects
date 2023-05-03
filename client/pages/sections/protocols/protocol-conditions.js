@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import conditions from '../../../constants/protocol-conditions';
-import { Details, Markdown } from '@asl/components';
+import { Details, Markdown } from '@ukhomeoffice/asl-components';
 
 class Content extends Component {
   render() {

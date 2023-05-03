@@ -2,7 +2,7 @@ import React, { useState, Fragment } from 'react';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 import get from 'lodash/get';
-import { Markdown, ConditionReminders } from '@asl/components';
+import { Markdown, ConditionReminders } from '@ukhomeoffice/asl-components';
 import { Button } from '@ukhomeoffice/react-components';
 import CONDITIONS from '../../constants/conditions';
 import Editable from '../editable';

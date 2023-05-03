@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import { RadioGroup, CheckboxGroup } from '@ukhomeoffice/react-components';
-import { Details, Inset } from '@asl/components';
+import { Details, Inset } from '@ukhomeoffice/asl-components';
 import Review from './review';
 
 function ReadOnly(props) {

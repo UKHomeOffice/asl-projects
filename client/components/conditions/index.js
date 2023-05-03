@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Markdown } from '@asl/components';
+import { Markdown } from '@ukhomeoffice/asl-components';
 import { Button } from '@ukhomeoffice/react-components';
 import { updateConditions } from '../../actions/projects';
 import Conditions from './conditions';

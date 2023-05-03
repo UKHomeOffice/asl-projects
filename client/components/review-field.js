@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
-import { Link } from '@asl/components';
+import { Link } from '@ukhomeoffice/asl-components';
 import TextEditor from './editor';
 import { projectSpecies as speciesOptions } from '@asl/constants';
 import { getLegacySpeciesLabel, mapSpecies, formatDate } from '../helpers';

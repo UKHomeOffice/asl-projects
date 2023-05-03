@@ -2,7 +2,7 @@ import React from 'react';
 import Establishments from './establishments';
 import Controls from '../../../components/controls';
 import {shallowEqual, useSelector} from 'react-redux';
-import {Inset, Link} from '@asl/components';
+import {Inset, Link} from '@ukhomeoffice/asl-components';
 
 export default function Index({ advance, exit, ...props }) {
   const {

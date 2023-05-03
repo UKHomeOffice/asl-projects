@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import classnames from 'classnames';
-import { Markdown } from '@asl/components';
+import { Markdown } from '@ukhomeoffice/asl-components';
 import Editable from '../editable';
 import Playback from '../playback';
 

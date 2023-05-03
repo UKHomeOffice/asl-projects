@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { useSelector } from 'react-redux';
-import { Markdown } from '@asl/components';
+import { Markdown } from '@ukhomeoffice/asl-components';
 import Review from '../../../components/review';
 import RetrospectiveAssessment from '../../../components/retrospective-assessment';
 import { formatDate, isTrainingLicence } from '../../../helpers';
