@@ -8,7 +8,7 @@ import map from 'lodash/map';
 import intersection from 'lodash/intersection';
 import uniq from 'lodash/uniq';
 
-import { projectSpecies as SPECIES } from '@asl/constants';
+import { projectSpecies as SPECIES } from '@ukhomeoffice/asl-constants';
 import SPECIES_CATEGORIES from '../constants/species-categories';
 
 import Field from './field';

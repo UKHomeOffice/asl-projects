@@ -4,7 +4,7 @@ import size from 'lodash/size';
 import map from 'lodash/map';
 import flatten from 'lodash/flatten';
 import Field from './field';
-import { projectSpecies as SPECIES } from '@asl/constants';
+import { projectSpecies as SPECIES } from '@ukhomeoffice/asl-constants';
 
 const AnimalQuantities = ({ label, hint, error, name, species, onFieldChange }) => {
   const definitions = flatten(Object.values(SPECIES));

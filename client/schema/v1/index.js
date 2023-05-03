@@ -24,7 +24,7 @@ import GrantedProtocols from '../../pages/sections/granted/protocols';
 
 import GrantedSteps from '../../pages/sections/granted/protocol-steps';
 
-import { projectSpecies as SPECIES } from '@asl/constants';
+import { projectSpecies as SPECIES } from '@ukhomeoffice/asl-constants';
 
 import intersection from 'lodash/intersection';
 import some from 'lodash/some';

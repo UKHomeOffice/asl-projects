@@ -8,7 +8,7 @@ import get from 'lodash/get';
 import pickBy from 'lodash/pickBy';
 import mapValues from 'lodash/mapValues';
 import format from 'date-fns/format';
-import { projectSpecies as SPECIES } from '@asl/constants';
+import { projectSpecies as SPECIES } from '@ukhomeoffice/asl-constants';
 import { getLegacySpeciesLabel, mapSpecies, stripInvalidXmlChars } from '../../../helpers';
 import { filterSpeciesByActive } from '../../../pages/sections/protocols/animals';
 import protocolConditions from '../../../constants/protocol-conditions';

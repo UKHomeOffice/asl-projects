@@ -6,7 +6,7 @@ import mapValues from 'lodash/mapValues';
 import map from 'lodash/map';
 import dateFormatter from 'date-fns/format';
 import LEGACY_SPECIES from '../constants/legacy-species';
-import { projectSpecies as SPECIES } from '@asl/constants';
+import { projectSpecies as SPECIES } from '@ukhomeoffice/asl-constants';
 import CONDITIONS from '../constants/conditions';
 
 export const formatDate = (date, format) => (date ? dateFormatter(date, format) : '-');
