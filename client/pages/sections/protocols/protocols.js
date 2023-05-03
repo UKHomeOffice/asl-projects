@@ -74,10 +74,11 @@ class Protocol extends PureComponent {
 
     // for each protocol: map through new comments, if the protocol includes a reusable step that has a comment (key includes id)
     // insert the protocol id to the comment to flag it as a new comment on the protocol
+    const steps = this.props.values.steps ? this.props.values.steps : null;
     let match = false;
-    const updatedComments = Object.fromEntries(
+    const updatedComments = steps ? Object.fromEntries(
       Object.entries(this.props.newComments).map(([key, value]) => {
-        this.props.values.steps.forEach(step => {
+        steps.forEach(step => {
           if (key.includes(step.reusableStepId)) {
             match = true;
           }
@@ -85,7 +86,7 @@ class Protocol extends PureComponent {
         const newKey = match ? key.replace('protocols.reusableSteps.', `protocols.${this.props.values.id}.reusableSteps.`) : key;
         return [newKey, value];
       })
-    );
+    ) : this.props.newComments;
 
     const newComments = mapKeys(
       pickBy(updatedComments, (comments, key) => {
