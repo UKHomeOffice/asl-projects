@@ -1,6 +1,6 @@
 {
-  "name": "@asl/projects",
-  "version": "12.0.0",
+  "name": "@ukhomeoffice/asl-projects",
+  "version": "13.0.0",
   "description": "ASL PPL prototype",
   "main": "client/external.js",
   "styles": "assets/scss/projects.scss",
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/UKHomeOffice/peephole#readme",
   "publishConfig": {
-    "registry": "https://artifactory.digital.homeoffice.gov.uk/artifactory/api/npm/npm-virtual/"
+    "@ukhomeoffice:registry": "https://npm.pkg.github.com"
   },
   "dependencies": {
     "@ukhomeoffice/asl-components": "12.0.0",
