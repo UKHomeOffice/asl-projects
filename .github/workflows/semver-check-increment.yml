@@ -5,6 +5,8 @@ on:
 
 jobs:
   version:
+    if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
+    needs: [ test ]
     uses: UKHomeOffice/sas-github-workflows/.github/workflows/semver-check-increment-npm.yml@v1
     with:
       mainLineBranchName: master
