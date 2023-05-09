@@ -1,6 +1,6 @@
 {
   "name": "@ukhomeoffice/asl-projects",
-  "version": "13.0.0",
+  "version": "12.0.0",
   "description": "ASL PPL prototype",
   "main": "client/external.js",
   "styles": "assets/scss/projects.scss",
