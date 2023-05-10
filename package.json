@@ -1,6 +1,6 @@
 {
   "name": "@asl/projects",
-  "version": "13.0.0",
+  "version": "13.1.0",
   "description": "ASL PPL prototype",
   "main": "client/external.js",
   "styles": "assets/scss/projects.scss",
