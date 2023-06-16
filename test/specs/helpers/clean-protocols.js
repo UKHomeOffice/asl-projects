@@ -24,7 +24,7 @@ describe('clean-protocols', () => {
       ]
     };
     const establishment = {
-      name: 'University of Cheese'
+      name: 'University of Croydon'
     };
     assert.deepEqual(cleanProtocols({ state, changed, establishment }), {
       title: 'Test project',
@@ -35,7 +35,6 @@ describe('clean-protocols', () => {
       protocols: [
         {
           locations: [
-            'University of Cheese',
             'University of Croydon'
           ],
           objectives: []
