@@ -299,7 +299,7 @@ Genetically altered animals may not be re-homed.`
       type: 'condition',
       versions: [
         {
-          title: 'Non purpose bred schedule 2 animals',
+          title: 'Non purpose bred animals',
           content: 'Standard condition 13(d) of this licence shall not apply in cases when the relevant animals bred for use in procedures are not suitable for the purpose of the programme of work as justified in the project licence application.'
         }
       ]
