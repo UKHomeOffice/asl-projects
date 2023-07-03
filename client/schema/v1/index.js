@@ -2360,7 +2360,7 @@ each other.`,
         fields: [
           {
             name: 'purpose-bred',
-            label: 'Will all animals used in your project be purpose bred?',
+            label: 'Will all schedule 2 animals used in your project be purpose bred?',
             hint: 'This means animals that have been bred primarily to be used in regulated procedures or for the use of their tissues or organs for scientific purposes.',
             type: 'radio',
             inline: true,
