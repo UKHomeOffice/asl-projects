@@ -394,7 +394,7 @@ For studies requested for other worldwide authorities, for example the US Food a
       versions: [
         {
           title: 'Cosmetic use',
-          content: 'The use of animals to test chemicals or pharmaceuticals that have exclusive use as ingredients for cosmetics is prohibited. Prospective authority will be sought for the testing on animals of substances that may also be used as ingredients for cosmetics'
+          content: 'The use of animals to test chemicals or pharmaceuticals that have exclusive use as ingredients for cosmetics is prohibited. Prospective authority will be sought for the testing on animals of substances that may also be used as ingredients for cosmetics.'
         }
       ]
     }
