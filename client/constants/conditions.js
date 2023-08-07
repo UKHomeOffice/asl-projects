@@ -394,7 +394,7 @@ For studies requested for other worldwide authorities, for example the US Food a
       versions: [
         {
           title: 'Cosmetic use',
-          content: 'The testing in animals of cosmetic ingredients or finished cosmetic products for meeting the requirements of the Cosmetics Regulations themselves is not authorised, unless it is for the testing of cosmetic ingredients and products to meet the requirements of other UK Regulations for example UK REACH provided all other requirements under ASPA are met.'
+          content: 'The use of animals to test chemicals or pharmaceuticals that have exclusive use as ingredients for cosmetics is prohibited. Prospective authority will be sought for the testing on animals of substances that may also be used as ingredients for cosmetics'
         }
       ]
     }
