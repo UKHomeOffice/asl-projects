@@ -36,6 +36,9 @@ import confirmProtocolsAffected from '../../helpers/confirm-protocols-affected';
 
 import { isTrainingLicence } from '../../helpers';
 
+const IS_TRAINING_LICENCE = '"Is this project for higher education and training purposes?" selected "Yes"';
+const NOT_TRAINING_LICENCE = '"Is this project for higher education and training purposes?" selected "No"';
+
 export default () => ({
   introduction: {
     title: 'Introductory details',
@@ -136,6 +139,7 @@ export default () => ({
         fields: [
           {
             name: 'benefit-outputs',
+            showSummary: NOT_TRAINING_LICENCE,
             show: values => !isTrainingLicence(values),
             label: 'What outputs do you think you will see at the end of this project?',
             hint: 'Outputs can include new information, publications, or products.',
@@ -143,6 +147,7 @@ export default () => ({
           },
           {
             name: 'benefit-who',
+            showSummary: NOT_TRAINING_LICENCE,
             show: values => !isTrainingLicence(values),
             label: 'Who or what will benefit from these outputs, and how?',
             hint: 'The impact of these outputs may be seen in the short-term, or they may not be fully realised until you\'ve completed the project. Consider all timescales in your answer.',
@@ -150,6 +155,7 @@ export default () => ({
           },
           {
             name: 'benefit-service',
+            showSummary: NOT_TRAINING_LICENCE,
             show: values => !isTrainingLicence(values),
             label: 'Will this work be offered as a service to others?',
             type: 'radio',
@@ -173,24 +179,28 @@ export default () => ({
           },
           {
             name: 'training-benefit-future-careers',
+            showSummary: IS_TRAINING_LICENCE,
             show: values => isTrainingLicence(values),
             label: 'How will course attendees use their knowledge or skills in their future careers?',
             type: 'texteditor'
           },
           {
             name: 'training-benefit-principle-learning-outcomes',
+            showSummary: IS_TRAINING_LICENCE,
             show: values => isTrainingLicence(values),
             label: 'What are the principal learning outcomes from the course?',
             type: 'texteditor'
           },
           {
             name: 'training-benefit-learning-outcomes-important',
+            showSummary: IS_TRAINING_LICENCE,
             show: values => isTrainingLicence(values),
             label: 'How are these learning outcomes important to the people on the course?',
             type: 'texteditor'
           },
           {
             name: 'training-benefit-transfer-of-knowledge',
+            showSummary: IS_TRAINING_LICENCE,
             show: values => isTrainingLicence(values),
             label: 'Who or what will benefit from the transfer of knowledge, or acquisition of skills that this course will deliver?',
             type: 'texteditor'
@@ -278,18 +288,21 @@ export default () => ({
           },
           {
             name: 'replacement-alternatives',
+            showSummary: NOT_TRAINING_LICENCE,
             show: values => !isTrainingLicence(values),
             label: 'Which non-animal alternatives did you consider for use in this project?',
             type: 'texteditor'
           },
           {
             name: 'replacement-justification',
+            showSummary: NOT_TRAINING_LICENCE,
             show: values => !isTrainingLicence(values),
             label: 'Why were they not suitable?',
             type: 'texteditor'
           },
           {
             name: 'training-replacement-observation',
+            showSummary: IS_TRAINING_LICENCE,
             show: values => isTrainingLicence(values),
             label: 'Why can\'t your aim be met by observing or by participating in ongoing research or clinical procedures?',
             type: 'texteditor'
@@ -314,6 +327,7 @@ export default () => ({
           },
           {
             name: 'reduction-steps',
+            showSummary: NOT_TRAINING_LICENCE,
             show: values => !isTrainingLicence(values),
             label: 'What steps did you take during the experimental design phase to reduce the number of animals being used in this project?',
             hint: 'You may want to reference online tools (such as the NC3R\'s Experimental Design Assistant) or any relevant regulatory requirements.',
@@ -321,6 +335,7 @@ export default () => ({
           },
           {
             name: 'reduction-review',
+            showSummary: NOT_TRAINING_LICENCE,
             show: values => !isTrainingLicence(values),
             label: 'What measures, apart from good experimental design, will you use to optimise the number of animals you plan to use in your project?',
             hint: 'This may include efficient breeding, pilot studies, computer modelling, or sharing of tissue.',
@@ -328,18 +343,21 @@ export default () => ({
           },
           {
             name: 'training-reduction-techniques',
+            showSummary: IS_TRAINING_LICENCE,
             show: values => isTrainingLicence(values),
             label: 'What in silico or ex vivo techniques will you use during training?',
             type: 'texteditor'
           },
           {
             name: 'training-reduction-animal-numbers',
+            showSummary: IS_TRAINING_LICENCE,
             show: values => isTrainingLicence(values),
             label: 'Will these techniques reduce animal numbers? If so, how?',
             type: 'texteditor'
           },
           {
             name: 'training-reduction-other-measures',
+            showSummary: IS_TRAINING_LICENCE,
             show: values => isTrainingLicence(values),
             label: 'What other measures will you use to minimise the number of animals you plan to use in your project?',
             type: 'texteditor'
@@ -389,6 +407,7 @@ export default () => ({
       experience,
       funding: {
         title: 'Funding',
+        showSummary: NOT_TRAINING_LICENCE,
         show: values => !isTrainingLicence(values),
         fields: [
           {
@@ -485,6 +504,7 @@ export default () => ({
           },
           {
             component: Establishments,
+            showSummary: '"Will your project use any additional establishments?" selected "Yes"',
             show: values => values['other-establishments'],
             repeats: 'establishments',
             singular: 'Additional establishment',
@@ -579,6 +599,7 @@ export default () => ({
             component: Repeater,
             repeats: 'polesList',
             singular: 'POLE',
+            showSummary: '"Will any part of your project be carried out in any places other than a licensed establishment (POLEs)?" selected "Yes"',
             show: values => values.poles === true,
             confirmRemove: confirmProtocolsAffected('remove', 'locations', 'POLE', 'title'),
             subtitle: 'Specify the details of each POLE that you will be using.',
@@ -603,6 +624,7 @@ If you can only add generic information at this stage, provide a general descrip
             ]
           },
           {
+            showSummary: '"Will any part of your project be carried out in any places other than a licensed establishment (POLEs)?" selected "Yes"',
             show: values => values.poles === true,
             fields: [
               {
@@ -683,6 +705,7 @@ If you can only add generic information at this stage, provide a general descrip
     subsections: {
       'scientific-background': {
         title: 'Scientific background',
+        showSummary: NOT_TRAINING_LICENCE,
         show: values => !isTrainingLicence(values),
         fields: [
           {
@@ -1000,6 +1023,7 @@ If you can only add generic information at this stage, provide a general descrip
       },
       'training-background': {
         title: 'Scientific background',
+        showSummary: IS_TRAINING_LICENCE,
         show: values => isTrainingLicence(values),
         fields: [
           {
@@ -1122,6 +1146,7 @@ If you can only add generic information at this stage, provide a general descrip
               },
               {
                 name: 'objective-relation',
+                showSummary: NOT_TRAINING_LICENCE,
                 show: values => !isTrainingLicence(values),
                 label: 'How do each of these objectives relate to each other and help you to achieve your aim?',
                 hint: `Outline any interdependencies, stop:go points, and milestones. Include any key in vitro, ex vivo or in silico work, clinical findings, or results from epidemiological studies carried out under other projects that will enable you to achieve your objectives.
@@ -1138,6 +1163,7 @@ each other.`,
             fields: [
               {
                 name: 'objectives-alternatives',
+                showSummary: NOT_TRAINING_LICENCE,
                 show: values => !isTrainingLicence(values),
                 label: 'Where relevant, how will you seek to use or develop non-animal alternatives for all or part of your work?',
                 type: 'texteditor'
@@ -1148,6 +1174,7 @@ each other.`,
                 type: 'radio',
                 inline: true,
                 className: 'smaller',
+                showSummary: NOT_TRAINING_LICENCE,
                 show: values => {
                   return !isTrainingLicence(values) && (!values.isGranted || !!values['objectives-regulatory-authorities']);
                 },
@@ -1227,6 +1254,7 @@ each other.`,
                 type: 'radio',
                 inline: true,
                 className: 'smaller',
+                showSummary: NOT_TRAINING_LICENCE,
                 show: values => {
                   return !isTrainingLicence(values) && (!values.isGranted || !!values['objectives-non-regulatory']);
                 },
@@ -1266,6 +1294,7 @@ each other.`,
                 type: 'radio',
                 inline: true,
                 className: 'smaller',
+                showSummary: NOT_TRAINING_LICENCE,
                 show: values => {
                   return !isTrainingLicence(values) && (!values.isGranted || !!values['objectives-genetically-altered']);
                 },
@@ -1333,6 +1362,7 @@ each other.`,
                 type: 'radio',
                 inline: true,
                 className: 'smaller',
+                showSummary: NOT_TRAINING_LICENCE,
                 show: values => {
                   return !isTrainingLicence(values) && (!values.isGranted || !!values['objectives-vaccines']);
                 },
@@ -1399,18 +1429,21 @@ each other.`,
               },
               {
                 name: 'training-objectives-use-of-animals',
+                showSummary: IS_TRAINING_LICENCE,
                 show: values => isTrainingLicence(values),
                 label: 'Why can\'t learning outcomes be achieved without the use of live animals?',
                 type: 'texteditor'
               },
               {
                 name: 'training-objectives-attendees-selected',
+                showSummary: IS_TRAINING_LICENCE,
                 show: values => isTrainingLicence(values),
                 label: 'How are attendees selected?',
                 type: 'texteditor'
               },
               {
                 name: 'training-objectives-long-term-teaching-aid',
+                showSummary: IS_TRAINING_LICENCE,
                 show: values => isTrainingLicence(values),
                 label: 'Will animals be used to produce a longer-term teaching aid such as a video?',
                 type: 'radio',
@@ -1434,6 +1467,7 @@ each other.`,
               },
               {
                 name: 'training-objectives-non-animal-alternatives',
+                showSummary: IS_TRAINING_LICENCE,
                 show: values => isTrainingLicence(values),
                 label: 'Describe any resources you use, or are currently developing, to supplement or replace the use of animals.',
                 hint: 'This could include videos, in silico or ex vivo material.',
@@ -1441,6 +1475,7 @@ each other.`,
               },
               {
                 name: 'training-objectives-other-resources',
+                showSummary: IS_TRAINING_LICENCE,
                 show: values => isTrainingLicence(values),
                 label: 'Specify any resources you’ve explored to ensure there are no suitable non-animal alternatives.',
                 hint: 'For example, Norecopa.',
@@ -1448,6 +1483,7 @@ each other.`,
               },
               {
                 name: 'training-objectives-keep-up-to-date',
+                showSummary: IS_TRAINING_LICENCE,
                 show: values => isTrainingLicence(values),
                 label: 'How will you keep up to date with any non-animal alternatives developed during the course of this project?',
                 type: 'texteditor'
@@ -1461,12 +1497,14 @@ each other.`,
         fields: [
           {
             name: 'general-principles-duplicate',
+            showSummary: NOT_TRAINING_LICENCE,
             show: values => !isTrainingLicence(values),
             label: 'Unnecessary duplication of work must be avoided. Under what circumstances would you knowingly duplicate work?',
             type: 'texteditor'
           },
           {
             name: 'training-general-principles-existing-material',
+            showSummary: IS_TRAINING_LICENCE,
             show: values => isTrainingLicence(values),
             label: 'Does data or learning material exist from previous work?',
             type: 'radio',
@@ -1593,6 +1631,7 @@ each other.`,
               },
               {
                 name: 'training-used-for',
+                showSummary: IS_TRAINING_LICENCE,
                 show: values => isTrainingLicence(values),
                 label: 'What will this protocol be used for?',
                 hint: 'If your purpose isn’t listed you can leave this blank.',
@@ -1611,12 +1650,14 @@ each other.`,
               },
               {
                 name: 'training-responsible-for-animals',
+                showSummary: IS_TRAINING_LICENCE,
                 show: values => isTrainingLicence(values),
                 label: 'Who will be responsible for the animals used in this protocol?',
                 type: 'texteditor'
               },
               {
                 name: 'training-regulated-procedures',
+                showSummary: IS_TRAINING_LICENCE,
                 show: values => isTrainingLicence(values),
                 label: 'Will students carry out regulated procedures under this protocol?',
                 type: 'radio',
@@ -1654,6 +1695,7 @@ each other.`,
               },
               {
                 name: 'training-participant-pre-course-training',
+                showSummary: IS_TRAINING_LICENCE,
                 show: values => isTrainingLicence(values),
                 label: 'What training will participants receive before they can use protected animals?',
                 type: 'texteditor'
@@ -2047,6 +2089,7 @@ each other.`,
             fields: [
               {
                 name: 'outputs',
+                showSummary: NOT_TRAINING_LICENCE,
                 show: values => !isTrainingLicence(values),
                 label: 'What outputs are expected to arise from this protocol?',
                 hint: 'For example, test results, phenotypic information, or products.',
@@ -2054,6 +2097,7 @@ each other.`,
               },
               {
                 name: 'training-outputs',
+                showSummary: IS_TRAINING_LICENCE,
                 show: values => isTrainingLicence(values),
                 label: 'What learning outcomes are expected to arise from this protocol?',
                 type: 'texteditor'
@@ -2234,6 +2278,7 @@ each other.`,
       domestic: {
         title: 'Cats, dogs, and equidae',
         intro: 'You are seeing this section because you added a type of cat, dog, or equid to your project. To change this, go to Introductory details.',
+        showSummary: 'project uses domestic animals',
         show: values => intersection(
           SPECIES.DOM.map(s => s.value),
           values.species
@@ -2249,6 +2294,7 @@ each other.`,
       },
       nhps: {
         title: 'Non-human primates',
+        showSummary: 'project uses NHPs',
         intro: 'You are seeing this section because you added a non-human primate to your project. To change this, go to Introductory details.',
         show: values => intersection(SPECIES.NHP.map(s => s.value), values.species).length,
         fields: [
@@ -2336,6 +2382,7 @@ each other.`,
             type: 'radio',
             inline: true,
             className: 'smaller',
+            showSummary: 'project uses marmosets',
             show: values => (values.species || []).includes('marmosets'),
             options: [
               {
@@ -2564,6 +2611,7 @@ each other.`,
           },
           {
             title: 'Animals taken from the wild - 2 of 2',
+            showSummary: '"Will you be using any animals taken from the wild?" selected "Yes"',
             show: values => values['wild-animals'] === true,
             fields: [
               {
@@ -2718,6 +2766,7 @@ each other.`,
           },
           {
             title: 'Neuromuscular blocking agents (NMBAs) - 1 of 2',
+            showSummary: '"Will this project involve the use of neuromuscular blocking agents (NMBAs)?" selected "Yes"',
             show: values => values['nmbas-used'],
             fields: [
               {
@@ -2744,6 +2793,7 @@ each other.`,
           },
           {
             title: 'Neuromuscular blocking agents (NMBAs) - 2 of 2',
+            showSummary: '"Will this project involve the use of neuromuscular blocking agents (NMBAs)?" selected "Yes"',
             show: values => values['nmbas-used'],
             fields: [
               {
@@ -2767,6 +2817,7 @@ each other.`,
       },
       'reusing-animals': {
         title: 'Re-using animals',
+        showSummary: '"Will you be re-using animals on to this protocol?" selected "Yes"',
         show: project => some(project.protocols, protocol => protocol && some(protocol.speciesDetails, species => (species || {}).reuse)),
         intro: 'You are seeing this section because you will be re-using animals during your project. If this is not correct, you can change this in Protocols.',
         fields: [
@@ -2836,6 +2887,7 @@ each other.`,
       },
       'keeping-alive': {
         title: 'Keeping animals alive',
+        showSummary: '"What will happen to animals at the end of this project?" selected "Rehomed"',
         show: project => (project['fate-of-animals'] || []).includes('kept-alive'),
         fields: [
           {
@@ -2857,6 +2909,7 @@ each other.`,
       },
       'setting-free': {
         title: 'Setting animals free',
+        showSummary: '"What will happen to animals at the end of this project?" selected "Set free"',
         show: project => (project['fate-of-animals'] || []).includes('set-free'),
         fields: [
           {
@@ -2916,6 +2969,7 @@ each other.`,
       },
       rehoming: {
         title: 'Rehoming animals',
+        showSummary: '"What will happen to animals at the end of this project?" selected "Rehomed"',
         show: project => (project['fate-of-animals'] || []).includes('rehomed'),
         fields: [
           {
@@ -2949,6 +3003,7 @@ each other.`,
     }
   },
   conditions: {
+    name: 'conditions',
     title: 'Additional conditions and authorisations',
     show: props => props.showConditions,
     subsections: {
@@ -2979,6 +3034,7 @@ Please review all sections of this application before making a recommendation.`,
     }
   },
   authorisations: {
+    name: 'authorisations',
     subtitle: 'Authorisations',
     show: props => props.showConditions,
     subsections: {
