@@ -74,7 +74,11 @@ class Review extends React.Component {
           this.replay()
         }
         {
-          showComments && <Comments field={`${this.props.prefix || ''}${this.props.name}`} collapsed={!this.props.readonly} />
+          showComments && <Comments
+            field={`${this.props.prefix || ''}${this.props.name}`}
+            collapsed={!this.props.readonly}
+            additionalCommentFields={this.props.additionalCommentFields ?? []}
+          />
         }
         {
           // repeaters have edit links on the individual fields

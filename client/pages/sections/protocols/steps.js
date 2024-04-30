@@ -141,6 +141,7 @@ class Step extends Component {
     const changeFieldPrefix = values.reusableStepId ? `reusableSteps.${values.reusableStepId}.` : this.props.prefix;
 
     const re = values.reusableStepId ? new RegExp(`^(reusable)?S?s?teps.(${values.id})?(${values.reusableStepId})?\\.`) : new RegExp(`^(reusable)?S?s?teps.${values.id}\\.`);
+
     const relevantComments = Object.values(
       pickBy(newComments, (value, key) => key.match(re))
     ).reduce((total, comments) => total + (comments || []).length, 0);
@@ -158,6 +159,7 @@ class Step extends Component {
           editLink={`0#${this.props.prefix}`}
           protocolId={protocol.id}
           readonly={!isReviewStep}
+          additionalCommentFields={values.reusableStepId ? [`${this.props.prefix}title`] : []}
         />
       )
     }

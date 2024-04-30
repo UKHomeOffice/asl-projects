@@ -1,5 +1,5 @@
-import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
+import React, {PureComponent} from 'react';
+import {connect} from 'react-redux';
 import classnames from 'classnames';
 
 import pickBy from 'lodash/pickBy';
@@ -11,7 +11,7 @@ import Fieldset from '../../../components/fieldset';
 import Repeater from '../../../components/repeater';
 import Controls from '../../../components/controls';
 
-import { getNewComments } from '../../../helpers';
+import {getNewComments} from '../../../helpers';
 
 const Form = ({
   number,
@@ -119,10 +119,7 @@ class Protocols extends PureComponent {
         return true;
       }
       if (p.deleted === true) {
-        if (previousProtocols.showDeleted.includes(p.id)) {
-          return true;
-        }
-        return false;
+        return !!previousProtocols.showDeleted.includes(p.id);
       }
       return true;
     });
@@ -178,9 +175,7 @@ class Protocols extends PureComponent {
 
 const mapStateToProps = ({
   comments,
-  project: {
-    protocols
-  },
+  project,
   application: {
     user,
     readonly,
@@ -188,8 +183,8 @@ const mapStateToProps = ({
     schemaVersion
   }
 }) => ({
-  protocols,
-  newComments: getNewComments(comments, user),
+  protocols: project.protocols,
+  newComments: getNewComments(comments, user, project),
   readonly,
   previousProtocols,
   isLegacy: schemaVersion === 0

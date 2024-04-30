@@ -45,7 +45,7 @@ const mapStateToProps = ({
     readonly,
     showComments,
     showConditions,
-    newComments: getNewComments(comments, user),
+    newComments: getNewComments(comments, user, project),
     fieldsBySection,
     legacy: schemaVersion === 0,
     values: project,

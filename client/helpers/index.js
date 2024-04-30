@@ -4,10 +4,10 @@ import castArray from 'lodash/castArray';
 import pickBy from 'lodash/pickBy';
 import mapValues from 'lodash/mapValues';
 import map from 'lodash/map';
-import { format as dateFormatter } from 'date-fns';
+import {format as dateFormatter} from 'date-fns';
 import {JSONPath} from 'jsonpath-plus';
 import LEGACY_SPECIES from '../constants/legacy-species';
-import { projectSpecies as SPECIES } from '@ukhomeoffice/asl-constants';
+import {projectSpecies as SPECIES} from '@ukhomeoffice/asl-constants';
 import CONDITIONS from '../constants/conditions';
 
 export const formatDate = (date, format) => (date ? dateFormatter(date, format) : '-');
@@ -105,16 +105,61 @@ export const getScrollPos = (elem, offset = 0) => {
   return Math.round(box.top + scrollTop - clientTop) + offset;
 };
 
-export const getNewComments = (comments, user) => {
-  // The way reusable steps is set up means that comments on reusable steps aren't captured in the comment count for the protocol section, this captures them
-  // const updatedComments = comments ? Object.fromEntries(
-  //   Object.entries(comments).map(([key, value]) => {
-  //     const newKey = key.includes('reusableSteps') ? key.replace('reusableSteps', 'protocols.reusableSteps') : key;
-  //     return [newKey, value];
-  //   })
-  // ) : comments;
+function mapReusableStepsToReferringSteps(project) {
+  return project.protocols.flatMap(
+    (protocol) =>
+      protocol.steps
+        .filter(step => step.reusableStepId)
+        .map(
+          step => ({
+            source: `reusableSteps.${step.reusableStepId}`,
+            target: `protocols.${protocol.id}.steps.${step.id}`
+          })
+        )
+  ).reduce((acc, {source, target}) => ({
+    ...acc,
+    [source]: [...(acc[source] ?? []), target]
+  }), {});
+}
+
+function aliasReusableStepCommentsToReferringSteps(newComments, reusableStepMapping) {
+  const reusableStepKeys = [...Object.keys(reusableStepMapping)];
+
+  return Object.entries(newComments)
+    .flatMap(
+      ([field, comments]) => {
+        let matchedKey = reusableStepKeys.find(key => field.startsWith(key));
+        return matchedKey
+          ? reusableStepMapping[matchedKey].map(target => [field.replace(matchedKey, target), comments])
+          : [[field, comments]];
+      }
+    )
+    .reduce(
+      (acc, [field, comments]) => ({
+        ...acc,
+        [field]: [...(acc[field] ?? []), ...comments]
+      }),
+      {}
+    );
+}
+
+/**
+ * Filter comments to only those flagged as new that are from other users.
+ * @param comments
+ * @param user
+ * @param project Optional - if provided any reusable step comments will be aliassed to the steps that reference them
+ * @return A record of field paths mapped to comments that apply to that field
+ */
+export const getNewComments = (comments, user, project) => {
   const filterNew = field => field.filter(comment => comment.isNew && comment.author !== user && !comment.deleted);
-  return pickBy(mapValues(comments, filterNew), filterNew);
+  const newComments = pickBy(mapValues(comments, filterNew), filterNew);
+
+  if (project?.reusableSteps) {
+    const reusableStepMapping = mapReusableStepsToReferringSteps(project);
+    return aliasReusableStepCommentsToReferringSteps(newComments, reusableStepMapping);
+  } else {
+    return newComments;
+  }
 };
 
 export const getLegacySpeciesLabel = species => {

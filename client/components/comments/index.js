@@ -9,12 +9,15 @@ import AddComment from './add-comment';
 import EditComment from './edit-comment';
 import Comment from './comment';
 
-const Comments = ({ field, collapsed }) => {
+const Comments = ({ field, collapsed, additionalCommentFields = [] }) => {
 
   const name = field.split('.').pop();
 
   const comments = useSelector(state => {
-    let allComments = state.comments[field];
+    let allComments = [
+      ...(state.comments[field] ?? []),
+      ...additionalCommentFields.flatMap(f => state.comments[f] ?? [])
+    ];
 
     // backwards compatibility fixes for some comments being saved without a prefix
     // merge comments saved with unprefixed name and full name

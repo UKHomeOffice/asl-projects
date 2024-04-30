@@ -34,7 +34,8 @@ const ReviewFields = ({
   showTitle = true,
   showItemHeading = true,
   isFullApplication,
-  title
+  title,
+  additionalCommentFields = []
 }) => (
   <Fragment>
     {
@@ -66,6 +67,7 @@ const ReviewFields = ({
                 altLabels={altLabels}
                 readonly={readonly}
                 hideChanges={hideChanges}
+                additionalCommentFields={additionalCommentFields}
               />;
             })
           }
