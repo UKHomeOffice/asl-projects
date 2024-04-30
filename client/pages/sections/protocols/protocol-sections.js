@@ -16,7 +16,6 @@ import { filterSpeciesByActive } from './animals';
 
 import { keepAlive } from '../../../actions/session';
 import { reusableStepFieldKeys } from '../../../helpers/steps';
-import Comments from '../../../components/comments';
 
 class ProtocolSections extends PureComponent {
   state = {
@@ -155,9 +154,6 @@ class ProtocolSections extends PureComponent {
             }
           </Completable>
           <div>
-            {
-              <Comments field={`protocols.${values.id}.title`} />
-            }
             <Sections
               {...this.props}
               onFieldChange={(key, value) => updateItem({ [key]: value })}
