@@ -698,7 +698,7 @@ export default (application, sections, values, updateImageDimensions) => {
         return (value || []).map(item => renderFields(doc, field, item, field.fields, project));
 
       case 'date':
-        return renderText(doc, format(value, 'DD/MM/YYYY'));
+        return renderText(doc, format(value, 'dd/MM/yyyy'));
 
       case 'location-selector':
       case 'objective-selector':
