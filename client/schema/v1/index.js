@@ -237,7 +237,8 @@ export default () => ({
         fields: [
           {
             name: 'fate-of-animals',
-            label: 'What will happen to animals at the end of this project?',
+            label: 'What will happen to animals used in this project?',
+            hint: 'Select all fates that apply across the whole project. You will be asked later about the fate of animals used in each protocol. Only the fates you select here will be presented as options in the Protocols section.',
             type: 'checkbox',
             className: 'smaller',
             options: [
@@ -246,8 +247,8 @@ export default () => ({
                 value: 'killed'
               },
               {
-                label: 'Kept alive',
-                value: 'kept-alive'
+                label: 'Used in other projects',
+                value: 'used-in-other-projects'
               },
               {
                 label: 'Set free',
@@ -258,8 +259,9 @@ export default () => ({
                 value: 'rehomed'
               },
               {
-                label: 'Used in other projects',
-                value: 'used-in-other-projects'
+                label: 'Kept alive at the establishment for non-regulated purposes or possible reuse',
+                hint: 'Non-regulated purposes could include handling, breeding or non-regulated procedures.',
+                value: 'kept-alive'
               }
             ]
           }
@@ -1966,15 +1968,17 @@ each other.`,
               {
                 name: 'fate',
                 label: 'What will happen to animals at the end of this protocol?',
-                hint: 'Select all that apply',
+                // TODO: 'non-technical summary' here should be a link to the Non-technical summary > Fate of animals section
+                hint: 'Select all that apply. These options are based on what you selected in the non-technical summary.',
                 type: 'checkbox',
                 preserveHierarchy: true,
                 className: 'smaller',
                 options: [
                   {
+                    // TODO: show only if selected in the Non-technical summary > Fate of animals section
                     label: 'Killed',
                     value: 'killed',
-                    hint: 'Ensure that the methods of killing to be used are described in the final step of this protocol.',
+                    hint: 'Ensure you describe the methods of killing to be used in the final step of this protocol.',
                     reveal: {
                       label: 'Will you be using non-schedule 1 killing methods on a conscious animal?',
                       name: 'non-schedule-1',
@@ -1999,10 +2003,6 @@ each other.`,
                     }
                   },
                   {
-                    label: 'Kept alive',
-                    value: 'kept-alive'
-                  },
-                  {
                     label: 'Continued use on another protocol in this project',
                     value: 'continued-use',
                     reveal: {
@@ -2014,6 +2014,20 @@ each other.`,
                   {
                     label: 'Continued use on other projects',
                     value: 'continued-use-2'
+                  },
+                  // TODO: For the two new options below - consult ref 2 in the copy deck for ASL-4495, specifically bullets 2 & 4 in the 'Changes:' list under the 'To-be screen' column
+                  {
+                    label: 'Set free',
+                    value: 'set-free'
+                  },
+                  {
+                    label: 'Rehomed',
+                    value: 'rehomed'
+                  },
+                  {
+                    label: 'Kept alive at the establishment for non-regulated purposes or possible reuse',
+                    hint: 'Non-regulated purposes could include handling, breeding or non-regulated procedures.',
+                    value: 'kept-alive'
                   }
                 ]
               }
