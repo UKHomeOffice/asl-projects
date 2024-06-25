@@ -2047,21 +2047,7 @@ export default () => {
                   type: 'checkbox',
                   preserveHierarchy: true,
                   className: 'smaller',
-                  options: [
-                      {
-                        label: 'Continued use on another protocol in this project',
-                        value: 'continued-use',
-                        reveal: {
-                          name: 'continued-use-relevant-project',
-                          label: 'Please state the relevant protocol.',
-                          type: 'texteditor'
-                        }
-                      },
-                      {
-                        label: 'Continued use on other projects',
-                        value: 'continued-use-2'
-                      }
-                  ]
+                  options: []
                 }
               ]
             },
