@@ -82,23 +82,13 @@ class Protocol extends PureComponent {
 
     const conditionalFateOfAnimalFields = renderFieldsInProtocol(this.props.project['fate-of-animals']);
 
-    // Ensure options array exists and is initialized properly
-    if (!this.props.sections.fate.fields[0].options) {
-      this.props.sections.fate.fields[0].options = [];
-    }
-
-    // Combine existing options with new fields
-    const combinedFields = [
-      ...this.props.sections.fate.fields[0].options,
-      ...conditionalFateOfAnimalFields
-    ];
-
-    // Use a Set to remove duplicates based on a unique identifier
-    const uniqueFields = Array.from(new Set(combinedFields.map(field => JSON.stringify(field))))
-        .map(str => JSON.parse(str));
+      // Ensure options array exists, and is initialised properly
+      if (!this.props.sections.fate.fields[0].options) {
+          this.props.sections.fate.fields[0].options = [];
+      }
 
     // Update the options array with unique fields
-    this.props.sections.fate.fields[0].options = uniqueFields;
+    this.props.sections.fate.fields[0].options = conditionalFateOfAnimalFields;
 
     return editable && this.state.active
         ? <Form
