@@ -8,26 +8,26 @@ import Fieldset from '../../../components/fieldset';
 import Repeater from '../../../components/repeater';
 import Controls from '../../../components/controls';
 import { getNewComments } from '../../../helpers';
-import { renderFieldsInProtocol } from "../../../helpers/render-fields-in-protocol";
+import { renderFieldsInProtocol } from '../../../helpers/render-fields-in-protocol';
 
 const Form = ({
-                number,
-                updateItem,
-                exit,
-                toggleActive,
-                prefix = '',
-                ...props
-              }) => (
-    <div className={classnames('protocol', 'panel')}>
-      <h2>{`Protocol ${number + 1}`}</h2>
-      <Fieldset
-          { ...props }
-          fields={props.fields}
-          prefix={prefix}
-          onFieldChange={(key, value) => updateItem({ [key]: value })}
-      />
-      <Controls onContinue={toggleActive} onExit={exit} exitDisabled={true} />
-    </div>
+  number,
+  updateItem,
+  exit,
+  toggleActive,
+  prefix = '',
+  ...props
+}) => (
+  <div className={classnames('protocol', 'panel')}>
+    <h2>{`Protocol ${number + 1}`}</h2>
+    <Fieldset
+      { ...props }
+      fields={props.fields}
+      prefix={prefix}
+      onFieldChange={(key, value) => updateItem({ [key]: value })}
+    />
+    <Controls onContinue={toggleActive} onExit={exit} exitDisabled={true} />
+  </div>
 );
 
 class Protocol extends PureComponent {
@@ -70,11 +70,11 @@ class Protocol extends PureComponent {
     const { editable } = this.props;
 
     const newComments = mapKeys(
-        pickBy(this.props.newComments, (comments, key) => {
-          const re = new RegExp(`^protocols.${this.props.values.id}`);
-          return key.match(re);
-        }),
-        (value, key) => key.replace(`protocols.${this.props.values.id}.`, '')
+      pickBy(this.props.newComments, (comments, key) => {
+        const re = new RegExp(`^protocols.${this.props.values.id}`);
+        return key.match(re);
+      }),
+      (value, key) => key.replace(`protocols.${this.props.values.id}.`, '')
     );
 
     const protocolState = this.getProtocolState();
@@ -82,25 +82,25 @@ class Protocol extends PureComponent {
 
     const conditionalFateOfAnimalFields = renderFieldsInProtocol(this.props.project['fate-of-animals']);
 
-      // Ensure options array exists, and is initialised properly
-      if (!this.props.sections.fate.fields[0].options) {
-          this.props.sections.fate.fields[0].options = [];
-      }
+    // Ensure options array exists, and is initialised properly
+    if (!this.props.sections.fate.fields[0].options) {
+      this.props.sections.fate.fields[0].options = [];
+    }
 
     // Update the options array with unique fields
     this.props.sections.fate.fields[0].options = conditionalFateOfAnimalFields;
 
     return editable && this.state.active
-        ? <Form
-            {...this.props}
-            toggleActive={this.toggleActive}
-        />
-        : <ProtocolSections
-            {...this.props}
-            newComments={newComments}
-            protocolState={isActive && protocolState}
-            onToggleActive={this.toggleActive}
-        />;
+      ? <Form
+        {...this.props}
+        toggleActive={this.toggleActive}
+      />
+      : <ProtocolSections
+        {...this.props}
+        newComments={newComments}
+        protocolState={isActive && protocolState}
+        onToggleActive={this.toggleActive}
+      />;
   }
 }
 
@@ -137,59 +137,59 @@ class Protocols extends PureComponent {
     };
 
     return (
-        <Repeater
-            type="protocols"
-            singular="protocol"
-            items={items}
-            onSave={this.save}
-            addAnother={editable}
-            addButtonBefore={protocols && protocols.length > 0 && protocols[0].title}
-            addButtonAfter={true}
-            softDelete={true}
-            itemProps={itemProps}
-            onAfterAdd={() => {
-              window.scrollTo({
-                top: document.body.scrollHeight,
-                behavior: 'smooth'
-              });
-            }}
-            onBeforeDuplicate={(items, id) => {
-              return items.map((item) => {
-                if (item.id === id) {
-                  return {
-                    ...item,
-                    title: `${item.title} (Copy)`,
-                    complete: false
-                  };
-                }
-                return item;
-              });
-            }}
-            onAfterDuplicate={(item, id) => {
-              const index = items.findIndex(i => i.id === id);
-              const protocol = document.querySelectorAll('.protocols-section .protocol')[index];
-              window.scrollTo({
-                top: protocol.offsetTop,
-                left: 0
-              });
-            }}
-        >
-          <Protocol {...this.props} />
-        </Repeater>
+      <Repeater
+        type="protocols"
+        singular="protocol"
+        items={items}
+        onSave={this.save}
+        addAnother={editable}
+        addButtonBefore={protocols && protocols.length > 0 && protocols[0].title}
+        addButtonAfter={true}
+        softDelete={true}
+        itemProps={itemProps}
+        onAfterAdd={() => {
+          window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: 'smooth'
+          });
+        }}
+        onBeforeDuplicate={(items, id) => {
+          return items.map((item) => {
+            if (item.id === id) {
+              return {
+                ...item,
+                title: `${item.title} (Copy)`,
+                complete: false
+              };
+            }
+            return item;
+          });
+        }}
+        onAfterDuplicate={(item, id) => {
+          const index = items.findIndex(i => i.id === id);
+          const protocol = document.querySelectorAll('.protocols-section .protocol')[index];
+          window.scrollTo({
+            top: protocol.offsetTop,
+            left: 0
+          });
+        }}
+      >
+        <Protocol {...this.props} />
+      </Repeater>
     );
   }
 }
 
 const mapStateToProps = ({
-                           comments,
-                           project,
-                           application: {
-                             user,
-                             readonly,
-                             previousProtocols,
-                             schemaVersion
-                           }
-                         }) => ({
+  comments,
+  project,
+  application: {
+    user,
+    readonly,
+    previousProtocols,
+    schemaVersion
+  }
+}) => ({
   protocols: project.protocols,
   newComments: getNewComments(comments, user, project),
   readonly,
