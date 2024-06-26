@@ -253,16 +253,16 @@ export default () => {
                 },
                 {
                   label: 'Set free',
-                  value: 'set-free',
+                  value: 'set-free'
                 },
                 {
                   label: 'Rehomed',
-                  value: 'rehomed',
+                  value: 'rehomed'
                 },
                 {
                   label: 'Kept alive at the establishment for non-regulated purposes or possible reuse',
                   hint: 'Non-regulated purposes could include handling, breeding or non-regulated procedures.',
-                  value: 'kept-alive',
+                  value: 'kept-alive'
                 }
               ]
             }
@@ -2193,8 +2193,8 @@ export default () => {
           title: 'Cats, dogs, and equidae',
           intro: 'You are seeing this section because you added a type of cat, dog, or equid to your project. To change this, go to Introductory details.',
           show: values => intersection(
-              SPECIES.DOM.map(s => s.value),
-              values.species
+            SPECIES.DOM.map(s => s.value),
+            values.species
           ).length,
           fields: [
             {
