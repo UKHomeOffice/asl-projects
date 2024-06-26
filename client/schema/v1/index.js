@@ -254,89 +254,15 @@ export default () => {
                 {
                   label: 'Set free',
                   value: 'set-free',
-                  reveal: [
-                    {
-                      name: 'setting-free-health',
-                      label: 'How will an animal\'s health be assessed to determine whether it can be set free?',
-                      type: 'texteditor'
-                    },
-                    {
-                      name: 'setting-free-vet',
-                      label: 'Will a veterinary surgeon perform this assessment?',
-                      type: 'radio',
-                      inline: true,
-                      className: 'smaller',
-                      options: [
-                        {
-                          label: 'Yes',
-                          value: true
-                        },
-                        {
-                          label: 'No',
-                          value: false,
-                          reveal: {
-                            name: 'setting-free-competence',
-                            label: 'How will you ensure the competence of the person responsible for assessing whether animals can be set free?',
-                            type: 'texteditor'
-                          }
-                        }
-                      ]
-                    }
-                  ]
                 },
                 {
                   label: 'Rehomed',
                   value: 'rehomed',
-                  reveal: [
-                    {
-                      name: 'rehoming-types',
-                      label: 'What types of animals do you intend to rehome?',
-                      hint: 'Also state the protocols on which they would have been used.',
-                      type: 'texteditor'
-                    },
-                    {
-                      name: 'rehoming-healthy',
-                      label: 'How will you make sure that an animal’s health allows it to be rehomed?',
-                      type: 'texteditor'
-                    },
-                    {
-                      name: 'rehoming-harmful',
-                      label: 'How will you ensure that rehoming does not pose a danger to public health, animal health, or the environment?',
-                      type: 'texteditor'
-                    },
-                    {
-                      name: 'rehoming-socialisation',
-                      label: 'What scheme is in place to ensure socialisation when an animal is rehomed?',
-                      type: 'texteditor'
-                    },
-                    {
-                      name: 'rehoming-other',
-                      label: 'What other measures will you take to safeguard an animal’s wellbeing when it is rehomed?',
-                      type: 'texteditor'
-                    }
-                  ]
                 },
                 {
                   label: 'Kept alive at the establishment for non-regulated purposes or possible reuse',
                   hint: 'Non-regulated purposes could include handling, breeding or non-regulated procedures.',
                   value: 'kept-alive',
-                  reveal: [
-                    {
-                      name: 'kept-alive-animals',
-                      label: 'What types of animals will you keep alive?',
-                      type: 'texteditor'
-                    },
-                    {
-                      name: 'keeping-animals-alive-determine',
-                      label: 'What criteria will the veterinary surgeon, or competent person trained by a veterinary surgeon, use to determine whether animals can be kept alive?',
-                      type: 'texteditor'
-                    },
-                    {
-                      name: 'keeping-animals-alive-supervised',
-                      label: 'Are there any limitations on the period of time that animals that have been kept alive can be held under the supervision of the veterinary surgeon?',
-                      type: 'texteditor'
-                    }
-                  ]
                 }
               ]
             }
