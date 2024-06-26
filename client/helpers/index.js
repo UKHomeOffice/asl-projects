@@ -246,3 +246,10 @@ export const stripInvalidXmlChars = text => {
 export const isTrainingLicence = values => {
   return values['training-licence'] || (values['permissible-purpose'] || []).includes('higher-education');
 };
+
+export const getCurrentURLForFateOfAnimals = () => {
+  let currentURL = window.location.href;
+  // Remove everything after '/edit/' including 'protocols' and everything after it
+  currentURL = currentURL.split('/edit/')[0] + '/edit/fate-of-animals';
+  return currentURL;
+};
