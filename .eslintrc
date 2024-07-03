@@ -24,5 +24,5 @@ rules:
     - 2
     - skipStrings: false
   import/no-implicit-dependencies:
-    - error
-    - devDependencies: true
+  - error
+  - devDependencies: true
