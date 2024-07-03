@@ -23,5 +23,5 @@ rules:
   no-irregular-whitespace:
     - 2
     - skipStrings: false
-  implicit-dependencies/no-implicit:
+  no-implicit-dependencies:
     - dev: true
