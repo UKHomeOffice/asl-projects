@@ -14,15 +14,9 @@ settings:
   react:
     version: detect
 
-plugins:
-- import
-
 rules:
   no-console: 1
   no-var: 2
   no-irregular-whitespace:
     - 2
     - skipStrings: false
-  import/no-implicit-dependencies:
-  - error
-  - devDependencies: true
