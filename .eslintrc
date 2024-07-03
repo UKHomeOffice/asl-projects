@@ -14,11 +14,14 @@ settings:
   react:
     version: detect
 
+plugins:
+- implicit-dependencies
+
 rules:
   no-console: 1
   no-var: 2
   no-irregular-whitespace:
     - 2
     - skipStrings: false
-  no-implicit-dependencides: 
+  implicit-dependencies/no-implicit:
     - dev: true
