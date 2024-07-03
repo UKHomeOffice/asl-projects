@@ -24,12 +24,12 @@
     "registry": "https://artifactory.digital.homeoffice.gov.uk/artifactory/api/npm/npm-virtual/"
   },
   "dependencies": {
-    "@ukhomeoffice/asl-components": "13.5.0",
-    "@ukhomeoffice/asl-constants": "^2.1.5",
-    "@ukhomeoffice/asl-slate-edit-list": "0.0.8",
     "@asl/service": "^10.3.2",
     "@asl/slate-edit-table": "0.0.3",
     "@babel/core": "^7.24.4",
+    "@ukhomeoffice/asl-components": "13.5.0",
+    "@ukhomeoffice/asl-constants": "^2.1.5",
+    "@ukhomeoffice/asl-slate-edit-list": "0.0.8",
     "@ukhomeoffice/frontend-toolkit": "^3.0.0",
     "@ukhomeoffice/react-components": "^1.0.0",
     "classnames": "^2.2.6",
@@ -68,7 +68,8 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^7.32.0",
     "eslint-config-lennym": "^2.3.2",
-    "mocha": "^10.4.0"
+    "mocha": "^10.4.0",
+    "redux-devtools-extension": "^2.13.9"
   },
   "files": [
     "client/*",
