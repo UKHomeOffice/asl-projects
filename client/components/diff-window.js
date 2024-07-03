@@ -182,7 +182,7 @@ const DiffWindow = (props) => {
       return props.options
         .map(option => {
           if (option.value === 'translational-research') {
-            return <ul>
+            return <ul key={option.value}>
               {
                 option.reveal.options.map(o => <Option option={o} key={o.value} />)
               }

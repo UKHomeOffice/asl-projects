@@ -28,6 +28,7 @@ const Fieldset = ({ fields, onFieldChange, values, noComments, altLabels, prefix
                 value={values && values[f.name]}
                 values={values}
                 confirmEdit={f.confirmEdit}
+                key={ f.name }
               >
                 {field}
               </ToggleEdit>
