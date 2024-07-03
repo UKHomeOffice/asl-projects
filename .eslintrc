@@ -20,4 +20,5 @@ rules:
   no-irregular-whitespace:
     - 2
     - skipStrings: false
-  no-implicit-dependencides: [true, "dev"]
+  no-implicit-dependencides: 
+    - dev: true
