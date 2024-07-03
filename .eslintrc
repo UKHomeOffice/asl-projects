@@ -15,7 +15,7 @@ settings:
     version: detect
 
 plugins:
-- implicit-dependencies
+- import
 
 rules:
   no-console: 1
@@ -23,5 +23,6 @@ rules:
   no-irregular-whitespace:
     - 2
     - skipStrings: false
-  no-implicit-dependencies:
-    - dev: true
+  import/no-implicit-dependencies:
+    - error
+    - devDependencies: true
