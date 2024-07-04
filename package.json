@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/UKHomeOffice/peephole.git"
+    "url": "git+https://github.com/UKHomeOffice/asl-projects.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/UKHomeOffice/peephole/issues"
+    "url": "https://github.com/UKHomeOffice/asl-projects.git/issues"
   },
-  "homepage": "https://github.com/UKHomeOffice/peephole#readme",
+  "homepage": "https://github.com/UKHomeOffice/asl-projects.git#readme",
   "publishConfig": {
     "registry": "https://artifactory.digital.homeoffice.gov.uk/artifactory/api/npm/npm-virtual/"
   },
@@ -68,7 +68,7 @@
     "@babel/register": "^7.8.3",
     "babel-eslint": "^10.0.1",
     "eslint": "^7.32.0",
-    "eslint-config-lennym": "^2.3.2",
+    "@ukhomeoffice/asl-eslint-common": "^2.2.0",
     "eslint-plugin-import": "^2.29.1",
     "mocha": "^10.4.0"
   },
