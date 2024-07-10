@@ -66,7 +66,7 @@ const findArrayDifferences = (oldArray, newArray) => {
 
 // Example usage:
 const oldArray = ["Bingo", "Blue"];
-const newArray = ["Bngo", "Blu"];
+const newArray = ["Victory - kk", "BlueMarina", "Spain"];
 
 const changes = findArrayDifferences(oldArray, newArray);
 console.log(JSON.stringify(changes, null, 2));
