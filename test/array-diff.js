@@ -11,44 +11,54 @@ const findArrayDifferences = (oldArray, newArray) => {
         let charIndexOld = 0;
         let charIndexNew = 0;
 
+        const changeObj = {
+            arrayIndex,
+            added: [],
+            removed: []
+        };
+
         diffResult.forEach(part => {
             if (part.added) {
-                for (let i = 0; i < part.count; i++) {
-                    changes.push({
-                        arrayIndex,
-                        charIndex: charIndexNew,
-                        oldChar: '',
-                        newChar: part.value[i]
-                    });
-                    charIndexNew++;
-                }
+                changeObj.added.push({
+                    value: part.value,
+                    charIndex: charIndexNew,
+                    start: charIndexNew,
+                    end: charIndexNew + part.value.length - 1
+                });
+                charIndexNew += part.value.length;
             } else if (part.removed) {
-                for (let i = 0; i < part.count; i++) {
-                    changes.push({
-                        arrayIndex,
-                        charIndex: charIndexOld,
-                        oldChar: part.value[i],
-                        newChar: ''
-                    });
-                    charIndexOld++;
-                }
+                changeObj.removed.push({
+                    value: part.value,
+                    charIndex: charIndexOld,
+                    start: charIndexOld,
+                    end: charIndexOld + part.value.length - 1
+                });
+                charIndexOld += part.value.length;
             } else {
-                charIndexOld += part.count;
-                charIndexNew += part.count;
+                charIndexOld += part.value.length;
+                charIndexNew += part.value.length;
             }
         });
+
+        changes.push(changeObj);
     });
 
     newArray.slice(oldArray.length).forEach((newStr, arrayIndex) => {
         const globalArrayIndex = oldArray.length + arrayIndex;
+        const changeObj = {
+            arrayIndex: globalArrayIndex,
+            added: [],
+            removed: []
+        };
         for (let charIndexNew = 0; charIndexNew < newStr.length; charIndexNew++) {
-            changes.push({
-                arrayIndex: globalArrayIndex,
+            changeObj.added.push({
+                value: newStr[charIndexNew],
                 charIndex: charIndexNew,
-                oldChar: '',
-                newChar: newStr[charIndexNew]
+                start: charIndexNew,
+                end: charIndexNew
             });
         }
+        changes.push(changeObj);
     });
 
     return changes;
@@ -56,7 +66,7 @@ const findArrayDifferences = (oldArray, newArray) => {
 
 // Example usage:
 const oldArray = ["Bingo", "Blue"];
-const newArray = ["Bngo", "Bliu"];
+const newArray = ["Bngo", "Blu"];
 
 const changes = findArrayDifferences(oldArray, newArray);
-console.log(changes);
+console.log(JSON.stringify(changes, null, 2));
