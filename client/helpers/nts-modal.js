@@ -15,17 +15,20 @@ export default function NtsModal(props) {
             ? props.confirmRemove(props.project, e.target.value)
             : true;
 
+        const h3bold = `
+            Are you sure you want to deselect ${e.target.value}?`
+        const h3 = `The ${e.target.value} option will be removed from all protocols.
+            Also, any additional information you entered about that fate will be removed from your application.`
+
         if (itemRemoved && confirmRemove) {
-            showModal('Are you sure you want to remove this item?', () => props.onFieldChange(newValue));
-        } else if (!itemRemoved) {
-            showModal('Are you sure you want to add this item?', () => props.onFieldChange(newValue));
+            showModal(h3bold, h3, () => props.onFieldChange(newValue));
         } else {
             props.onFieldChange(newValue);
         }
     };
 }
 
-function showModal(message, onConfirm) {
+function showModal(h3Bold, h3, onConfirm) {
     const modalContainer = document.createElement('div');
     document.body.appendChild(modalContainer);
 
@@ -45,9 +48,12 @@ function showModal(message, onConfirm) {
 
     ReactDOM.render(
         <Modal onClose={handleClose}>
-            <div>{message}</div>
-            <button onClick={handleConfirm}>Confirm</button>
-            <button onClick={handleClose}>Cancel</button>
+            <h3>{h3Bold}</h3>
+            <h3>{h3}</h3>
+            <div>
+                <button className="confirm" onClick={handleConfirm}>Yes, deselect</button>
+                <button className="cancel" onClick={handleClose}>Cancel</button>
+            </div>
         </Modal>,
         modalContainer
     );
