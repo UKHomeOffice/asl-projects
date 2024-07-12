@@ -36,6 +36,7 @@ import Fieldset from './fieldset';
 import Comments from './comments';
 
 import ErrorBoundary from './error-boundary';
+import NtsModal from "../helpers/nts-modal";
 
 class Field extends Component {
 
@@ -221,25 +222,12 @@ class Field extends Component {
         value={ value }
         error={ this.props.error }
         inline={ this.props.inline }
-        onChange={ e => {
-          const values = [ ...(value || []) ];
-          const itemRemoved = values.includes(e.target.value);
-
-          const newValue = itemRemoved
-            ? values.filter(v => v !== e.target.value)
-            : [ ...values, e.target.value ];
-
-          if (this.props.confirmRemove && itemRemoved) {
-            if (this.props.confirmRemove(this.props.project, e.target.value)) {
-              this.onFieldChange(newValue);
-            } else {
-              e.preventDefault();
-              return false;
-            }
-          }
-
-          this.onFieldChange(newValue);
-        }}
+        onChange={NtsModal({
+              value,
+              confirmRemove: this.props.confirmRemove,
+              project: this.props.project,
+              onFieldChange: this.onFieldChange
+            })}
       />;
     }
     if (this.props.type === 'textarea') {
