@@ -49,9 +49,9 @@ const DiffWindow = (props) => {
 
   const changes = useSelector(state => {
     if (props.type === 'keywords' && state.questionVersions['keywords']?.latest?.value.length > 0) {
-      return findArrayDifferences(before, props.value)
+      return findArrayDifferences(before, props.value);
     }
-    return get(state.questionVersions, `['${props.name}'].${versions[active]}.diff`, { added: [], removed: [] })
+    return get(state.questionVersions, `['${props.name}'].${versions[active]}.diff`, { added: [], removed: [] });
   });
 
   useEffect(() => {
