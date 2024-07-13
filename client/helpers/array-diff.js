@@ -12,12 +12,14 @@ export const findArrayDifferences = (oldArray, newArray) => {
   const same = diff.same(oldArray, newArray);
   const changes = diff.diff(oldArray, newArray);
 
+  const sameCountValue = {
+    count: same.length,
+    value: same
+  };
+
   return {
     added: [
-      {
-        count: same.length,
-        value: same
-      },
+      sameCountValue,
       {
         count: changes.added.length,
         added: true,
@@ -25,10 +27,7 @@ export const findArrayDifferences = (oldArray, newArray) => {
       }
     ],
     removed: [
-      {
-        count: same.length,
-        value: same
-      },
+      sameCountValue,
       {
         count: changes.removed.length,
         removed: true,
