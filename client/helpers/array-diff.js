@@ -1,7 +1,8 @@
 import * as diff from 'fast-array-diff';
 
 /**
- *
+ * Function to compare arrays and return changes in required format to be
+ * used in diff window to highlight what has changed
  * @param {string[]} oldArray
  * @param {string[]} newArray
  * @returns {Object}
