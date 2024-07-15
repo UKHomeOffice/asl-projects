@@ -9,7 +9,7 @@ import { mapAnimalQuantities } from '../helpers';
 import Modal from './modal';
 import ReviewField from './review-field';
 import Tabs from './tabs';
-
+import { findArrayDifferences } from '../helpers/array-diff';
 import normaliseWhitespace from '../helpers/normalise-whitespace';
 
 const DEFAULT_LABEL = 'No answer provided';
@@ -45,8 +45,14 @@ const DiffWindow = (props) => {
 
   const dispatch = useDispatch();
 
-  const changes = useSelector(state => get(state.questionVersions, `['${props.name}'].${versions[active]}.diff`, { added: [], removed: [] }));
   const before = useSelector(state => get(state.questionVersions, `['${props.name}'].${versions[active]}.value`));
+
+  const changes = useSelector(state => {
+    if (props.type === 'keywords' && state.questionVersions['keywords']?.latest?.value.length > 0) {
+      return findArrayDifferences(before, props.value);
+    }
+    return get(state.questionVersions, `['${props.name}'].${versions[active]}.diff`, { added: [], removed: [] });
+  });
 
   useEffect(() => {
     if (!before && modalOpen) {
@@ -210,6 +216,7 @@ const DiffWindow = (props) => {
       case 'location-selector':
       case 'objective-selector':
       case 'species-selector':
+      case 'keywords':
         return parts.length
           ? (
             <ul>
