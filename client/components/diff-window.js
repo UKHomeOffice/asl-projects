@@ -171,15 +171,15 @@ const DiffWindow = (props) => {
 
     const radioDiff = () => {
       return (
-          <p>  
-            {
-              value === undefined ? (
-                  <em>{ DEFAULT_LABEL }</em>
-              ) : ( 
-                <span className={`diff ${parts.added ? 'added': 'removed'}`}> { value ?  'Yes' : 'No'}</span> 
-              )
-            }
-          </p>
+        <p>
+          {
+            value === undefined ? (
+              <em>{ DEFAULT_LABEL }</em>
+            ) : (
+              <span className={`diff ${parts.added ? 'added' : 'removed'}`}> { value ? 'Yes' : 'No'}</span>
+            )
+          }
+        </p>
       );
     };
 
