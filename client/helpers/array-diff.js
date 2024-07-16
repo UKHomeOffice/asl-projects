@@ -1,4 +1,4 @@
-let diff = require('fast-array-diff');
+import * as diff from 'fast-array-diff';
 
 /**
  * Function to compare arrays and return changes in required format to be
