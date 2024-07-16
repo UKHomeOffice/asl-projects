@@ -320,8 +320,7 @@ const DiffWindow = (props) => {
   const compare = () => {
 
     const hasVisibleChanges = hasContentChanges(before, props.value, props.type);
-    let removed = changes.removed;
-    let added = changes.added;
+    let { removed, added } = changes.removed;
     if (props.type === 'radio') {
       removed = { added: false };
       added = { added: true };
