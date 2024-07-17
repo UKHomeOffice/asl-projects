@@ -30,33 +30,19 @@ export default function NtsModal(props) {
 
 function showModal(h3Bold, paragraphLine1, paragraphLine2, onConfirm) {
     const modalContainer = document.createElement('div');
-    modalContainer.style.position = "fixed";
-    modalContainer.style.top = "0";
-    modalContainer.style.left = "0";
-    modalContainer.style.width = "100%";
-    modalContainer.style.height = "100%";
-    modalContainer.style.backgroundColor = "rgba(0, 0, 0, 0.4)";
-    modalContainer.style.zIndex = "999";
-    modalContainer.style.display = "flex";
-    modalContainer.style.alignItems = "center";
-    modalContainer.style.justifyContent = "center";
-    modalContainer.style.backdropFilter = "blur(5px)";
-
     const modalInner = document.createElement('div');
-    modalInner.style.width = "90%";
-    modalInner.style.maxWidth = "600px";
-    modalInner.style.backgroundColor = "white";
-    modalInner.style.padding = "30px";
-    modalInner.style.overflow = "auto";
-    modalInner.style.margin = "auto";
-    modalInner.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.1)";
+
+    modalInner.classList.add("nts-modal-inner");
+    modalContainer.classList.add("nts-modal-container");
 
     modalContainer.appendChild(modalInner);
     document.body.appendChild(modalContainer);
 
+
     const handleClose = () => {
         ReactDOM.unmountComponentAtNode(modalContainer);
         document.body.removeChild(modalContainer);
+        document.getElementsByTagName('html')[0].classList.remove('modal-open');
     };
 
     const handleConfirm = () => {
@@ -74,6 +60,6 @@ function showModal(h3Bold, paragraphLine1, paragraphLine2, onConfirm) {
                 <button className="govuk-!-margin-left-3 govuk-button" style={{background: 'grey'}} onClick={handleClose}>Cancel</button>
             </div>
         </Modal>,
-        modalInner // Render inside modalInner to apply inner styles
+        modalInner
     );
 }
