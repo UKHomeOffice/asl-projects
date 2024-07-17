@@ -48,7 +48,7 @@ const DiffWindow = (props) => {
   const before = useSelector(state => get(state.questionVersions, `['${props.name}'].${versions[active]}.value`));
 
   const changes = useSelector(state => {
-    if (props.type === 'keywords' && state.questionVersions['keywords']?.latest?.value.length > 0) {
+    if (props.type === 'keywords' && state.questionVersions['keywords']?.latest?.value?.length > 0 && before) {
       return findArrayDifferences(before, props.value);
     }
     return get(state.questionVersions, `['${props.name}'].${versions[active]}.diff`, { added: [], removed: [] });
@@ -320,7 +320,7 @@ const DiffWindow = (props) => {
   const compare = () => {
 
     const hasVisibleChanges = hasContentChanges(before, props.value, props.type);
-    let { removed, added } = changes.removed;
+    let { removed, added } = changes;
     if (props.type === 'radio') {
       removed = { added: false };
       added = { added: true };
