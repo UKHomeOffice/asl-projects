@@ -15,10 +15,11 @@ export default function NtsModal(props) {
             ? props.confirmRemove(props.project, e.target.value)
             : true;
 
+        const selectedOption = e.target.value.toString().charAt(0).toUpperCase() + e.target.value.toString().slice(1)
         const h3bold = `
-            Are you sure you want to deselect [${e.target.value}]?`
-        const paragraphLine1 = `The [${e.target.value}] option will be removed from all protocols.`
-        const paragraphLine2 = 'Also, any additional information you entered about that fate will be removed from your application.'
+            Are you sure you want to deselect this fate?`
+        const paragraphLine1 = `The ${selectedOption} at the establishment for non-regulated purposes or possible reuse’ option will be removed from all protocols.`
+        const paragraphLine2 = 'Also, any additional information you entered about this fate will be removed from your application.'
 
         if (itemRemoved && confirmRemove) {
             showModal(h3bold, paragraphLine1, paragraphLine2, () => props.onFieldChange(newValue));
