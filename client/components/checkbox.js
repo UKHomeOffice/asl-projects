@@ -1,54 +1,80 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CheckboxGroup } from '@ukhomeoffice/react-components';
+import Modal from "./modal";
+import {useSelector} from "react-redux";
 
 const NtsCheckBoxWithModal = (props) => {
-    const {
-        className,
-        label,
-        hint,
-        name,
-        options,
-        value,
-        error,
-        inline,
-        confirmRemove,
-        project,
-        onFieldChange
-    } = props;
+    const { className, label, hint, name, options, value, error, inline, project, onFieldChange } = props;
+    const [showModal, setShowModal] = useState(false);
+    const [selectedValue, setSelectedValue] = useState(null); // State to store selected value
+    const ntsQuestion = useSelector(state => state.project);
+    console.table(ntsQuestion);
 
     // Function to handle onChange event
     const handleCheckboxChange = (e) => {
+        const checkboxValue = e.target.value;
         const values = [...(value || [])];
-        const itemRemoved = values.includes(e.target.value);
+        const itemRemoved = values.includes(checkboxValue);
 
-        const newValue = itemRemoved
-            ? values.filter((v) => v !== e.target.value)
-            : [...values, e.target.value];
-
-        if (confirmRemove && itemRemoved) {
-            if (confirmRemove(project, e.target.value)) {
-                onFieldChange(newValue);
-            } else {
-                e.preventDefault();
-                return false;
-            }
+        if (itemRemoved) {
+            setShowModal(true);
+            setSelectedValue(checkboxValue); // Store selected value to use in modal
+        } else {
+            const newValue = [...values, checkboxValue];
+            onFieldChange(newValue);
         }
+    };
 
+    // Function to handle modal confirmation
+    const handleConfirmModal = () => {
+        const values = [...value];
+        const newValue = values.filter((v) => v !== selectedValue);
         onFieldChange(newValue);
+        setShowModal(false);
+    };
+
+    // Function to handle modal cancellation
+    const handleCancelModal = () => {
+        setShowModal(false);
+    };
+
+    // Function to prepare modal content
+    const prepareModalContent = () => {
+        const selectedOption = selectedValue ? selectedValue.toString().charAt(0).toUpperCase() + selectedValue.toString().slice(1) : '';
+        return {
+            h3Bold: `Are you sure you want to deselect this fate?`,
+            paragraphLine1: `The ${selectedOption} at the establishment for non-regulated purposes or possible reuse option will be removed from all protocols.`,
+            paragraphLine2: 'Also, any additional information you entered about this fate will be removed from your application.',
+        };
     };
 
     return (
-        <CheckboxGroup
-            className={className}
-            label={label}
-            hint={hint}
-            name={name}
-            options={options}
-            value={value}
-            error={error}
-            inline={inline}
-            onChange={handleCheckboxChange}
-        />
+        <>
+            <CheckboxGroup
+                className={className}
+                label={label}
+                hint={hint}
+                name={name}
+                options={options}
+                value={value}
+                error={error}
+                inline={inline}
+                onChange={handleCheckboxChange}
+            />
+            {showModal && selectedValue && ( // Show modal only if showModal is true and selectedValue is truthy
+                <div className="nts-modal-container">
+                    <Modal onClose={handleCancelModal} className={"nts-modal-inner"}>
+                        <h3 className="govuk-heading-s">{prepareModalContent().h3Bold}</h3>
+                        <p className="govuk-body">{prepareModalContent().paragraphLine1}</p>
+                        <p className="govuk-body">{prepareModalContent().paragraphLine2}</p>
+                        <div className="govuk-button-group">
+                            <button type="submit" className="govuk-button" data-module="govuk-button" onClick={handleConfirmModal}>Yes, deselect</button>
+                            <button className="govuk-!-margin-left-3 govuk-button" style={{ background: 'grey' }} onClick={handleCancelModal}>Cancel</button>
+                        </div>
+                    </Modal>
+                </div>
+            )}
+        </>
     );
 };
 

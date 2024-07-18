@@ -222,7 +222,6 @@ class Field extends Component {
           value={ value }
           error={ this.props.error }
           inline={ this.props.inline }
-          confirmRemove={this.props.confirmRemove}
           project={this.props.project}
           onFieldChange={this.onFieldChange}
           />
