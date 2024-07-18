@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from "../components/modal";
+import {useSelector} from "react-redux";
 
 export default function NtsModal(props) {
     return function(e) {
@@ -29,7 +30,7 @@ export default function NtsModal(props) {
     };
 }
 
-function showModal(h3Bold, paragraphLine1, paragraphLine2, onConfirm) {
+function ntsModal(h3Bold, paragraphLine1, paragraphLine2, onConfirm) {
     const modalContainer = document.createElement('div');
     const modalInner = document.createElement('div');
 

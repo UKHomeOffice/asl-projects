@@ -36,7 +36,7 @@ import Fieldset from './fieldset';
 import Comments from './comments';
 
 import ErrorBoundary from './error-boundary';
-import NtsModal from "../helpers/nts-modal";
+import NtsCheckBoxWithModal from "./checkbox";
 
 class Field extends Component {
 
@@ -213,22 +213,19 @@ class Field extends Component {
       />;
     }
     if (this.props.type === 'checkbox' || this.props.type === 'permissible-purpose') {
-      return <CheckboxGroup
-        className={ this.props.className }
-        label={ label }
-        hint={ hint }
-        name={ this.props.name }
-        options={ this.mapOptions(this.props.options) }
-        value={ value }
-        error={ this.props.error }
-        inline={ this.props.inline }
-        onChange={NtsModal({
-              value,
-              confirmRemove: this.props.confirmRemove,
-              project: this.props.project,
-              onFieldChange: this.onFieldChange
-            })}
-      />;
+      return <NtsCheckBoxWithModal
+          className={ this.props.className }
+          label={ label }
+          hint={ hint }
+          name={ this.props.name }
+          options={ this.mapOptions(this.props.options) }
+          value={ value }
+          error={ this.props.error }
+          inline={ this.props.inline }
+          confirmRemove={this.props.confirmRemove}
+          project={this.props.project}
+          onFieldChange={this.onFieldChange}
+          />
     }
     if (this.props.type === 'textarea') {
       return <TextArea
