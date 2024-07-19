@@ -1,37 +1,62 @@
+/**
+ * @desc @desc takes @param project:Object, @param checkboxValue: String, select checkbox value, will reset any data nodes associated to NTS checkbox.
+ * @returns {Object} An object containing the checkbox value and a boolean indicating if there is existing data.
+ * */
 import cloneDeep from 'lodash/cloneDeep';
 
 const resetFieldsBasedOnCheckbox = (project, checkboxValue) => {
-  // Deep clone the project object to avoid mutating it directly
+  // Deep clone the project object to avoid mutating it directly and manipulate NTS data fields.
   const newProject = cloneDeep(project);
-
+  const defaultEmptyObject = {
+    'object': 'value',
+    'document': {
+      'data': {},
+      'nodes': [
+        {
+          'data': {},
+          'type': 'paragraph',
+          'nodes': [
+            {
+              'text': '',
+              'marks': [],
+              'object': 'text'
+            }
+          ],
+          'object': 'block'
+        }
+      ],
+      'object': 'document'
+    }
+  };
   switch (checkboxValue) {
     case 'killed':
-      newProject['method-and-justification'] = {};
+      newProject['method-and-justification'] = defaultEmptyObject;
       break;
     case 'used-in-other-projects':
-      newProject['continued-use-relevant-project'] = {};
+      newProject['continued-use-relevant-project'] = defaultEmptyObject;
       break;
     case 'kept-alive':
       newProject['keeping-alive-complete'] = false;
-      newProject['keeping-animals-alive-determine'] = {};
-      newProject['keeping-animals-alive-supervised'] = {};
-      newProject['kept-alive-animals'] = {};
+      newProject['keeping-animals-alive-determine'] = defaultEmptyObject;
+      newProject['keeping-animals-alive-supervised'] = defaultEmptyObject;
+      newProject['kept-alive-animals'] = defaultEmptyObject;
       break;
     case 'rehomed':
       newProject['rehoming-complete'] = false;
-      newProject['rehoming-harmful'] = {};
-      newProject['rehoming-healthy'] = {};
-      newProject['rehoming-other'] = {};
-      newProject['rehoming-types'] = {};
+      newProject['rehoming-harmful'] = defaultEmptyObject;
+      newProject['rehoming-healthy'] = defaultEmptyObject;
+      newProject['rehoming-other'] = defaultEmptyObject;
+      newProject['rehoming-types'] = defaultEmptyObject;
       break;
     case 'set-free':
       newProject['setting-free-complete'] = false;
-      newProject['setting-free-ensure-not-harmful'] = {};
-      newProject['setting-free-health'] = {};
-      newProject['setting-free-lost'] = {}; // Adjusted to match the specified format
-      newProject['setting-free-recapturing'] = {};
-      newProject['setting-free-rehabilitate'] = {};
-      newProject['setting-free-socialise'] = {};
+      newProject['setting-free-ensure-not-harmful'] = defaultEmptyObject;
+      newProject['setting-free-health'] = defaultEmptyObject;
+      newProject['setting-free-lost'] = defaultEmptyObject; // Adjusted to match the specified format
+      newProject['setting-free-recapturing'] = defaultEmptyObject;
+      newProject['setting-free-rehabilitate'] = defaultEmptyObject;
+      newProject['setting-free-socialise'] = defaultEmptyObject;
+      newProject['setting-free-competence'] = defaultEmptyObject;
       newProject['setting-free-vet'] = false;
       break;
     default:
@@ -39,8 +64,8 @@ const resetFieldsBasedOnCheckbox = (project, checkboxValue) => {
   }
 
   // // Reset other fields
-  // newProject['nts-review-complete'] = false;
-  // newProject['protocols-complete'] = false;
+  newProject['fate-of-animals-complete'] = false;
+  newProject['protocols-complete'] = false;
 
   return newProject;
 };

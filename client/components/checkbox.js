@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import Modal from './modal';
 import resetFieldsBasedOnCheckbox from '../helpers/reset-fields-based-on-checkbox';
 import {updateProject} from '../actions/projects';
+import hasExistingDataForCheckbox from '../helpers/has-existing-data-for-checkbox';
 
 const NtsCheckBoxWithModal = (props) => {
   const { className, label, hint, name, options, value, error, inline, onFieldChange } = props;
@@ -18,10 +19,20 @@ const NtsCheckBoxWithModal = (props) => {
     const values = [...(value || [])];
     const itemRemoved = values.includes(checkboxValue);
 
+    const {hasData} = hasExistingDataForCheckbox(project, checkboxValue);
+
     if (itemRemoved) {
-      setShowModal(true);
-      setSelectedValue(checkboxValue); // Store selected value to use in modal
+      if (hasData) {
+        // If there's existing data, show the modal
+        setShowModal(true);
+        setSelectedValue(checkboxValue); // Store selected value to use in modal
+      } else {
+        // If no existing data, simply remove the checkbox
+        const newValue = values.filter((v) => v !== checkboxValue);
+        onFieldChange(newValue);
+      }
     } else {
+      // Add new checkbox value
       const newValue = [...values, checkboxValue];
       onFieldChange(newValue);
     }
