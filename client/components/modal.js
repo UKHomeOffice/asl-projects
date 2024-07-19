@@ -1,6 +1,6 @@
 import React, {createRef, useEffect} from 'react';
 
-export default function Modal({ onClose, children }) {
+export default function Modal({ onClose, children, className }) {
   useEffect(() => {
     const keydownHandler = e => {
       const listener = keyListeners.get(e.key);
@@ -46,7 +46,7 @@ export default function Modal({ onClose, children }) {
   };
 
   return (
-    <div className="modal" onClick={close}>
+    <div className={className ?? 'modal'} onClick={close}>
       <div className="modal-content" ref={modalRef}>
         {children}
       </div>
