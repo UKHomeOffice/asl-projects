@@ -3,46 +3,50 @@ import hasExistingDataForCheckbox from '../../../client/helpers/has-existing-dat
 
 describe('hasExistingDataForCheckbox', () => {
   const project = {
-    'method-and-justification': {
-      document: {
-        'data': {},
-        'nodes': [
-          {
+    'protocols': [
+      {
+        'method-and-justification': {
+          document: {
             'data': {},
-            'type': 'paragraph',
             'nodes': [
               {
-                'text': 'method-and-justification',
-                'marks': [],
-                'object': 'text'
+                'data': {},
+                'type': 'paragraph',
+                'nodes': [
+                  {
+                    'text': 'method-and-justification',
+                    'marks': [],
+                    'object': 'text'
+                  }
+                ],
+                'object': 'block'
               }
             ],
-            'object': 'block'
+            'object': 'document'
           }
-        ],
-        'object': 'document'
-      }
-    },
-    'continued-use-relevant-project': {
-      document: {
-        'data': {},
-        'nodes': [
-          {
+        },
+        'continued-use-relevant-project': {
+          document: {
             'data': {},
-            'type': 'paragraph',
             'nodes': [
               {
-                'text': '',
-                'marks': [],
-                'object': 'text'
+                'data': {},
+                'type': 'paragraph',
+                'nodes': [
+                  {
+                    'text': '',
+                    'marks': [],
+                    'object': 'text'
+                  }
+                ],
+                'object': 'block'
               }
             ],
-            'object': 'block'
+            'object': 'document'
           }
-        ],
-        'object': 'document'
+        }
       }
-    },
+    ],
     'keeping-alive-complete': false,
     'keeping-animals-alive-determine': {
       document: {
