@@ -46,7 +46,7 @@ export default function Modal({ onClose, children, className }) {
   };
 
   return (
-    <div className={className ?? "modal"} onClick={close}>
+    <div className={className ?? 'modal'} onClick={close}>
       <div className="modal-content" ref={modalRef}>
         {children}
       </div>

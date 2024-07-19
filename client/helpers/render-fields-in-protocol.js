@@ -75,7 +75,7 @@ export const renderFieldsInProtocol = (fateOfAnimals) => {
     orderedFields[2] = predefinedFields['continued-use-2'];
   }
 
-  if (fateOfAnimals.includes('set-free')) {
+  if (fateOfAnimals?.includes('set-free')) {
     orderedFields[3] = predefinedFields['set-free'];
   }
 
