@@ -30,10 +30,10 @@ const resetFieldsBasedOnCheckbox = (project, checkboxValue) => {
   };
   switch (checkboxValue) {
     case 'killed':
-      newProject['method-and-justification'] = defaultEmptyObject;
+      newProject.protocols[0]['method-and-justification'] = defaultEmptyObject;
       break;
     case 'used-in-other-projects':
-      newProject['continued-use-relevant-project'] = defaultEmptyObject;
+      newProject.protocols[0]['continued-use-relevant-project'] = defaultEmptyObject;
       break;
     case 'kept-alive':
       newProject['keeping-alive-complete'] = false;

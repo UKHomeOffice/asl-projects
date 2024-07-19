@@ -23,10 +23,10 @@ const hasExistingDataForCheckbox = (project, checkboxValue) => {
 
   switch (checkboxValue) {
     case 'killed':
-      hasData = checkField(project['method-and-justification']);
+      hasData = checkField(project.protocols[0]['method-and-justification']);
       break;
     case 'used-in-other-projects':
-      hasData = checkField(project['continued-use-relevant-project']);
+      hasData = checkField(project.protocols[0]['continued-use-relevant-project']);
       break;
     case 'kept-alive':
       hasData = [
