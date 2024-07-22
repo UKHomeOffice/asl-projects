@@ -1,6 +1,6 @@
 /**
  * @desc @desc takes @param project:Object, @param checkboxValue: String, select checkbox value, will reset any data nodes associated to NTS checkbox.
- * @returns {Object} An object containing the checkbox value and a boolean indicating if there is existing data.
+ * @returns {Object} An object containing the checkbox value.
  * */
 import cloneDeep from 'lodash/cloneDeep';
 

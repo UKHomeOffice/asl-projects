@@ -1747,3 +1747,11 @@ html.modal-open, html.modal-open body {
   margin: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+.nts-modal-inner a {
+  text-decoration: underline;
+  position: relative;
+  top: 8px;
+  cursor: pointer;
+  color: blue;
+}

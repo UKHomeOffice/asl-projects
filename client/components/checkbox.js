@@ -84,7 +84,7 @@ const NtsCheckBoxWithModal = (props) => {
             <p className="govuk-body">{prepareModalContent().paragraphLine2}</p>
             <div className="govuk-button-group">
               <button type="submit" className="govuk-button" data-module="govuk-button" onClick={handleConfirmModal}>Yes, deselect</button>
-              <button className="govuk-!-margin-left-3 govuk-button" style={{ background: 'grey' }} onClick={handleCancelModal}>Cancel</button>
+              <a className="govuk-!-margin-left-3" onClick={handleCancelModal}>Cancel</a>
             </div>
           </Modal>
         </div>
