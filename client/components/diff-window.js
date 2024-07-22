@@ -230,7 +230,6 @@ const DiffWindow = (props) => {
       case 'location-selector':
       case 'objective-selector':
       case 'species-selector':
-      case 'keywords':
         return parts.length
           ? (
             <ul>
@@ -242,6 +241,30 @@ const DiffWindow = (props) => {
               <em>{ DEFAULT_LABEL }</em>
             </p>
           );
+      case 'keywords':
+        if (parts.length) {
+          return (
+            <ul>
+              { arrayDiff() }
+            </ul>
+          );
+        } else if ((value || []).length >= 1) {
+          return (
+            <ul>
+              {
+                value.map((keyword, i) => (
+                  <li key={i}>{keyword}</li>
+                ))
+              }
+            </ul>
+          );
+        } else {
+          return (
+            <p>
+              <em>{ DEFAULT_LABEL }</em>
+            </p>
+          );
+        }
       case 'radio':
         return radioDiff();
       case 'permissible-purpose':
