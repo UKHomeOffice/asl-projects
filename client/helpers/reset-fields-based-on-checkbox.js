@@ -30,21 +30,23 @@ const resetFieldsBasedOnCheckbox = (project, checkboxValue) => {
   };
 
   if (checkboxValue === 'killed' || checkboxValue === 'used-in-other-projects') {
-    newProject.protocols.forEach(protocol => {
-      switch (checkboxValue) {
-        case 'killed':
-          protocol['method-and-justification'] = defaultEmptyObject;
-          protocol['non-schedule-1'] = false;
-          protocol['complete'] = false;
-          break;
-        case 'used-in-other-projects':
-          protocol['continued-use-relevant-project'] = defaultEmptyObject;
-          protocol['non-schedule-1'] = false;
-          protocol['complete'] = false;
-          break;
-        default:
-          break;
+    newProject.protocols = newProject.protocols.map(protocol => {
+      if (checkboxValue === 'killed') {
+        return {
+          ...protocol,
+          'method-and-justification': defaultEmptyObject,
+          'non-schedule-1': false,
+          'complete': false
+        };
+      } else if (checkboxValue === 'used-in-other-projects') {
+        return {
+          ...protocol,
+          'continued-use-relevant-project': defaultEmptyObject,
+          'non-schedule-1': false,
+          'complete': false
+        };
       }
+      return protocol; // Return the original protocol if no changes are needed
     });
   }
 
