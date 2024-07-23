@@ -3,7 +3,6 @@ export const renderFieldsInProtocol = (fateOfAnimals) => {
     return [];
   }
 
-  // Inject to ../schema/v01/index all possible fields
   const predefinedFields = {
     'killed': {
       label: 'Killed',
@@ -60,33 +59,16 @@ export const renderFieldsInProtocol = (fateOfAnimals) => {
     }
   };
 
-  // Initialize an array with placeholders for the fields
-  const orderedFields = new Array(6).fill(null);
+  // Create an ordered list of fields based on fateOfAnimals
+  const orderedFields = [
+    fateOfAnimals.includes('killed') ? predefinedFields['killed'] : null,
+    predefinedFields['continued-use'], // This field is always present
+    fateOfAnimals.includes('used-in-other-projects') ? predefinedFields['continued-use-2'] : null,
+    fateOfAnimals.includes('set-free') ? predefinedFields['set-free'] : null,
+    fateOfAnimals.includes('rehomed') ? predefinedFields['rehomed'] : null,
+    (fateOfAnimals.includes('set-free') || fateOfAnimals.includes('rehomed')) ? predefinedFields['kept-alive'] : null,
+  ];
 
-  // Assign fields to their specific positions
-  if (fateOfAnimals.includes('killed')) {
-    orderedFields[0] = predefinedFields['killed'];
-  }
-
-  // 'continued-use' should always be the second field
-  orderedFields[1] = predefinedFields['continued-use'];
-
-  if (fateOfAnimals.includes('used-in-other-projects')) {
-    orderedFields[2] = predefinedFields['continued-use-2'];
-  }
-
-  if (fateOfAnimals?.includes('set-free')) {
-    orderedFields[3] = predefinedFields['set-free'];
-  }
-
-  if (fateOfAnimals.includes('rehomed')) {
-    orderedFields[4] = predefinedFields['rehomed'];
-  }
-
-  if (fateOfAnimals.includes('set-free') || fateOfAnimals.includes('rehomed')) {
-    orderedFields[5] = predefinedFields['kept-alive'];
-  }
-
-  // Filter out the null values
+  // Filter out null values
   return orderedFields.filter(field => field !== null);
 };
