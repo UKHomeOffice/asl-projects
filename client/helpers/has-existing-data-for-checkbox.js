@@ -21,44 +21,57 @@ const hasExistingDataForCheckbox = (project, checkboxValue) => {
 
   let hasData = false;
 
-  switch (checkboxValue) {
-    case 'killed':
-      hasData = checkField(project.protocols[0]['method-and-justification']);
-      break;
-    case 'used-in-other-projects':
-      hasData = checkField(project.protocols[0]['continued-use-relevant-project']);
-      break;
-    case 'kept-alive':
-      hasData = [
-        project['keeping-alive-complete'] ||
-                checkField(project['keeping-animals-alive-determine']) ||
-                checkField(project['keeping-animals-alive-supervised']) ||
-                checkField(project['kept-alive-animals'])
-      ].some(field => field === true);
-      break;
-    case 'rehomed':
-      hasData = [
-        project['rehoming-complete'] ||
-                checkField(project['rehoming-harmful']) ||
-                checkField(project['rehoming-healthy']) ||
-                checkField(project['rehoming-other']) ||
-                checkField(project['rehoming-types'])
-      ].some(field => field === true);
-      break;
-    case 'set-free':
-      hasData = [
-        project['setting-free-complete'] ||
-                checkField(project['setting-free-ensure-not-harmful']) ||
-                checkField(project['setting-free-health']) ||
-                checkField(project['setting-free-lost']) ||
-                checkField(project['setting-free-recapturing']) ||
-                checkField(project['setting-free-rehabilitate']) ||
-                checkField(project['setting-free-socialise']) ||
-                project['setting-free-vet']
-      ].some(field => field === true);
-      break;
-    default:
-      hasData = false;
+  if (checkboxValue === 'killed' || checkboxValue === 'used-in-other-projects') {
+    for (let protocol of project.protocols) {
+      switch (checkboxValue) {
+        case 'killed':
+          hasData = checkField(protocol['method-and-justification']);
+          break;
+        case 'used-in-other-projects':
+          hasData = checkField(protocol['continued-use-relevant-project']);
+          break;
+        default:
+          break;
+      }
+      // Break the loop if data is found
+      if (hasData) {
+        break;
+      }
+    }
+  } else {
+    switch (checkboxValue) {
+      case 'kept-alive':
+        hasData = [
+          project['keeping-alive-complete'] ||
+                    checkField(project['keeping-animals-alive-determine']) ||
+                    checkField(project['keeping-animals-alive-supervised']) ||
+                    checkField(project['kept-alive-animals'])
+        ].some(field => field === true);
+        break;
+      case 'rehomed':
+        hasData = [
+          project['rehoming-complete'] ||
+                    checkField(project['rehoming-harmful']) ||
+                    checkField(project['rehoming-healthy']) ||
+                    checkField(project['rehoming-other']) ||
+                    checkField(project['rehoming-types'])
+        ].some(field => field === true);
+        break;
+      case 'set-free':
+        hasData = [
+          project['setting-free-complete'] ||
+                    checkField(project['setting-free-ensure-not-harmful']) ||
+                    checkField(project['setting-free-health']) ||
+                    checkField(project['setting-free-lost']) ||
+                    checkField(project['setting-free-recapturing']) ||
+                    checkField(project['setting-free-rehabilitate']) ||
+                    checkField(project['setting-free-socialise']) ||
+                    project['setting-free-vet']
+        ].some(field => field === true);
+        break;
+      default:
+        hasData = false;
+    }
   }
 
   return { checkboxValue, hasData };

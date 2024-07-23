@@ -28,13 +28,27 @@ const resetFieldsBasedOnCheckbox = (project, checkboxValue) => {
       'object': 'document'
     }
   };
+
+  if (checkboxValue === 'killed' || checkboxValue === 'used-in-other-projects') {
+    newProject.protocols.forEach(protocol => {
+      switch (checkboxValue) {
+        case 'killed':
+          protocol['method-and-justification'] = defaultEmptyObject;
+          protocol['non-schedule-1'] = false;
+          protocol['complete'] = false;
+          break;
+        case 'used-in-other-projects':
+          protocol['continued-use-relevant-project'] = defaultEmptyObject;
+          protocol['non-schedule-1'] = false;
+          protocol['complete'] = false;
+          break;
+        default:
+          break;
+      }
+    });
+  }
+
   switch (checkboxValue) {
-    case 'killed':
-      newProject.protocols[0]['method-and-justification'] = defaultEmptyObject;
-      break;
-    case 'used-in-other-projects':
-      newProject.protocols[0]['continued-use-relevant-project'] = defaultEmptyObject;
-      break;
     case 'kept-alive':
       newProject['keeping-alive-complete'] = false;
       newProject['keeping-animals-alive-determine'] = defaultEmptyObject;
