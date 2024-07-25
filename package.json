@@ -1,12 +1,12 @@
 {
   "name": "@asl/projects",
-  "version": "15.4.4",
+  "version": "15.4.5",
   "description": "ASL PPL prototype",
   "main": "client/external.js",
   "styles": "assets/scss/projects.scss",
   "scripts": {
     "test": "npm run test:lint && npm run test:unit",
-    "test:lint": "eslint .",
+    "test:lint": "eslint . --fix",
     "test:unit": "mocha ./test --recursive --require @babel/register"
   },
   "repository": {
