@@ -80,7 +80,7 @@ class Protocol extends PureComponent {
     const protocolState = this.getProtocolState();
     const isActive = this.isActive(protocolState);
 
-    const conditionalFateOfAnimalFields = renderFieldsInProtocol(this.props.project['fate-of-animals']);
+    const conditionalFateOfAnimalFields = renderFieldsInProtocol(this.props.project['fate-of-animals'] ?? 'default');
 
     // Ensure options array exists, and is initialised properly
     if (!this.props.sections.fate.fields[0].options) {
