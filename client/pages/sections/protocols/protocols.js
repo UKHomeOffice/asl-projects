@@ -9,6 +9,7 @@ import Repeater from '../../../components/repeater';
 import Controls from '../../../components/controls';
 import { getNewComments } from '../../../helpers';
 import { renderFieldsInProtocol } from '../../../helpers/render-fields-in-protocol';
+import NTSFateOfAnimalFields from '../../../helpers/nts-field';
 
 const Form = ({
   number,
@@ -79,17 +80,18 @@ class Protocol extends PureComponent {
 
     const protocolState = this.getProtocolState();
     const isActive = this.isActive(protocolState);
-
-    const conditionalFateOfAnimalFields = renderFieldsInProtocol(this.props.project['fate-of-animals'] ?? 'default');
-
-    // Ensure options array exists, and is initialised properly
-    if (!this.props.sections.fate.fields[0].options) {
-      this.props.sections.fate.fields[0].options = [];
+    let conditionalFateOfAnimalFields = null;
+    if (editable) {
+      conditionalFateOfAnimalFields = renderFieldsInProtocol(this.props.project['fate-of-animals'] ?? 'default');
+      // Ensure options array exists, and is initialised properly
+      if (!this.props.sections.fate.fields[0].options) {
+        this.props.sections.fate.fields[0].options = [];
+      }
+      // Update the options array with unique fields
+      this.props.sections.fate.fields[0].options = conditionalFateOfAnimalFields;
+    } else {
+      this.props.sections.fate.fields[0].options = NTSFateOfAnimalFields();
     }
-
-    // Update the options array with unique fields
-    this.props.sections.fate.fields[0].options = conditionalFateOfAnimalFields;
-
     return editable && this.state.active
       ? <Form
         {...this.props}
