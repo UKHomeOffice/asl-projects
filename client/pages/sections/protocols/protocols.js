@@ -82,7 +82,7 @@ class Protocol extends PureComponent {
     const isActive = this.isActive(protocolState);
     let conditionalFateOfAnimalFields = null;
     if (editable) {
-      conditionalFateOfAnimalFields = renderFieldsInProtocol(this.props.project['fate-of-animals'] ?? 'default');
+      conditionalFateOfAnimalFields = renderFieldsInProtocol(this.props.project['fate-of-animals']);
       // Ensure options array exists, and is initialised properly
       if (!this.props.sections.fate.fields[0].options) {
         this.props.sections.fate.fields[0].options = [];
