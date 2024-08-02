@@ -1,12 +1,12 @@
 import assert from 'assert';
 import {getCurrentURLForFateOfAnimals, UrlMarkdown} from '../../../client/helpers';
 
-Object.defineProperty(window, 'location', {
-  value: {
+// Mock window object
+global.window = {
+  location: {
     href: 'https://example.com/edit/some-page'
-  },
-  writable: true
-});
+  }
+};
 
 describe('getCurrentURLForFateOfAnimals', () => {
   it('should return the correct URL for fate-of-animals', () => {
