@@ -254,10 +254,10 @@ export const getCurrentURLForFateOfAnimals = () => {
   return null;
 };
 
-export const UrlMarkdown = (anchoreName) => {
+export const UrlMarkdown = (linkText) => {
   const url = getCurrentURLForFateOfAnimals();
   if (url == null) {
-    return anchoreName;
+    return linkText;
   }
-  return `[${anchoreName}](${url})`;
+  return `[${linkText}](${url})`;
 };
