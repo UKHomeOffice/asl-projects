@@ -34,7 +34,7 @@ import permissiblePurpose from './permissible-purpose';
 
 import confirmProtocolsAffected from '../../helpers/confirm-protocols-affected';
 
-import { isTrainingLicence, getCurrentURLForFateOfAnimals } from '../../helpers';
+import {isTrainingLicence, UrlMarkdown} from '../../helpers';
 
 export default () => {
   return ({
@@ -1969,7 +1969,7 @@ export default () => {
                 {
                   name: 'fate',
                   label: 'What will happen to animals at the end of this protocol?',
-                  hint: `Select all that apply. These options are based on what you selected in the [non-technical summary](${getCurrentURLForFateOfAnimals()}).`,
+                  hint: `Select all that apply. These options are based on what you selected in the ${UrlMarkdown('non-technical summary')}.`,
                   type: 'checkbox',
                   preserveHierarchy: true,
                   className: 'smaller',
@@ -2286,7 +2286,7 @@ export default () => {
               name: 'marmoset-colony',
               label: 'Will all marmosets be sourced from a self-sustaining colony?',
               hint: `This is a colony that is kept in captivity in a way that:
-  
+
   * ensures animals are accustomed to humans.
   * consists only of animals that have been bred in captivity.
   * is sustained only by animals bred within the same colony, or animals that are sourced from another self-sustaining colony.`,
@@ -2921,16 +2921,16 @@ export default () => {
             title: 'Conditions',
             subtitle: 'Additional conditions',
             intro: `These additional conditions apply to the project as a whole.
-  
+
   Additional conditions that are specific to a set of procedures can be found in each protocol.`,
             pdf: 'These additional conditions apply to the project as a whole. Additional conditions that are specific to a set of procedures can be found in each protocol. Standard conditions that apply to all project licences can be found at the end of this document.'
           },
           addMore: 'Add more conditions',
           intro: `Additional conditions have been added automatically according to the selections made by the applicant.
-  
+
   Please review all sections of this application before making a recommendation.`,
           emptyIntro: `Additional conditions have been added automatically according to the selections made by the applicant.
-  
+
   Please review all sections of this application before making a recommendation.`,
           emptyIntroReadOnly: null,
           type: 'condition',
@@ -2952,15 +2952,15 @@ export default () => {
             },
             review: GrantedAuthorisations,
             intro: `These authorisations apply to the project as a whole.
-  
+
   Authorisations that are specific to a set of procedures can be found in each protocol.`
           },
           addMore: 'Add more authorisations',
           intro: `Authorisations have been added automatically according to the selections made by the applicant.
-  
+
   Please review all sections of this application before making a recommendation.`,
           emptyIntro: `No authorisations have been added to this licence.
-  
+
   If you want to add an authorisation, you will need to create one.`,
           emptyIntroReadOnly: 'No authorisations have been added to this licence.',
           type: 'authorisation',
