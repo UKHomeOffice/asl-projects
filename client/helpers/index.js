@@ -248,8 +248,16 @@ export const isTrainingLicence = values => {
 };
 
 export const getCurrentURLForFateOfAnimals = () => {
-  let currentURL = window.location.href;
-  // Remove everything after '/edit/' including 'protocols' and everything after it
-  currentURL = currentURL.split('/edit/')[0] + '/edit/fate-of-animals';
-  return currentURL;
+  if (window.location.href) {
+    return window.location.href.split('/edit/')[0] + '/edit/fate-of-animals';
+  }
+  return null;
+};
+
+export const UrlMarkdown = (linkText) => {
+  const url = getCurrentURLForFateOfAnimals();
+  if (url == null) {
+    return linkText;
+  }
+  return `[${linkText}](${url})`;
 };
