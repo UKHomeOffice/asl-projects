@@ -34,7 +34,7 @@ import permissiblePurpose from './permissible-purpose';
 
 import confirmProtocolsAffected from '../../helpers/confirm-protocols-affected';
 
-import {isTrainingLicence, UrlMarkdown} from '../../helpers';
+import {isTrainingLicence, markdownLink, getCurrentURLForFateOfAnimals} from '../../helpers';
 
 export default () => {
   return ({
@@ -1969,7 +1969,7 @@ export default () => {
                 {
                   name: 'fate',
                   label: 'What will happen to animals at the end of this protocol?',
-                  hint: `Select all that apply. These options are based on what you selected in the ${UrlMarkdown('non-technical summary')}.`,
+                  hint: `Select all that apply. These options are based on what you selected in the ${markdownLink('non-technical summary', getCurrentURLForFateOfAnimals())}.`,
                   type: 'checkbox',
                   preserveHierarchy: true,
                   className: 'smaller',

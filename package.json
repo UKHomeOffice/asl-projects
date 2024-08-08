@@ -1,6 +1,6 @@
 {
   "name": "@asl/projects",
-  "version": "15.5.7",
+  "version": "15.5.8",
   "description": "ASL PPL prototype",
   "main": "client/external.js",
   "styles": "assets/scss/projects.scss",
@@ -67,7 +67,7 @@
   },
   "devDependencies": {
     "@babel/register": "^7.8.3",
-    "@ukhomeoffice/asl-eslint-common": "^2.2.0",
+    "@ukhomeoffice/eslint-config-asl": "^3.0.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.29.1",

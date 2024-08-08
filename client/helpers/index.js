@@ -248,16 +248,9 @@ export const isTrainingLicence = values => {
 };
 
 export const getCurrentURLForFateOfAnimals = () => {
-  if (window.location.href) {
-    return window.location.href.split('/edit/')[0] + '/edit/fate-of-animals';
-  }
-  return null;
+  return typeof window !== 'undefined' ? window.location.href.split('/edit/')[0] + '/edit/fate-of-animals' : null;
 };
 
-export const UrlMarkdown = (linkText) => {
-  const url = getCurrentURLForFateOfAnimals();
-  if (url == null) {
-    return linkText;
-  }
-  return `[${linkText}](${url})`;
+export const markdownLink = (linkText, url) => {
+  return url ? `[${linkText}](${url})` : linkText;
 };
