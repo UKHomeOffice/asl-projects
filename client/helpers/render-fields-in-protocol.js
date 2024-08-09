@@ -1,20 +1,11 @@
 import NTSFateOfAnimalFields from './nts-field';
 
 export const renderFieldsInProtocol = (fateOfAnimals) => {
-  if (!fateOfAnimals) {
-    return [
-      {'continued-use': {
-        label: 'Continued use on another protocol in this project',
-        value: 'continued-use',
-        reveal: {
-          name: 'continued-use-relevant-project',
-          label: 'Please state the relevant protocol.',
-          type: 'texteditor'
-        }
-      }}];
-  }
-
   const predefinedFields = NTSFateOfAnimalFields();
+
+  if (!fateOfAnimals) {
+    return [predefinedFields['continued-use']];
+  }
 
   // Create an ordered list of fields based on fateOfAnimals
   const orderedFields = [
