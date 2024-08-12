@@ -35,6 +35,7 @@ import permissiblePurpose from './permissible-purpose';
 import confirmProtocolsAffected from '../../helpers/confirm-protocols-affected';
 
 import {isTrainingLicence, markdownLink, getCurrentURLForFateOfAnimals} from '../../helpers';
+import NTSFateOfAnimalFields from '../../helpers/nts-field';
 
 export default () => {
   return ({
@@ -1973,7 +1974,7 @@ export default () => {
                   type: 'checkbox',
                   preserveHierarchy: true,
                   className: 'smaller',
-                  options: []
+                  options: Object.values(NTSFateOfAnimalFields())
                 }
               ]
             },
