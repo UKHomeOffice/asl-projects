@@ -91,7 +91,7 @@ class Protocol extends PureComponent {
     } else {
       // Ensure options array exists and is initialized properly
       _.set(this.props.sections, 'fate.fields[0].options', _.get(this.props.sections, 'fate.fields[0].options', []));
-      this.props.sections.fate.fields[0].options = NTSFateOfAnimalFields();
+      this.props.sections.fate.fields[0].options = Object.values(NTSFateOfAnimalFields());
     }
 
     return editable && this.state.active
