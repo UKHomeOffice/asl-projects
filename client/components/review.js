@@ -34,8 +34,8 @@ class Review extends React.Component {
 
     if (this.props.raPlayback) {
       hint = <RAPlaybackHint {...this.props.raPlayback} hint={hint} />;
-    } else if (!React.isValidElement(hint)) {
-      hint = <Markdown links={true}>{hint}</Markdown>;
+    } else if (hint && !React.isValidElement(hint)) {
+      hint = <Markdown links={true} unwrapSingleLine>{hint}</Markdown>;
     }
 
     const showComments = !this.props.noComments && this.props.type !== 'repeater';

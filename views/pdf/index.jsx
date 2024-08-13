@@ -10,9 +10,9 @@ const PDF = ({ schemaVersion }) => {
     <StaticRouter>
       <Route path="/" component={Component} />
     </StaticRouter>
-  )
+  );
 };
 
-const mapStateToProps = ({ application: { schemaVersion } }) => ({ schemaVersion })
+const mapStateToProps = ({ application: { schemaVersion } }) => ({ schemaVersion });
 
 export default connect(mapStateToProps)(PDF);
