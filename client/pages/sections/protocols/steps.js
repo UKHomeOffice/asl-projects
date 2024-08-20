@@ -41,7 +41,10 @@ class Step extends Component {
   removeItem = e => {
     e.preventDefault();
     if (window.confirm('Are you sure you want to remove this step?')) {
-      this.scrollToPrevious();
+      console.log(this.props);
+      if (!this.props.values.completed) {
+        this.setCompleted(true);
+      }
       this.props.removeItem();
     }
   }
@@ -218,15 +221,20 @@ class Step extends Component {
 
     const repeatedFrom = getRepeatedFromProtocolIndex(values, protocol.id);
     const step = <>
+      {
+          values.deleted && <span className="badge deleted">removed</span>
+      }
       <section
         className={classnames('step', { completed: !stepEditable, editable })}
         ref={this.step}
       >
         <NewComments comments={relevantComments} />
-        <ChangedBadge fields={changeFields(values, changeFieldPrefix)} protocolId={protocol.id} />
+        {
+          !values.deleted && <ChangedBadge fields={changeFields(values, changeFieldPrefix)} protocolId={protocol.id} />
+        }
         <Fragment>
           {
-            editable && completed && !deleted && (
+            editable && completed && !deleted && !values.deleted && (
               <div className="float-right">
                 {
                   length > 1 && (
@@ -240,7 +248,10 @@ class Step extends Component {
             )
           }
           <h3>
-            {`Step ${index + 1}`}
+            {`Step ${index + 1} `}
+            {
+              <a href="#" className={classnames('inline-block', { restore: values.deleted })} onClick={this.props.restoreItem}>{values.deleted ? ' Restore' : ''}</a>
+            }
             {(pdf || readonly) && values.reference && (<Fragment>: { values.reference }</Fragment>)}
             {
               completed && !isUndefined(values.optional) &&
@@ -255,7 +266,7 @@ class Step extends Component {
           }
         </Fragment>
         <EditStepWarning editingReusableStep={editingReusableStep} protocol={protocol} step={values} completed={completed}/>
-        {stepContent}
+        {!values.deleted && stepContent}
       </section>
     </>;
 
@@ -313,7 +324,12 @@ class Step extends Component {
       return (
         <section className={'review-step'}>
           <NewComments comments={relevantComments} />
-          <ChangedBadge fields={changeFields(values, changeFieldPrefix)} protocolId={protocol.id} />
+          {
+            values.deleted && <span className="badge deleted">removed</span>
+          }
+          {
+            !values.deleted && <ChangedBadge fields={changeFields(values, changeFieldPrefix)} protocolId={protocol.id} />
+          }
           <Expandable expanded={expanded} onHeaderClick={() => onToggleExpanded(index)}>
             <Fragment>
               <p className={'toggles float-right'}>
@@ -403,6 +419,7 @@ const StepsRepeater = ({ values, prefix, updateItem, editable, project, isReview
     singular="step"
     prefix={prefix}
     items={steps}
+    softDelete={true}
     onSave={steps => {
       // Extract reusable steps to save
       // Update reusableSteps on project only when they are complete, or have previously been saved
