@@ -39,9 +39,11 @@ const resetFieldsBasedOnCheckbox = (project, checkboxValue) => {
       fate: (protocol.fate ?? []).filter(value => value !== checkboxValue)
     };
 
-    // If the protocol previously had this fate, mark it as incomplete
+    // If the protocol previously had this fate, mark it as incomplete. Casts
+    // existing value to boolean as undefined causes issues with calculating the
+    // checksum for the project.
     updatedProtocol.complete =
-      protocol.complete &&
+      !!protocol.complete &&
       updatedProtocol.fate.length === (protocol.fate ?? []).length;
 
     protocolsComplete = protocolsComplete && updatedProtocol.complete;
@@ -101,8 +103,7 @@ const resetFieldsBasedOnCheckbox = (project, checkboxValue) => {
     newProject['kept-alive-animals'] = defaultEmptyObject();
   }
 
-  // Reset other fields
-  newProject['fate-of-animals-complete'] = false;
+  // If any protocols we're marked as incomplete also make the section as incomplete.
   newProject['protocols-complete'] = protocolsComplete;
 
   return newProject;
