@@ -58,7 +58,7 @@ const NtsCheckBoxWithModal = (props) => {
     const selectedOption = selectedValue ? selectedValue.toString().charAt(0).toUpperCase() + selectedValue.toString().slice(1) : '';
     return {
       h3Bold: `Are you sure you want to deselect this fate?`,
-      paragraphLine1: `The ${selectedOption} at the establishment for non-regulated purposes or possible reuse option will be removed from all protocols.`,
+      paragraphLine1: `The '${selectedOption}' at the establishment for non-regulated purposes or possible reuse option will be removed from all protocols.`,
       paragraphLine2: 'Also, any additional information you entered about this fate will be removed from your application.'
     };
   };
