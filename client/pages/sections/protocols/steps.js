@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import {Button, Warning} from '@ukhomeoffice/react-components';
 
 import isUndefined from 'lodash/isUndefined';
-import {isEqual, pickBy, uniqBy, flatMap} from 'lodash';
+import {isEqual, pickBy, uniqBy, flatMap, get} from 'lodash';
 
 import ReviewFields from '../../../components/review-fields';
 import Repeater from '../../../components/repeater';
@@ -14,7 +14,7 @@ import NewComments from '../../../components/new-comments';
 import ChangedBadge from '../../../components/changed-badge';
 import {v4 as uuid} from 'uuid';
 import Review from '../../../components/review';
-import {getRepeatedFromProtocolIndex, getStepTitle, getTruncatedStepTitle, hydrateSteps} from '../../../helpers/steps';
+import {getRepeatedFromProtocolIndex, getStepTitle, getTruncatedStepTitle, hydrateSteps, removeNewDeleted} from '../../../helpers/steps';
 import {saveReusableSteps} from '../../../actions/projects';
 import Expandable from '../../../components/expandable';
 import cloneDeep from 'lodash/cloneDeep';
@@ -139,7 +139,8 @@ class Step extends Component {
       pdf,
       readonly,
       expanded,
-      onToggleExpanded
+      onToggleExpanded,
+      number
     } = this.props;
     const changeFieldPrefix = values.reusableStepId ? `reusableSteps.${values.reusableStepId}.` : this.props.prefix;
 
@@ -248,7 +249,7 @@ class Step extends Component {
             )
           }
           <h3>
-            {`Step ${index + 1} `}
+            Step { !values.deleted && number + 1 }
             {
               <a href="#" className={classnames('inline-block', { restore: values.deleted })} onClick={this.props.restoreItem}>{values.deleted ? ' Restore' : ''}</a>
             }
@@ -336,7 +337,7 @@ class Step extends Component {
                 <Button className="link no-wrap" onClick={() => onToggleExpanded(index)}>{expanded ? 'Close' : 'Open'} step</Button>
               </p>
               {values.reference ? <h3 className={'title inline'}>{values.reference}</h3> : <h3 className={'title no-wrap'}>{getStepTitle(values.title)}</h3>}
-              <h4 className="light">Step {index + 1} {values.optional === true ? '(optional)' : '(mandatory)'}{repeatedFrom ? ` - repeated from protocol ${repeatedFrom}` : ''}</h4>
+              <h4 className="light">Step { !values.deleted && number + 1 } {values.optional === true ? '(optional)' : '(mandatory)'}{repeatedFrom ? ` - repeated from protocol ${repeatedFrom}` : ''}</h4>
             </Fragment>
             {stepContent}
           </Expandable>
@@ -455,7 +456,8 @@ const StepsRepeater = ({ values, prefix, updateItem, editable, project, isReview
 
 export default function Steps({project, values, ...props}) {
   const isReviewStep = parseInt(useParams().step, 10) === 1;
-  const [ steps, reusableSteps ] = hydrateSteps(project.protocols, values.steps, project.reusableSteps || {});
+  const [ allSteps, reusableSteps ] = hydrateSteps(project.protocols, values.steps, project.reusableSteps || {});
+  const steps = removeNewDeleted(allSteps, props.previousProtocols.steps);
 
   const [expanded, setExpanded] = useState(steps.map(() => false));
 
