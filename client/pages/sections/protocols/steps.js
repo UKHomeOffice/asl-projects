@@ -14,7 +14,7 @@ import NewComments from '../../../components/new-comments';
 import ChangedBadge from '../../../components/changed-badge';
 import {v4 as uuid} from 'uuid';
 import Review from '../../../components/review';
-import {getRepeatedFromProtocolIndex, getStepTitle, getTruncatedStepTitle, hydrateSteps, removeNewDeleted} from '../../../helpers/steps';
+import {getRepeatedFromProtocolIndex, getStepTitle, getTruncatedStepTitle, hydrateSteps, removeNewDeleted, addDeletedReusableSteps} from '../../../helpers/steps';
 import {saveReusableSteps} from '../../../actions/projects';
 import Expandable from '../../../components/expandable';
 import cloneDeep from 'lodash/cloneDeep';
@@ -457,8 +457,10 @@ const StepsRepeater = ({ values, prefix, updateItem, editable, project, isReview
 export default function Steps({project, values, ...props}) {
   const isReviewStep = parseInt(useParams().step, 10) === 1;
   const [ allSteps, reusableSteps ] = hydrateSteps(project.protocols, values.steps, project.reusableSteps || {});
-  const steps = removeNewDeleted(allSteps, props.previousProtocols.steps);
-
+  let steps = removeNewDeleted(allSteps, props.previousProtocols.steps);
+  if ( !props.editable && props.previousProtocols.steps.length > props.index) {
+    steps = addDeletedReusableSteps(steps, props.previousProtocols.steps[props.index], reusableSteps);
+  }
   const [expanded, setExpanded] = useState(steps.map(() => false));
 
   const setAllExpanded = (e) => {

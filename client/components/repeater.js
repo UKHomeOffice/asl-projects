@@ -88,7 +88,7 @@ class Repeater extends Component {
     return Promise.resolve()
       .then(this.props.onBeforeRemove)
       .then(() => {
-        if (this.props.softDelete) {
+        if (this.props.softDelete && !this.state.items[index].reusable) {
           return this.update(this.state.items.map((item, i) => {
             if (index === i) {
               return { ...item, deleted: true };
