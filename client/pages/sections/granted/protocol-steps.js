@@ -44,7 +44,7 @@ const Step = ({ id, index, fields, prefix, ...props }) => {
 
 const Steps = ({ values, fields, pdf, prefix, project }) => {
   let [ steps ] = hydrateSteps(project.protocols, values.steps, project.reusableSteps || {});
-  steps = steps.filter (step => !step.deleted );
+  steps = steps.filter(step => !step.deleted);
 
   return (
     <div className="granted-steps">

@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import {Button, Warning} from '@ukhomeoffice/react-components';
 
 import isUndefined from 'lodash/isUndefined';
-import {isEqual, pickBy, uniqBy, flatMap, get} from 'lodash';
+import {isEqual, pickBy, uniqBy, flatMap} from 'lodash';
 
 import ReviewFields from '../../../components/review-fields';
 import Repeater from '../../../components/repeater';
@@ -223,7 +223,7 @@ class Step extends Component {
     const repeatedFrom = getRepeatedFromProtocolIndex(values, protocol.id);
     const step = <>
       {
-          values.deleted && <span className="badge deleted">removed</span>
+        values.deleted && <span className="badge deleted">removed</span>
       }
       <section
         className={classnames('step', { completed: !stepEditable, editable })}
@@ -460,7 +460,7 @@ export default function Steps({project, values, ...props}) {
   console.log(props);
   let steps = allSteps;
   if (props.pdf) {
-    steps = allSteps.filter (step => !step.deleted );
+    steps = allSteps.filter(step => !step.deleted);
   } else {
     steps = removeNewDeleted(allSteps, props.previousProtocols.steps);
     if (!props.editable && props.previousProtocols.steps.length > props.index) {
