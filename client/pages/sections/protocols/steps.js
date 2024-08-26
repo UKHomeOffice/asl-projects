@@ -457,9 +457,15 @@ const StepsRepeater = ({ values, prefix, updateItem, editable, project, isReview
 export default function Steps({project, values, ...props}) {
   const isReviewStep = parseInt(useParams().step, 10) === 1;
   const [ allSteps, reusableSteps ] = hydrateSteps(project.protocols, values.steps, project.reusableSteps || {});
-  let steps = removeNewDeleted(allSteps, props.previousProtocols.steps);
-  if ( !props.editable && props.previousProtocols.steps.length > props.index) {
-    steps = addDeletedReusableSteps(steps, props.previousProtocols.steps[props.index], reusableSteps);
+  console.log(props);
+  let steps = allSteps;
+  if (props.pdf) {
+    steps = allSteps.filter (step => !step.deleted );
+  } else {
+    steps = removeNewDeleted(allSteps, props.previousProtocols.steps);
+    if (!props.editable && props.previousProtocols.steps.length > props.index) {
+      steps = addDeletedReusableSteps(steps, props.previousProtocols.steps[props.index], reusableSteps);
+    }
   }
   const [expanded, setExpanded] = useState(steps.map(() => false));
 
