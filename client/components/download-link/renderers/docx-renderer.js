@@ -800,7 +800,8 @@ export default (application, sections, values, updateImageDimensions) => {
 
     switch (name) {
       case 'steps':
-        const [ steps ] = hydrateSteps(project.protocols, values.steps, project.reusableSteps || {});
+        let [ steps ] = hydrateSteps(project.protocols, values.steps, project.reusableSteps || {});
+        steps = steps.filter(step => !step.deleted);
         return (steps || []).forEach((stepValues, index) => {
           doc.createParagraph(`Step ${index + 1}${stepValues.reference ? `: ${stepValues.reference}` : ''} (${stepValues.optional ? 'optional' : 'mandatory'})`).heading4();
           const repeatedFrom = getRepeatedFromProtocolIndex(stepValues, values.id);
