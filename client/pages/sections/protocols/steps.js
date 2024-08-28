@@ -41,7 +41,6 @@ class Step extends Component {
   removeItem = e => {
     e.preventDefault();
     if (window.confirm('Are you sure you want to remove this step?')) {
-      console.log(this.props);
       if (!this.props.values.completed) {
         this.setCompleted(true);
       }
@@ -457,7 +456,6 @@ const StepsRepeater = ({ values, prefix, updateItem, editable, project, isReview
 export default function Steps({project, values, ...props}) {
   const isReviewStep = parseInt(useParams().step, 10) === 1;
   const [ allSteps, reusableSteps ] = hydrateSteps(project.protocols, values.steps, project.reusableSteps || {});
-  console.log(props);
   let steps = allSteps;
   if (props.pdf) {
     steps = allSteps.filter(step => !step.deleted);
