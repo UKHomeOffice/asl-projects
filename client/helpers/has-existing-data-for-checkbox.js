@@ -1,24 +1,33 @@
+function checkNodes(nodes) {
+  for (let node of nodes) {
+    if (node.object === 'text' && node.text && node.text.trim() !== '') {
+      return true;
+    }
+    if (node.object === 'block' && node.nodes && checkNodes(node.nodes)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function checkField(field) {
+  return field && field.document && field.document.nodes && checkNodes(field.document.nodes);
+}
+
+function hasKeptAliveData(project) {
+  return [
+    project['keeping-alive-complete'] ||
+    checkField(project['keeping-animals-alive-determine']) ||
+    checkField(project['keeping-animals-alive-supervised']) ||
+    checkField(project['kept-alive-animals'])
+  ].some(field => field === true);
+}
+
 /**
  * @desc Takes @param project:Object and @param checkboxValue: String. Checks if there is any existing data in the nodes of the NTS [fate-of-animal] fields associated with the checkbox value.
  * @returns {Object} An object containing the checkbox value and a boolean indicating if there is existing data.
  * */
 const hasExistingDataForCheckbox = (project, checkboxValue) => {
-  const checkNodes = (nodes) => {
-    for (let node of nodes) {
-      if (node.object === 'text' && node.text && node.text.trim() !== '') {
-        return true;
-      }
-      if (node.object === 'block' && node.nodes && checkNodes(node.nodes)) {
-        return true;
-      }
-    }
-    return false;
-  };
-
-  const checkField = (field) => {
-    return field && field.document && field.document.nodes && checkNodes(field.document.nodes);
-  };
-
   let hasData = false;
 
   if (checkboxValue === 'killed' || checkboxValue === 'used-in-other-projects') {
@@ -41,12 +50,7 @@ const hasExistingDataForCheckbox = (project, checkboxValue) => {
   } else {
     switch (checkboxValue) {
       case 'kept-alive':
-        hasData = [
-          project['keeping-alive-complete'] ||
-                    checkField(project['keeping-animals-alive-determine']) ||
-                    checkField(project['keeping-animals-alive-supervised']) ||
-                    checkField(project['kept-alive-animals'])
-        ].some(field => field === true);
+        hasData = hasKeptAliveData(project);
         break;
       case 'rehomed':
         hasData = [
@@ -55,7 +59,8 @@ const hasExistingDataForCheckbox = (project, checkboxValue) => {
                     checkField(project['rehoming-healthy']) ||
                     checkField(project['rehoming-other']) ||
                     checkField(project['rehoming-types'])
-        ].some(field => field === true);
+        ].some(field => field === true) ||
+          hasKeptAliveData(project);
         break;
       case 'set-free':
         hasData = [
@@ -67,7 +72,8 @@ const hasExistingDataForCheckbox = (project, checkboxValue) => {
                     checkField(project['setting-free-rehabilitate']) ||
                     checkField(project['setting-free-socialise']) ||
                     project['setting-free-vet']
-        ].some(field => field === true);
+        ].some(field => field === true) ||
+          hasKeptAliveData(project);
         break;
       default:
         hasData = false;
