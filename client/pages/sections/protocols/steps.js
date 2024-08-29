@@ -333,10 +333,13 @@ class Step extends Component {
           <Expandable expanded={expanded} onHeaderClick={() => onToggleExpanded(index)}>
             <Fragment>
               <p className={'toggles float-right'}>
-                <Button className="link no-wrap" onClick={() => onToggleExpanded(index)}>{expanded ? 'Close' : 'Open'} step</Button>
+                <Button className="link no-wrap"
+                        onClick={() => onToggleExpanded(index)}>{expanded ? 'Close' : 'Open'} step</Button>
               </p>
-              {values.reference ? <h3 className={'title inline'}>{values.reference}</h3> : <h3 className={'title no-wrap'}>{getStepTitle(values.title)}</h3>}
-              <h4 className="light">Step { !values.deleted && number + 1 } {values.optional === true ? '(optional)' : '(mandatory)'}{repeatedFrom ? ` - repeated from protocol ${repeatedFrom}` : ''}</h4>
+              {values.reference ? <h3 className={'title inline'}>{values.reference}</h3> :
+                <h3 className={'title no-wrap'}>{getStepTitle(values.title)}</h3>}
+              <h4
+                className="light">{values.deleted ? 'Removed step' : `Step ${number + 1}`} {values.optional === true ? '(optional)' : '(mandatory)'}{repeatedFrom ? ` - repeated from protocol ${repeatedFrom}` : ''}</h4>
             </Fragment>
             {stepContent}
           </Expandable>
@@ -347,7 +350,7 @@ class Step extends Component {
   }
 }
 
-const StepSelector = ({ reusableSteps, values, onSaveSelection, length, onCancel }) => {
+const StepSelector = ({reusableSteps, values, onSaveSelection, length, onCancel}) => {
   const DEFAULT_STEP_REFERENCE = 'Unnamed step';
   const MAX_CHARACTERS_FROM_TITLE = 80;
   const [selectedSteps, setSelectedSteps] = useState([]);
