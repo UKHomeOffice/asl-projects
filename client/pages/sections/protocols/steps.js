@@ -1,21 +1,26 @@
-import React, {Component, createRef, Fragment, useState} from 'react';
-import {useParams} from 'react-router';
+import React, { Component, createRef, Fragment, useState } from 'react';
+import { useParams } from 'react-router';
 
 import classnames from 'classnames';
-import {Button, Warning} from '@ukhomeoffice/react-components';
+import { Button, Warning } from '@ukhomeoffice/react-components';
 
 import isUndefined from 'lodash/isUndefined';
-import {isEqual, pickBy, uniqBy, flatMap} from 'lodash';
+import { flatMap, isEqual, pickBy, uniqBy } from 'lodash';
 
 import ReviewFields from '../../../components/review-fields';
 import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';
 import NewComments from '../../../components/new-comments';
 import ChangedBadge from '../../../components/changed-badge';
-import {v4 as uuid} from 'uuid';
+import { v4 as uuid } from 'uuid';
 import Review from '../../../components/review';
-import {getRepeatedFromProtocolIndex, getStepTitle, getTruncatedStepTitle, hydrateSteps} from '../../../helpers/steps';
-import {saveReusableSteps} from '../../../actions/projects';
+import {
+  getRepeatedFromProtocolIndex,
+  getStepTitle,
+  getTruncatedStepTitle,
+  hydrateSteps
+} from '../../../helpers/steps';
+import { saveReusableSteps } from '../../../actions/projects';
 import Expandable from '../../../components/expandable';
 import cloneDeep from 'lodash/cloneDeep';
 
@@ -184,7 +189,7 @@ class Step extends Component {
               readonly={true}
               className="reusable"
             />
-            <Warning>You cannot change this answer when editing all instances of this step.</Warning>
+            <Warning>You cannot change this answer when editing reusable steps.</Warning>
           </Fragment>
           }
           <p className="control-panel">
@@ -210,8 +215,9 @@ class Step extends Component {
             !values.reusable && editable && !deleted && <a href="#" onClick={this.editStep}>Edit step</a>
           }
           {
-            values.reusable && editable && !deleted && (<><a href="#" onClick={this.editThisStep}>Edit just this
-              step</a> | <a href="#" onClick={this.editReusableStep}>Edit every instance of this step</a></>)
+            values.reusable && editable && !deleted && (
+              <a href="#" onClick={this.editReusableStep}>Edit every instance of this reusable step</a>
+            )
           }
         </div>
     }</>;
