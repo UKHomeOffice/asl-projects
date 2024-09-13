@@ -11,7 +11,7 @@ import ReviewFields from '../../../components/review-fields';
 import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';
 import NewComments from '../../../components/new-comments';
-import ChangedBadge from '../../../components/changed-badge';
+import StepBadge from "../../../components/step-badge";
 import { v4 as uuid } from 'uuid';
 import Review from '../../../components/review';
 import {
@@ -119,6 +119,14 @@ class Step extends Component {
     this.props.moveDown();
   }
 
+  isOldStep = previousSteps => {
+    let stepIds = [];
+    previousSteps.forEach(protocol => {
+      protocol.forEach(step => stepIds.push(step.id));
+    });
+    return stepIds.includes(this.props.values.id);
+  }
+
   componentDidMount() {
     if (this.props.protocolState && !isUndefined(this.props.protocolState.sectionItem)) {
       const activeStep = this.props.protocolState.sectionItem;
@@ -165,7 +173,7 @@ class Step extends Component {
         <ReviewFields
           fields={[fields.find(f => f.name === 'title')]}
           values={{ title: values.title }}
-          prefix={changeFieldPrefix}
+          prefix={this.isOldStep(this.props.previousProtocols.steps) ? changeFieldPrefix : {}}
           editLink={`0#${this.props.prefix}`}
           protocolId={protocol.id}
           readonly={!isReviewStep}
@@ -184,7 +192,7 @@ class Step extends Component {
           /> : <Fragment>
             <Fieldset
               fields={fields.filter(f => f.name !== 'reusable')}
-              prefix={changeFieldPrefix}
+              prefix={this.isOldStep(this.props.previousProtocols.steps) ? changeFieldPrefix : {}}
               onFieldChange={(key, value) => updateItem({ [key]: value })}
               values={values}
             />
@@ -238,7 +246,7 @@ class Step extends Component {
       >
         <NewComments comments={relevantComments} />
         {
-          !values.deleted && <ChangedBadge fields={changeFields(values, changeFieldPrefix)} protocolId={protocol.id} />
+          !values.deleted && <StepBadge fields={values} changeFieldPrefix={changeFieldPrefix} protocolId={protocol.id} />
         }
         <Fragment>
           {
@@ -336,7 +344,7 @@ class Step extends Component {
             values.deleted && <span className="badge deleted">removed</span>
           }
           {
-            !values.deleted && <ChangedBadge fields={changeFields(values, changeFieldPrefix)} protocolId={protocol.id} />
+            !values.deleted && <StepBadge fields={values} changeFieldPrefix={changeFieldPrefix} protocolId={protocol.id} />
           }
           <Expandable expanded={expanded} onHeaderClick={() => onToggleExpanded(index)}>
             <Fragment>
