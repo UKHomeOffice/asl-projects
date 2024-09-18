@@ -246,3 +246,19 @@ export const stripInvalidXmlChars = text => {
 export const isTrainingLicence = values => {
   return values['training-licence'] || (values['permissible-purpose'] || []).includes('higher-education');
 };
+
+export const getCurrentURLForFateOfAnimals = () => {
+  if (typeof window === 'undefined') return null;
+
+  const href = window.location.href;
+  const splitter = ['/edit/', '/full-application/'].find(urlPart => href.includes(urlPart));
+  if (!splitter) {
+    return null;
+  }
+
+  return typeof window !== 'undefined' ? window.location.href.split(splitter)[0] + `${splitter}fate-of-animals` : null;
+};
+
+export const markdownLink = (linkText, url) => {
+  return url ? `[${linkText}](${url})` : linkText;
+};

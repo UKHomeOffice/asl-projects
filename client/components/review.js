@@ -7,6 +7,7 @@ import DiffWindow from './diff-window';
 import ReviewField from './review-field';
 import ChangedBadge from './changed-badge';
 import RAPlaybackHint from './ra-playback-hint';
+import { Markdown } from '@ukhomeoffice/asl-components';
 
 import ErrorBoundary from './error-boundary';
 import classnames from 'classnames';
@@ -33,6 +34,14 @@ class Review extends React.Component {
 
     if (this.props.raPlayback) {
       hint = <RAPlaybackHint {...this.props.raPlayback} hint={hint} />;
+    } else if (hint && !React.isValidElement(hint)) {
+      hint = <Markdown links={true} paragraphProps={{className: 'grey'}}>{hint}</Markdown>;
+    } else if (hint) {
+      // Defensive: keep old behaviour for unexpected edge cases
+      hint = <p className="grey">{hint}</p>;
+    } else {
+      // Cast all falsy hints to null, so react definitely renders nothing
+      hint = null;
     }
 
     const showComments = !this.props.noComments && this.props.type !== 'repeater';
@@ -67,9 +76,7 @@ class Review extends React.Component {
             />
           )
         }
-        {
-          hint && <p className="grey">{hint}</p>
-        }
+        {hint}
         {
           this.replay()
         }

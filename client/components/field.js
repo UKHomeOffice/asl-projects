@@ -36,6 +36,7 @@ import Fieldset from './fieldset';
 import Comments from './comments';
 
 import ErrorBoundary from './error-boundary';
+import NtsCheckBoxWithModal from './checkbox';
 
 class Field extends Component {
 
@@ -209,6 +210,20 @@ class Field extends Component {
           }
           this.onFieldChange(val);
         }}
+      />;
+    }
+    if (this.props.type === 'checkbox' && this.props.name === 'fate-of-animals') {
+      return <NtsCheckBoxWithModal
+        className={ this.props.className }
+        label={ label }
+        hint={ hint }
+        name={ this.props.name }
+        options={ this.mapOptions(this.props.options) }
+        value={ value }
+        error={ this.props.error }
+        inline={ this.props.inline }
+        project={this.props.project}
+        onFieldChange={this.onFieldChange}
       />;
     }
     if (this.props.type === 'checkbox' || this.props.type === 'permissible-purpose') {

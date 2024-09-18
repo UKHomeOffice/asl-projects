@@ -36,6 +36,39 @@ export const hydrateSteps = (protocols, steps, reusableSteps) => {
   return [hydratedSteps, Object.values(reusableSteps)];
 };
 
+export const removeNewDeleted = (steps, previousSteps) => {
+  let oldSteps = [];
+  previousSteps.forEach(protocol => {
+    protocol.forEach(step => oldSteps.push(step.id));
+  });
+  return (steps || []).filter(p => {
+    if (p.deleted === true) {
+      return !!oldSteps.includes(p.id);
+    }
+    return true;
+  });
+};
+
+export const addDeletedReusableSteps = (steps, previousSteps, reusableSteps) => {
+  let stepIds = [];
+  steps.forEach(step => {
+    stepIds.push(step.id);
+  });
+  let oldIndex = 0;
+  for (let i = 0; i < previousSteps.length; i++) {
+    if (stepIds.includes(previousSteps[i].id)) {
+      oldIndex = stepIds.indexOf(previousSteps[i].id);
+    } else {
+      oldIndex = oldIndex + 1;
+      const found = reusableSteps.find((reusableStep) => reusableStep.id === previousSteps[i].reusableStepId);
+      let step = {...found};
+      step.deleted = true;
+      steps.splice(oldIndex, 0, step);
+    }
+  }
+  return steps;
+};
+
 export const getTruncatedStepTitle = (step, numCharacters) => {
   const title = getStepTitle(step.title, null);
   if (!title || title.trim() === '') return null;

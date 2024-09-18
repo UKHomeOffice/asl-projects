@@ -88,7 +88,9 @@ class Repeater extends Component {
     return Promise.resolve()
       .then(this.props.onBeforeRemove)
       .then(() => {
-        if (this.props.softDelete) {
+        // mark record deleted, second check is to
+        // ensure that reusable step which was used to create reusable step in a protocol is not deleted, when deleting an instance of reusable step.
+        if (this.props.softDelete && !this.state.items[index].reusable) {
           return this.update(this.state.items.map((item, i) => {
             if (index === i) {
               return { ...item, deleted: true };

@@ -1,6 +1,6 @@
 {
   "name": "@asl/projects",
-  "version": "15.3.3",
+  "version": "15.6.1",
   "description": "ASL PPL prototype",
   "main": "client/external.js",
   "styles": "assets/scss/projects.scss",
@@ -28,7 +28,7 @@
     "@asl/slate-edit-table": "0.0.3",
     "@babel/core": "^7.24.4",
     "@redux-devtools/extension": "^3.3.0",
-    "@ukhomeoffice/asl-components": "13.5.0",
+    "@ukhomeoffice/asl-components": "13.6.0",
     "@ukhomeoffice/asl-constants": "^2.1.5",
     "@ukhomeoffice/asl-slate-edit-list": "0.0.8",
     "@ukhomeoffice/frontend-toolkit": "^3.0.0",
@@ -38,6 +38,7 @@
     "details-element-polyfill": "^2.3.0",
     "diff": "^5.2.0",
     "docx": "5.0.0-rc4",
+    "fast-array-diff": "^1.1.0",
     "file-saver": "^2.0.0",
     "immutable": "^3.8.2",
     "is-hotkey": "^0.2.0",
@@ -66,7 +67,7 @@
   },
   "devDependencies": {
     "@babel/register": "^7.8.3",
-    "@ukhomeoffice/asl-eslint-common": "^2.2.0",
+    "@ukhomeoffice/eslint-config-asl": "^3.0.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.29.1",
