@@ -110,12 +110,14 @@ class Step extends Component {
   moveUp = e => {
     e.preventDefault();
     e.stopPropagation();
+    this.props.updateReusable(false);
     this.props.moveUp();
   }
 
   moveDown = e => {
     e.preventDefault();
     e.stopPropagation();
+    this.props.updateReusable(false);
     this.props.moveDown();
   }
 
@@ -344,7 +346,7 @@ class Step extends Component {
             values.deleted && <span className="badge deleted">removed</span>
           }
           {
-            !values.deleted && <StepBadge fields={values} changeFieldPrefix={changeFieldPrefix} protocolId={protocol.id} />
+            !values.deleted && <StepBadge fields={values} changeFieldPrefix={changeFieldPrefix} protocolId={protocol.id} position={number} />
           }
           <Expandable expanded={expanded} onHeaderClick={() => onToggleExpanded(index)}>
             <Fragment>
@@ -430,6 +432,8 @@ const EditStepWarning = ({ editingReusableStep, protocol, step, completed }) => 
 
 const StepsRepeater = ({ values, prefix, updateItem, editable, project, isReviewStep, steps, reusableSteps, ...props }) => {
   const lastStepIsNew = isNewStep(steps[steps.length - 1]);
+  //By default, reusable steps are updated always, but this is not true, hence adding ability to turn off when not needed
+  const [updateReusable, setUpdateReusable] = useState(true);
 
   return (<Repeater
     type="steps"
@@ -452,7 +456,11 @@ const StepsRepeater = ({ values, prefix, updateItem, editable, project, isReview
         return step;
       });
 
-      props.dispatch(saveReusableSteps(reusableSteps));
+      if (updateReusable) {
+        props.dispatch(saveReusableSteps(reusableSteps));
+      } else {
+        setUpdateReusable(true);
+      }
       updateItem({ steps: mappedSteps });
     }}
     addAnother={!props.pdf && !values.deleted && editable && !lastStepIsNew}
@@ -464,6 +472,7 @@ const StepsRepeater = ({ values, prefix, updateItem, editable, project, isReview
       isReviewStep={isReviewStep}
       protocol={values}
       reusableSteps={reusableSteps}
+      updateReusable={setUpdateReusable}
       {...props}
       parentUpdateItem={updateItem}
     />
