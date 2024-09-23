@@ -66,7 +66,7 @@ const NtsCheckBoxWithModal = (props) => {
         selectedValue.toString().charAt(0).toUpperCase() + selectedValue.toString().slice(1)) : '';
     const dynamicLine1 = selectedValue === 'kept-alive'
       ? 'The Kept alive at the establishment for non-regulated purposes or possible reuse'
-      : `The '${selectedOption}' at the establishment for non-regulated purposes or possible reuse option will be removed from all protocols.`;
+      : `The '${selectedOption}' option will be removed from all protocols.`;
 
     return {
       h3Bold: `Are you sure you want to deselect this fate?`,
