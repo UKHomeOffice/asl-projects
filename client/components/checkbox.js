@@ -55,7 +55,7 @@ const NtsCheckBoxWithModal = (props) => {
   const customTextMap = {
     'set-free': 'Set free',
     'kept-alive': 'Kept alive',
-    'used-in-other-projects': 'Used in other projects'
+    'used-in-other-projects': 'Continued use on other projects'
   };
 
   // Function to prepare modal content
@@ -65,7 +65,7 @@ const NtsCheckBoxWithModal = (props) => {
       ? (customTextMap[selectedValue.toString().toLowerCase()] ||
         selectedValue.toString().charAt(0).toUpperCase() + selectedValue.toString().slice(1)) : '';
     const dynamicLine1 = selectedValue === 'kept-alive'
-      ? 'The Kept alive at the establishment for non-regulated purposes or possible reuse'
+      ? `The 'Kept alive for non-regulated purposes or possible reuse' option will be removed from all protocols.`
       : `The '${selectedOption}' option will be removed from all protocols.`;
 
     return {
