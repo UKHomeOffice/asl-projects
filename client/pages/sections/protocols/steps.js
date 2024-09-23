@@ -332,6 +332,7 @@ class Step extends Component {
           fields={fields}
           prefix={`${values.id}-add-step`}
           onFieldChange={(key, value) => {
+            this.props.updateReusable(false);
             updateItem({ [key]: value });
           }}
           values={values}
@@ -442,6 +443,9 @@ const StepsRepeater = ({ values, prefix, updateItem, editable, project, isReview
     prefix={prefix}
     items={steps}
     softDelete={true}
+    onBeforeAdd={() => {
+      setUpdateReusable(false);
+    }}
     onSave={steps => {
       // Extract reusable steps to save
       // Update reusableSteps on project only when they are complete, or have previously been saved
