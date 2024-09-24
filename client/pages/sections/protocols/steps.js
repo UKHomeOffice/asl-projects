@@ -11,7 +11,7 @@ import ReviewFields from '../../../components/review-fields';
 import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';
 import NewComments from '../../../components/new-comments';
-import StepBadge from "../../../components/step-badge";
+import StepBadge from '../../../components/step-badge';
 import { v4 as uuid } from 'uuid';
 import Review from '../../../components/review';
 import {
@@ -36,8 +36,6 @@ function renderUsedInProtocols(protocolIndexes) {
   }
   return `${protocolIndexes.slice(0, protocolIndexes.length - 1).join(',')} and ${protocolIndexes[protocolIndexes.length - 1]}`;
 }
-
-const changeFields = (step, prefix) => step.reusable ? [ `reusableSteps.${step.reusableStepId}` ] : [ prefix.substr(0, prefix.length - 1) ];
 
 class Step extends Component {
   constructor(options) {

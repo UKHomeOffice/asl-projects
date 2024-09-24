@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames';
-import ChangedBadge from "./changed-badge";
+import ChangedBadge from './changed-badge';
 
 const changeFields = (step, prefix) => step.reusable ? [ `reusableSteps.${step.reusableStepId}` ] : [ prefix.substr(0, prefix.length - 1) ];
 
@@ -11,34 +11,34 @@ export default function StepBadge(props) {
   let stepIds = [];
   let previousIndex = -1;
   steps.forEach(protocol => {
-    protocol.forEach(((step, i) => {
-      if ( step.id === props.fields.id && props.position !== i) {
+    protocol.forEach((step, i) => {
+      if (step.id === props.fields.id && props.position !== i) {
         previousIndex = i;
       }
-      stepIds.push(step.id)
-    }));
+      stepIds.push(step.id);
+    });
   });
 
   let grantedIndex = -1;
   let grantedStepIds = [];
   grantedSteps.forEach(protocol => {
-    protocol.forEach(((step, i) => {
-      if ( step.id === props.fields.id && props.position !== i) {
+    protocol.forEach((step, i) => {
+      if (step.id === props.fields.id && props.position !== i) {
         grantedIndex = i;
       }
       grantedStepIds.push(step.id);
-    }));
+    });
   });
 
   let firstIndex = -1;
   let firstStepIds = [];
   firstSteps.forEach(protocol => {
-    protocol.forEach(((step, i) => {
-      if ( step.id === props.fields.id && props.position !== i) {
+    protocol.forEach((step, i) => {
+      if (step.id === props.fields.id && props.position !== i) {
         firstIndex = i;
       }
       firstStepIds.push(step.id);
-    }));
+    });
   });
   if (stepIds.includes(props.fields.id) || grantedStepIds.includes(props.fields.id) || firstStepIds.includes(props.fields.id)) {
     let move;
