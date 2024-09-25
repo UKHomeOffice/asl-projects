@@ -247,7 +247,7 @@ class Step extends Component {
       >
         <NewComments comments={relevantComments} />
         {
-          !values.deleted && !pdf && <StepBadge fields={values} changeFieldPrefix={changeFieldPrefix} protocolId={protocol.id} position={index}/>
+          !values.deleted && <StepBadge fields={values} changeFieldPrefix={changeFieldPrefix} protocolId={protocol.id} position={index}/>
         }
         <Fragment>
           {
