@@ -8,7 +8,7 @@ const changeFields = (step, prefix) => step.reusable ? [ `reusableSteps.${step.r
 export default function StepBadge(props) {
   const { previous, steps, firstSteps, grantedSteps } = useSelector(state => state.application.previousProtocols);
   if (!previous || !steps || !firstSteps || !grantedSteps) {
-    return <></>;
+    return null;
   }
 
   let stepIds = [];
