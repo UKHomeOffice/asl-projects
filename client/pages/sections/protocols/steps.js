@@ -174,7 +174,7 @@ class Step extends Component {
         <ReviewFields
           fields={[fields.find(f => f.name === 'title')]}
           values={{ title: values.title }}
-          prefix={!pdf && this.isOldStep(this.props.previousProtocols.steps) ? changeFieldPrefix : {}}
+          prefix={changeFieldPrefix}
           editLink={`0#${this.props.prefix}`}
           protocolId={protocol.id}
           readonly={!isReviewStep}
@@ -193,7 +193,7 @@ class Step extends Component {
           /> : <Fragment>
             <Fieldset
               fields={fields.filter(f => f.name !== 'reusable')}
-              prefix={this.isOldStep(this.props.previousProtocols.steps) ? changeFieldPrefix : {}}
+              prefix={changeFieldPrefix}
               onFieldChange={(key, value) => updateItem({ [key]: value })}
               values={values}
             />
