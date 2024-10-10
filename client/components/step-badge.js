@@ -49,7 +49,7 @@ export default function StepBadge(props) {
       move = <span className="badge reordered">{previousIndex > props.position ? 'Moved up' : 'Moved down'}</span>;
     } else if (grantedIndex !== -1) {
       move = <span className="badge">{grantedIndex > props.position ? 'Moved up' : 'Moved down'}</span>;
-    } else if (grantedSteps.length === 0 && firstIndex !== -1) {
+    } else if (!grantedSteps.length && firstIndex >= 0) {
       move = <span className="badge">{firstIndex > props.position ? 'Moved up' : 'Moved down'}</span>;
     }
     return (
