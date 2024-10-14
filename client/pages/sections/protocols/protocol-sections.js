@@ -99,7 +99,8 @@ class ProtocolSections extends PureComponent {
             <Fragment>
               <NewProtocolBadge id={values.id} />
               <ReorderedBadge id={values.id} />
-              <ChangedBadge fields={[`protocols.${values.id}`, ...reusableStepFieldKeys(values)]} protocolId={values.id} />
+<ChangedBadge fields={[`protocols.${values.id}`, ...reusableStepFieldKeys(values)]} protocolId={values.id} />
+
             </Fragment>
           )
         }

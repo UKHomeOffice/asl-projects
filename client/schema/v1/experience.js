@@ -48,7 +48,7 @@ export default {
           value: true,
           reveal: {
             name: 'training-delivery-experience',
-            label: 'Describe your experience of delivering these types of courses.',
+            label: 'Describe your experience of delivering these types of courses. test',
             alt: {
               label: 'Describe this person\'s experience of delivering these types of courses.'
             },

@@ -134,6 +134,7 @@ class TextEditor extends Component {
 
   render() {
     const { value } = this.state;
+    console.log(serialiseValue(value));
     if (this.props.readOnly && !serialiseValue(value)) {
       return <p><em>No answer provided</em></p>;
     }

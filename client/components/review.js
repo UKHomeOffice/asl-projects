@@ -65,6 +65,7 @@ class Review extends React.Component {
               changedFromLatest={changedFromLatest}
               changedFromGranted={changedFromGranted}
               protocolId={this.props.protocolId}
+              inputFieldValue={this.props.value}
             />
           )
         }

@@ -1,6 +1,7 @@
 import * as types from '../actions/types';
 
 const INITIAL_STATE = {
+  first: [],   // Added first to track the initial state
   latest: [],
   granted: []
 };
@@ -26,17 +27,20 @@ const changes = (state = INITIAL_STATE, action) => {
     }
 
     case types.ADD_CHANGES: {
+      const first = state.first.length === 0 ? action.initial : state.first;  // Set first only if it's empty
       const granted = action.granted.reduce((arr, item) => changedItems(arr, item), state.granted);
       const latest = action.latest.reduce((arr, item) => changedItems(arr, item), state.latest);
       return {
         ...state,
+        first,    // Keep track of the initial state
         granted,
         latest
       };
     }
-  }
 
-  return state;
+    default:
+      return state;
+  }
 };
 
 export default changes;
