@@ -49,7 +49,7 @@ export default function NTSFateOfAnimalFields() {
       value: 'rehomed'
     },
     'kept-alive': {
-      label: 'Kept alive at the establishment for non-regulated purposes or possible reuse',
+      label: 'Kept alive at a licensed establishment for non-regulated purposes or possible reuse',
       hint: 'Non-regulated purposes could include handling, breeding or non-regulated procedures.',
       value: 'kept-alive'
     }
