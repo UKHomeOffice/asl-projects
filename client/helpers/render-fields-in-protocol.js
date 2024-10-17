@@ -14,9 +14,7 @@ export const renderFieldsInProtocol = (fateOfAnimals) => {
     fateOfAnimals.includes('used-in-other-projects') ? predefinedFields['continued-use-2'] : null,
     fateOfAnimals.includes('set-free') ? predefinedFields['set-free'] : null,
     fateOfAnimals.includes('rehomed') ? predefinedFields['rehomed'] : null,
-    (fateOfAnimals.includes('set-free') || fateOfAnimals.includes('rehomed')) ||
-    fateOfAnimals.includes('kept-alive')
-      ? predefinedFields['kept-alive'] : null
+    fateOfAnimals.includes('kept-alive') ? predefinedFields['kept-alive'] : null
   ];
 
   // Filter out null values
