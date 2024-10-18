@@ -19,9 +19,9 @@ const NtsCheckBoxWithModal = (props) => {
     const values = [...(value || [])];
     const itemRemoved = values.includes(checkboxValue);
 
-    const {hasData} = hasExistingDataForCheckbox(project, checkboxValue);
-
     if (itemRemoved) {
+      const {hasData} = hasExistingDataForCheckbox(project, checkboxValue);
+
       if (hasData) {
         // If there's existing data, show the modal
         setShowModal(true);
