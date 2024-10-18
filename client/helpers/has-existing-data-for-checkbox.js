@@ -15,71 +15,75 @@ function checkField(field) {
 }
 
 function hasKeptAliveData(project) {
-  return [
+  const fields = [
     project['keeping-alive-complete'] ||
     checkField(project['keeping-animals-alive-determine']) ||
     checkField(project['keeping-animals-alive-supervised']) ||
     checkField(project['kept-alive-animals'])
-  ].some(field => field === true);
+  ];
+
+  return fields.some(Boolean);
 }
+
+const protocolHasDataForValue = (checkboxValue) => (protocol) => {
+  if (Array.isArray(protocol['fate']) && protocol['fate'].includes(checkboxValue)) {
+    return true;
+  }
+
+  switch (checkboxValue) {
+    case 'killed':
+      return checkField(protocol['method-and-justification']);
+    case 'used-in-other-projects':
+      return checkField(protocol['continued-use-relevant-project']);
+    default:
+      return false;
+  }
+};
+
+const hasProtocolLevelData = (project, checkboxValue) =>
+  (project.protocols || []).some(protocolHasDataForValue(checkboxValue));
+
+const hasProjectLevelData = (project, checkboxValue) => {
+  switch (checkboxValue) {
+    case 'kept-alive':
+      return hasKeptAliveData(project);
+
+    case 'rehomed': {
+      const fields = [
+        project['rehoming-complete'] ||
+          checkField(project['rehoming-harmful']) ||
+          checkField(project['rehoming-healthy']) ||
+          checkField(project['rehoming-other']) ||
+          checkField(project['rehoming-types'])
+      ];
+
+      return fields.some(Boolean) || hasKeptAliveData(project);
+    }
+    case 'set-free': {
+      const fields = [
+        project['setting-free-complete'] ||
+          checkField(project['setting-free-ensure-not-harmful']) ||
+          checkField(project['setting-free-health']) ||
+          checkField(project['setting-free-lost']) ||
+          checkField(project['setting-free-recapturing']) ||
+          checkField(project['setting-free-rehabilitate']) ||
+          checkField(project['setting-free-socialise']) ||
+          project['setting-free-vet']
+      ];
+
+      return fields.some(Boolean) || hasKeptAliveData(project);
+    }
+    default:
+      return false;
+  }
+};
 
 /**
  * @desc Takes @param project:Object and @param checkboxValue: String. Checks if there is any existing data in the nodes of the NTS [fate-of-animal] fields associated with the checkbox value.
  * @returns {Object} An object containing the checkbox value and a boolean indicating if there is existing data.
  * */
 const hasExistingDataForCheckbox = (project, checkboxValue) => {
-  let hasData = false;
-
-  if (checkboxValue === 'killed' || checkboxValue === 'used-in-other-projects') {
-    for (let protocol of project.protocols) {
-      switch (checkboxValue) {
-        case 'killed':
-          hasData = checkField(protocol['method-and-justification']);
-          break;
-        case 'used-in-other-projects':
-          hasData = checkField(protocol['continued-use-relevant-project']);
-          break;
-        default:
-          break;
-      }
-      // Break the loop if data is found
-      if (hasData) {
-        break;
-      }
-    }
-  } else {
-    switch (checkboxValue) {
-      case 'kept-alive':
-        hasData = hasKeptAliveData(project);
-        break;
-      case 'rehomed':
-        hasData = [
-          project['rehoming-complete'] ||
-                    checkField(project['rehoming-harmful']) ||
-                    checkField(project['rehoming-healthy']) ||
-                    checkField(project['rehoming-other']) ||
-                    checkField(project['rehoming-types'])
-        ].some(field => field === true) ||
-          hasKeptAliveData(project);
-        break;
-      case 'set-free':
-        hasData = [
-          project['setting-free-complete'] ||
-                    checkField(project['setting-free-ensure-not-harmful']) ||
-                    checkField(project['setting-free-health']) ||
-                    checkField(project['setting-free-lost']) ||
-                    checkField(project['setting-free-recapturing']) ||
-                    checkField(project['setting-free-rehabilitate']) ||
-                    checkField(project['setting-free-socialise']) ||
-                    project['setting-free-vet']
-        ].some(field => field === true) ||
-          hasKeptAliveData(project);
-        break;
-      default:
-        hasData = false;
-    }
-  }
-
+  const hasData = hasProjectLevelData(project, checkboxValue) || hasProtocolLevelData(project, checkboxValue);
   return { checkboxValue, hasData };
 };
 
