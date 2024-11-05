@@ -10,7 +10,13 @@ import LEGACY_SPECIES from '../constants/legacy-species';
 import {projectSpecies as SPECIES} from '@ukhomeoffice/asl-constants';
 import CONDITIONS from '../constants/conditions';
 
-export const formatDate = (date, format) => (date ? dateFormatter(date, format) : '-');
+export const formatDate = (date, format) => {
+  try {
+    return date ? dateFormatter(date, format) : '-';
+  } catch (err) {
+    return `Invalid date: ${date}`;
+  }
+};
 
 export const getConditions = (values, project) => {
   const isProtocol = !!project;

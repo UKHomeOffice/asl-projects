@@ -7,9 +7,9 @@ import isNull from 'lodash/isNull';
 import get from 'lodash/get';
 import pickBy from 'lodash/pickBy';
 import mapValues from 'lodash/mapValues';
-import { format } from 'date-fns';
 import { projectSpecies as SPECIES } from '@ukhomeoffice/asl-constants';
-import { getLegacySpeciesLabel, mapSpecies, stripInvalidXmlChars } from '../../../helpers';
+import { getLegacySpeciesLabel, mapSpecies, stripInvalidXmlChars, formatDate } from '../../../helpers';
+import { DATE_FORMAT } from '../../../constants';
 import { filterSpeciesByActive } from '../../../pages/sections/protocols/animals';
 import protocolConditions from '../../../constants/protocol-conditions';
 import { getRepeatedFromProtocolIndex, hydrateSteps } from '../../../helpers/steps';
@@ -698,7 +698,7 @@ export default (application, sections, values, updateImageDimensions) => {
         return (value || []).map(item => renderFields(doc, field, item, field.fields, project));
 
       case 'date':
-        return renderText(doc, format(value, 'dd/MM/yyyy'));
+        return renderText(doc, formatDate(value, DATE_FORMAT.long));
 
       case 'location-selector':
       case 'objective-selector':
