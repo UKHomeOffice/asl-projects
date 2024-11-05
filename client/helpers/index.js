@@ -14,7 +14,7 @@ export const formatDate = (date, format) => {
   try {
     return date ? dateFormatter(date, format) : '-';
   } catch (err) {
-    return `Invalid date: ${date}`;
+    return `Invalid date entered`;
   }
 };
 
