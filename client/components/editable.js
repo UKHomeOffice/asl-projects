@@ -35,7 +35,9 @@ function Editable({ edited,
   const save = e => {
     e.preventDefault();
     if ((!!state.content && state.content !== '') || allowEmpty) {
-      onSave(state).then(setChanged(false));
+      Promise.resolve()
+        .then(() => onSave(state))
+        .then(() => setChanged(false));
     } else {
       window.alert('Condition/authorisation cannot be empty');
     }
