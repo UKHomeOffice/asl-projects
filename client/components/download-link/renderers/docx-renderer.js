@@ -846,6 +846,8 @@ export default (application, sections, values, updateImageDimensions) => {
         renderProtocolConditions(doc);
       }
       renderProtocolsSection(doc, subsection, values);
+    } else if (subsection.title === 'Training') {
+      subsection.trainingRenderer(doc, values, renderTable);
     } else {
       renderFields(doc, subsection, values);
     }

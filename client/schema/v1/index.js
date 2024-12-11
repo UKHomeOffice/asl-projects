@@ -36,6 +36,7 @@ import confirmProtocolsAffected from '../../helpers/confirm-protocols-affected';
 
 import {isTrainingLicence, markdownLink, getCurrentURLForFateOfAnimals} from '../../helpers';
 import NTSFateOfAnimalFields from '../../helpers/nts-field';
+import { trainingSummaryRenderer } from '../../../client/components/download-link/components/training-summary-renderer';
 
 export default () => {
   return ({
@@ -429,6 +430,7 @@ export default () => {
           title: 'Training',
           intro: 'Add details of relevant training completed. All project licence holders must have completed the PPL and E2 training modules, unless they have grounds for an exemption.',
           component: Training,
+          trainingRenderer: trainingSummaryRenderer,
           review: Training,
           fields: [
             {
