@@ -1,28 +1,37 @@
-import { Table, TableRow, TableCell, Paragraph } from 'docx';
+import { Table, Paragraph } from 'docx';
 
-export function trainingSummaryRenderer(doc, values, renderTable) {
-  doc.createParagraph('There was a problem rendering this content');
-  doc.createParagraph('There was a problem rendering this content new');
-  doc.createParagraph(JSON.stringify(values.training, null, 2));
+export function trainingSummaryRenderer(doc, values) {
+  const TRAINING_RECORD_HEADERS = ['Category', 'Modules', 'Animal types', 'Details'];
+
+  const training = values.training;
+  const rowCount = training.length > 0 && values.training.length;
   const table = new Table({
-    rows: [
-      new TableRow([
-        new TableCell({
-          children: [new Paragraph('Hello')]
-        }),
-        new TableCell({
-          children: []
-        })
-      ]),
-      new TableRow([
-        new TableCell({
-          children: []
-        }),
-        new TableCell({
-          children: [new Paragraph('World')]
-        })
-      ])
-    ]
+    rows: rowCount + 1, // +1 for header row
+    columns: TRAINING_RECORD_HEADERS.length
+  });
+
+  TRAINING_RECORD_HEADERS.forEach((header, index) => {
+    table.getCell(0, index).createParagraph(header);
+  });
+
+  training.forEach((element, index) => {
+    const category = element.isExemption ? 'Exemption' : 'Certificate';
+
+    // const modulesPragraph = new Paragraph();
+    // element.modules.forEach(module => {
+    //   modulesPragraph.style('body').bullet();
+    //   modulesPragraph.addRun(module);
+    // });
+
+    const modules = element.modules.flat().join(', ');
+    const animalTypes = element.species.flat().join(', ');
+    const details = `Certificate number: ${element.certificateNumber}\nAwarded on: ${element.passDate}\nAwarded by: ${element.accreditingBody}`;
+    const tableRow = index + 1;
+
+    table.getCell(tableRow, 0).createParagraph(category);
+    table.getCell(tableRow, 1).createParagraph(modules);
+    table.getCell(tableRow, 2).createParagraph(animalTypes);
+    table.getCell(tableRow, 3).createParagraph(details);
   });
 
   doc.addTable(table);
