@@ -4,6 +4,8 @@ import { sortBy } from 'lodash';
 export function trainingSummaryRenderer(doc, values) {
   const TRAINING_RECORD_HEADERS = ['Category', 'Modules', 'Animal types', 'Details'];
 
+  doc.createParagraph('Training record').heading4();
+
   if (!values?.training?.length) {
     doc.createParagraph('No training records found');
     return;
