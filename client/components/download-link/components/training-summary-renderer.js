@@ -1,4 +1,4 @@
-import { Table, Paragraph } from 'docx';
+import { Table } from 'docx';
 
 export function trainingSummaryRenderer(doc, values) {
   const TRAINING_RECORD_HEADERS = ['Category', 'Modules', 'Animal types', 'Details'];
@@ -16,13 +16,6 @@ export function trainingSummaryRenderer(doc, values) {
 
   training.forEach((element, index) => {
     const category = element.isExemption ? 'Exemption' : 'Certificate';
-
-    // const modulesPragraph = new Paragraph();
-    // element.modules.forEach(module => {
-    //   modulesPragraph.style('body').bullet();
-    //   modulesPragraph.addRun(module);
-    // });
-
     const modules = element.modules.flat().join(', ');
     const animalTypes = element.species.flat().join(', ');
     const details = `Certificate number: ${element.certificateNumber}\nAwarded on: ${element.passDate}\nAwarded by: ${element.accreditingBody}`;
