@@ -426,14 +426,11 @@ export default () => {
             }
           ]
         },
-        trainingRecord: {
-          title: 'Training record',
-          trainingRenderer: trainingSummaryRenderer
-        },
         training: {
-          title: 'Training',
+          title: 'Training record',
           intro: 'Add details of relevant training completed. All project licence holders must have completed the PPL and E2 training modules, unless they have grounds for an exemption.',
           component: Training,
+          trainingRenderer: trainingSummaryRenderer,
           review: Training,
           fields: [
             {
