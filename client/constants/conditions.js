@@ -155,11 +155,11 @@ export default {
         {
           title: 'Rehoming',
           requiresEditing: true,
-          content: `<<<INSERT animal type(s) HERE>>> may be rehomed at the end of a series of regulated procedures provided that the following actions have been taken:
-* <<<INSERT actions to ensure the state of health allows the animal to be re-homed HERE>>>;
-* <<<INSERT actions to ensure that the rehoming of the animal poses no danger to public health, animal health, or the environment HERE>>>;
-* <<<INSERT actions to ensure socialisation of the animal on being re-homed HERE>>>; and
-* <<<INSERT any other measures to safeguard the animal's welfare on being re-homed HERE>>>.
+          content: `Animals may be re-homed at the end of a series of regulated procedures provided the establishment has taken action to ensure that:
+* the animal's state of health allows it to be re-homed
+* re-homing the animal poses no danger to public health, animal health or the environment
+* the animal is socialised when it is re-homed
+* the animal's welfare is safeguarded when it is re-homed
 
 Genetically altered animals may not be re-homed.`
         }
@@ -172,11 +172,11 @@ Genetically altered animals may not be re-homed.`
         {
           title: 'Setting free',
           requiresEditing: true,
-          content: `<<<INSERT animal type(s) HERE>>> may be set free at the end of the series of regulated procedures conducted under the authority of protocol <<<INSERT protocol number(s) HERE>>> provided that the following actions have been taken:
-* <<<INSERT actions to ensure the state of health allows the animal to be set free HERE>>>;
-* <<<INSERT actions to ensure that the setting free of the animal poses no danger to public health, animal health or the environment HERE>>>;
-* <<<INSERT actions to ensure socialisation of the animal on being set free HERE>>>; and
-* <<<INSERT any other measures to safeguard the animal's welfare on being set free HERE>>>`
+          content: `Animals may be set free at the end of a series of regulated procedures provided the establishment has taken action to ensure that:
+* the animal's state of health allows it to be set free
+* setting the animal free poses no danger to public health, animal health or the environment
+* the animal is socialised when it is set free, where appropriate
+* the animal's welfare is safeguarded when it is set free`
         }
       ]
     },
