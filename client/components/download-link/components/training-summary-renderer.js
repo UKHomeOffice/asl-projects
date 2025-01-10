@@ -7,7 +7,13 @@ export function trainingSummaryRenderer(doc, values) {
   const rowCount = training.length > 0 && values.training.length;
   const table = new Table({
     rows: rowCount + 1, // +1 for header row
-    columns: TRAINING_RECORD_HEADERS.length
+    columns: TRAINING_RECORD_HEADERS.length,
+    margins: {
+      top: 100,
+      right: 100,
+      bottom: 100,
+      left: 100
+    }
   });
 
   TRAINING_RECORD_HEADERS.forEach((header, index) => {
@@ -16,15 +22,15 @@ export function trainingSummaryRenderer(doc, values) {
 
   training.forEach((element, index) => {
     const category = element.isExemption ? 'Exemption' : 'Certificate';
-    const modules = element.modules.flat().join(', ');
-    const animalTypes = element.species.flat().join(', ');
-    const details = `Certificate number: ${element.certificateNumber}\nAwarded on: ${element.passDate}\nAwarded by: ${element.accreditingBody}`;
+    const modules = element.modules;
+    const animalTypes = element.species;
+    const details = [`Certificate number: ${element.certificateNumber}`, `Awarded on: ${element.passDate}`, `Awarded by: ${element.accreditingBody}`];
     const tableRow = index + 1;
 
     table.getCell(tableRow, 0).createParagraph(category);
-    table.getCell(tableRow, 1).createParagraph(modules);
-    table.getCell(tableRow, 2).createParagraph(animalTypes);
-    table.getCell(tableRow, 3).createParagraph(details);
+    modules.forEach(module => table.getCell(tableRow, 1).createParagraph(module).bullet());
+    animalTypes.forEach(animalType => table.getCell(tableRow, 2).createParagraph(animalType).bullet());
+    details.forEach(detail => table.getCell(tableRow, 3).createParagraph(detail));
   });
 
   doc.addTable(table);
