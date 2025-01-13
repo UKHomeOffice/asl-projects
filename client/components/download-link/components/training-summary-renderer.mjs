@@ -1,9 +1,8 @@
-import { Table } from 'docx';
 import _ from 'lodash';
+import { populateTableHeader } from '../helpers/populate-table-header.js';
+import { initializeTable } from '../helpers/initialize-table.js';
 
 const { sortBy } = _;
-
-
 
 export function trainingSummaryRenderer(doc, values) {
   const TRAINING_RECORD_HEADERS = ['Category', 'Modules', 'Animal types', 'Details'];
@@ -18,39 +17,30 @@ export function trainingSummaryRenderer(doc, values) {
   const training = sortBy(values.training, ['isExemption', 'createdAt']);
   const rowCount = training.length;
 
-  const table = createTable(rowCount + 1, TRAINING_RECORD_HEADERS.length);
+  const initTable = initializeTable(rowCount + 1, TRAINING_RECORD_HEADERS.length);
+  const tableWithHeader = populateTableHeader(initTable, TRAINING_RECORD_HEADERS);
+  const tableWithTrainingRecords = populateTableWithTrainingRecords(tableWithHeader, training);
 
-  TRAINING_RECORD_HEADERS.forEach((header, index) => {
-    table.getCell(0, index).createParagraph(header).center();
-  });
-
-  training.forEach((element, index) => {
-    const tableRow = index + 1;
-
-    const category = element.isExemption ? 'Exemption' : 'Certificate';
-    table.getCell(tableRow, 0).createParagraph(category);
-
-    createBulletedList(element.modules, table.getCell(tableRow, 1));
-    createBulletedList(element.species, table.getCell(tableRow, 2));
-
-    const details = [`Certificate number: ${element.certificateNumber}`, `Awarded on: ${element.passDate}`, `Awarded by: ${element.accreditingBody}`];
-    details.forEach(detail => table.getCell(tableRow, 3).createParagraph(detail));
-  });
-
-  doc.addTable(table);
+  doc.addTable(tableWithTrainingRecords);
 }
 
-function createTable(rows, columns) {
-  return new Table({
-    rows,
-    columns,
-    margins: {
-      top: 100,
-      right: 100,
-      bottom: 100,
-      left: 100
-    }
+function populateTableWithTrainingRecords(table, training) {
+  training.forEach((record, index) => {
+    const row = index + 1;
+
+    table.getCell(row, 0).createParagraph(record.isExemption ? 'Exemption' : 'Certificate');
+    createBulletedList(record.modules, table.getCell(row, 1));
+    createBulletedList(record.species, table.getCell(row, 2));
+
+    const details = [
+      `Certificate number: ${record.certificateNumber}`,
+      `Awarded on: ${record.passDate}`,
+      `Awarded by: ${record.accreditingBody}`
+    ];
+    details.forEach(detail => table.getCell(row, 3).createParagraph(detail));
   });
+
+  return table;
 }
 
 function createBulletedList(items, container) {
