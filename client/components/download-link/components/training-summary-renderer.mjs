@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import { populateTableHeader } from '../helpers/populate-table-header.js';
-import { initializeTable } from '../helpers/initialize-table.js';
+import { populateTableHeader } from '../helpers/populate-table-header.mjs';
+import { initializeTable } from '../helpers/initialize-table.mjs';
 
 const { sortBy } = _;
 
@@ -24,7 +24,7 @@ export function trainingSummaryRenderer(doc, values) {
   doc.addTable(tableWithTrainingRecords);
 }
 
-function populateTableWithTrainingRecords(table, training) {
+export function populateTableWithTrainingRecords(table, training) {
   training.forEach((record, index) => {
     const row = index + 1;
 
