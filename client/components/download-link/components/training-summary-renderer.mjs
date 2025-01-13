@@ -1,5 +1,9 @@
 import { Table } from 'docx';
-import { sortBy } from 'lodash';
+import _ from 'lodash';
+
+const { sortBy } = _;
+
+
 
 export function trainingSummaryRenderer(doc, values) {
   const TRAINING_RECORD_HEADERS = ['Category', 'Modules', 'Animal types', 'Details'];
@@ -14,16 +18,7 @@ export function trainingSummaryRenderer(doc, values) {
   const training = sortBy(values.training, ['isExemption', 'createdAt']);
   const rowCount = training.length;
 
-  const table = new Table({
-    rows: rowCount + 1, // +1 for header row
-    columns: TRAINING_RECORD_HEADERS.length,
-    margins: {
-      top: 100,
-      right: 100,
-      bottom: 100,
-      left: 100
-    }
-  });
+  const table = createTable(rowCount + 1, TRAINING_RECORD_HEADERS.length);
 
   TRAINING_RECORD_HEADERS.forEach((header, index) => {
     table.getCell(0, index).createParagraph(header).center();
@@ -43,6 +38,19 @@ export function trainingSummaryRenderer(doc, values) {
   });
 
   doc.addTable(table);
+}
+
+function createTable(rows, columns) {
+  return new Table({
+    rows,
+    columns,
+    margins: {
+      top: 100,
+      right: 100,
+      bottom: 100,
+      left: 100
+    }
+  });
 }
 
 function createBulletedList(items, container) {

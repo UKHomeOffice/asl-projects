@@ -36,7 +36,7 @@ import confirmProtocolsAffected from '../../helpers/confirm-protocols-affected';
 
 import {isTrainingLicence, markdownLink, getCurrentURLForFateOfAnimals} from '../../helpers';
 import NTSFateOfAnimalFields from '../../helpers/nts-field';
-import { trainingSummaryRenderer } from '../../../client/components/download-link/components/training-summary-renderer';
+import { trainingSummaryRenderer } from '../../components/download-link/components/training-summary-renderer.mjs';
 
 export default () => {
   return ({
