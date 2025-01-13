@@ -7,7 +7,7 @@
  */
 import { Table } from 'docx';
 
-export function createTable(rows, columns) {
+export function initializeTable(rows, columns) {
   return new Table({
     rows,
     columns,
