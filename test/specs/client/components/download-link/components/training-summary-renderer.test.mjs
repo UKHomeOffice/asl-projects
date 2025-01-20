@@ -89,6 +89,24 @@ describe('populateTableWithTrainingRecords', () => {
     assert.equal(table.getCell(1, 1).createParagraph.calledWith('-'), true);
     assert.equal(table.getCell(1, 2).createParagraph.calledWith('-'), true);
   });
+
+  it('should handle undefined modules and species lists', () => {
+    const training = [
+      {
+        isExemption: false,
+        modules: undefined,
+        species: undefined,
+        certificateNumber: '12345',
+        passDate: '2021-01-01',
+        accreditingBody: 'Body 1'
+      }
+    ];
+
+    populateTableWithTrainingRecords(table, training);
+
+    assert.equal(table.getCell(1, 1).createParagraph.calledWith('-'), true);
+    assert.equal(table.getCell(1, 2).createParagraph.calledWith('-'), true);
+  });
 });
 
 const training = [
