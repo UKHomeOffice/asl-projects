@@ -11,7 +11,7 @@ import ReviewFields from '../../../components/review-fields';
 import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';
 import NewComments from '../../../components/new-comments';
-import ChangedBadge from '../../../components/changed-badge';
+import StepBadge from '../../../components/step-badge';
 import { v4 as uuid } from 'uuid';
 import Review from '../../../components/review';
 import {
@@ -37,8 +37,6 @@ function renderUsedInProtocols(protocolIndexes) {
   return `${protocolIndexes.slice(0, protocolIndexes.length - 1).join(',')} and ${protocolIndexes[protocolIndexes.length - 1]}`;
 }
 
-const changeFields = (step, prefix) => step.reusable ? [ `reusableSteps.${step.reusableStepId}` ] : [ prefix.substr(0, prefix.length - 1) ];
-
 class Step extends Component {
   constructor(options) {
     super(options);
@@ -51,6 +49,7 @@ class Step extends Component {
       if (!this.props.values.completed) {
         this.setCompleted(true);
       }
+      this.props.updateReusable(false);
       this.props.removeItem();
     }
   }
@@ -110,13 +109,23 @@ class Step extends Component {
   moveUp = e => {
     e.preventDefault();
     e.stopPropagation();
+    this.props.updateReusable(false);
     this.props.moveUp();
   }
 
   moveDown = e => {
     e.preventDefault();
     e.stopPropagation();
+    this.props.updateReusable(false);
     this.props.moveDown();
+  }
+
+  isOldStep = previousSteps => {
+    let stepIds = [];
+    previousSteps.forEach(protocol => {
+      protocol.forEach(step => stepIds.push(step.id));
+    });
+    return stepIds.includes(this.props.values.id);
   }
 
   componentDidMount() {
@@ -238,7 +247,7 @@ class Step extends Component {
       >
         <NewComments comments={relevantComments} />
         {
-          !values.deleted && <ChangedBadge fields={changeFields(values, changeFieldPrefix)} protocolId={protocol.id} />
+          !values.deleted && <StepBadge fields={values} changeFieldPrefix={changeFieldPrefix} protocolId={protocol.id} position={index}/>
         }
         <Fragment>
           {
@@ -321,6 +330,7 @@ class Step extends Component {
           fields={fields}
           prefix={`${values.id}-add-step`}
           onFieldChange={(key, value) => {
+            this.props.updateReusable(false);
             updateItem({ [key]: value });
           }}
           values={values}
@@ -336,7 +346,7 @@ class Step extends Component {
             values.deleted && <span className="badge deleted">removed</span>
           }
           {
-            !values.deleted && <ChangedBadge fields={changeFields(values, changeFieldPrefix)} protocolId={protocol.id} />
+            !values.deleted && !pdf && <StepBadge fields={values} changeFieldPrefix={changeFieldPrefix} protocolId={protocol.id} position={index} />
           }
           <Expandable expanded={expanded} onHeaderClick={() => onToggleExpanded(index)}>
             <Fragment>
@@ -422,6 +432,8 @@ const EditStepWarning = ({ editingReusableStep, protocol, step, completed }) => 
 
 const StepsRepeater = ({ values, prefix, updateItem, editable, project, isReviewStep, steps, reusableSteps, ...props }) => {
   const lastStepIsNew = isNewStep(steps[steps.length - 1]);
+  //By default, reusable steps are updated always, but this is not true, hence adding ability to turn off when not needed
+  const [updateReusable, setUpdateReusable] = useState(true);
 
   return (<Repeater
     type="steps"
@@ -429,6 +441,9 @@ const StepsRepeater = ({ values, prefix, updateItem, editable, project, isReview
     prefix={prefix}
     items={steps}
     softDelete={true}
+    onBeforeAdd={() => {
+      setUpdateReusable(false);
+    }}
     onSave={steps => {
       // Extract reusable steps to save
       // Update reusableSteps on project only when they are complete, or have previously been saved
@@ -444,7 +459,11 @@ const StepsRepeater = ({ values, prefix, updateItem, editable, project, isReview
         return step;
       });
 
-      props.dispatch(saveReusableSteps(reusableSteps));
+      if (updateReusable) {
+        props.dispatch(saveReusableSteps(reusableSteps));
+      } else {
+        setUpdateReusable(true);
+      }
       updateItem({ steps: mappedSteps });
     }}
     addAnother={!props.pdf && !values.deleted && editable && !lastStepIsNew}
@@ -456,6 +475,7 @@ const StepsRepeater = ({ values, prefix, updateItem, editable, project, isReview
       isReviewStep={isReviewStep}
       protocol={values}
       reusableSteps={reusableSteps}
+      updateReusable={setUpdateReusable}
       {...props}
       parentUpdateItem={updateItem}
     />

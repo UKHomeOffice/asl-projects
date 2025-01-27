@@ -99,6 +99,12 @@ class ReviewField extends React.Component {
       );
     }
 
+    if (value && this.props.type === 'holder-name') {
+      return (
+        <p>{value.firstName} {value.lastName}</p>
+      );
+    }
+
     if (this.props.type === 'establishment-selector') {
       return <EstablishmentSelector {...this.props} review={true} />;
     }

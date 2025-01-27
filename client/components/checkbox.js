@@ -52,13 +52,24 @@ const NtsCheckBoxWithModal = (props) => {
   const handleCancelModal = () => {
     setShowModal(false);
   };
+  const customTextMap = {
+    'set-free': 'Set free',
+    'kept-alive': 'Kept alive for non-regulated purposes or possible reuse',
+    'used-in-other-projects': 'Continued use on other projects',
+    'killed': 'Killed',
+    'rehomed': 'Rehomed'
+  };
 
   // Function to prepare modal content
   const prepareModalContent = () => {
-    const selectedOption = selectedValue ? selectedValue.toString().charAt(0).toUpperCase() + selectedValue.toString().slice(1) : '';
+    // Get the formatted selected value or capitalize it if no custom text is found
+    const selectedOption = selectedValue
+      ? customTextMap[selectedValue.toString().toLowerCase()]
+      : '';
+
     return {
       h3Bold: `Are you sure you want to deselect this fate?`,
-      paragraphLine1: `The '${selectedOption}' at the establishment for non-regulated purposes or possible reuse option will be removed from all protocols.`,
+      paragraphLine1: `The '${selectedOption}' option will be removed from all protocols.`,
       paragraphLine2: 'Also, any additional information you entered about this fate will be removed from your application.'
     };
   };

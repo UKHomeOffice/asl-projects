@@ -1,3 +1,123 @@
+Issues : 
+1. Change detection process change from state to compare from database value - done 
+2. text input level change detection - done 
+3. textarea input level change detection - done 
+4. checkbox input level change detection - done 
+5. radio input level change detection with default values - done 
+6. radio input level change detection without default values - done 
+7. select input level change detection with default values - done 
+8. conditional input level change detection without default values (text, radio, textarea, checkbox, select) - done 
+9. section level change detection - done 
+10. sub section level change detection - done 
+11. sub sub section level change detection - done 
+12. Protocol level change detection - done 
+13. Duration  input type level change detection - done 
+14. Tab  input type level change detection - done 
+15. Add default value comparison with input fields - done 
+16. Reduction field value change detection - done 
+
+
+
+
+
+
+Others : 
+1. New badge and changed badge conflict for protocol section 
+2. New badge and changed badge conflict for protocol sub section 
+
+
+
+
+
+
+* Reduction Issue - need sri to reproduce 
+  1. Do we consider change when any spices added in introduction and then reduction 
+  2. if we do what will be the default value for each added animal 
+  3
+
+
+Data comparison : 
+1. Input text data comparison - working 
+2. on the fly input field data 
+
+
+
+Extra issues : 
+1. Default value issue with licence expiry 
+2. Year limit set for expiry date 
+
+
+
+{
+  "projectId": "project-12345",
+  "status": "active",  // Overall application status: active, granted, draft, etc.
+  "lastUpdated": "2024-10-30T12:00:00Z",
+  "sections": [
+    {
+      "sectionId": "section-1",
+      "name": "Section Name",
+      "status": "granted",  // Section-specific status
+      "changed": true,
+      "newlyAdded": false,
+      "defaultValue": null,
+      "previousValue": null,
+      "currentValue": null,
+      "currentStateValue": null,
+      "fields": [
+        {
+          "fieldId": "field-1",
+          "name": "most-appropriate",
+          "label": "a) the most appropriate scientific approach?",
+          "type": "texteditor",
+          "status": "draft",  // Field-specific status
+          "defaultValue": "Default value from schema/code",
+          "previousValue": "Stored value in database",
+          "currentValue": "Updated value from database",
+          "currentStateValue": "Unsaved value in state",
+          "changed": true,
+          "newlyAdded": false,
+          "subFields": []
+        }
+      ],
+      "subSections": [
+        {
+          "sectionId": "sub-section-1",
+          "name": "Sub-section Name",
+          "status": "active",  // Subsection-specific status
+          "changed": false,
+          "newlyAdded": false,
+          "defaultValue": null,
+          "previousValue": null,
+          "currentValue": null,
+          "currentStateValue": null,
+          "fields": [],
+          "subSections": []
+        }
+      ]
+    }
+  ]
+}
+
+
+
+object structure : 
+{
+    "parentSectionID": "6d22de6f-7ea3-4b07-ad78-f387b070b24d",
+    "section": "details", 
+    "name": "most-appropriate", ( name of the field)
+    "label": "a) the most appropriate scientific approach?",
+    "type": "texteditor",
+    "defaultValue": "Default value either set on schema or in the code or in the database",
+    "previousValue": "if any value stored in the database aganist this field which is different then current field",
+    "currentValue": "Current value from database",
+    "currentStateValue": "any values in the state which havent been saved yet",
+    "changed": true ( or false depends on comparison value aganist defaultValue vs currentValue vs currentStateValue)
+  }
+
+
+
+Files involved in changed Badge 
+~/Projects/ASPeL/aspel-workspace/packages/asl-projects/client/pages/sections/protocols/protocol-sections.js:
 import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -187,3 +307,14 @@ class ProtocolSections extends PureComponent {
 const mapStateToProps = ({ application: { schemaVersion }, project }) => ({ schemaVersion, project });
 
 export default withRouter(connect(mapStateToProps, { keepAlive })(ProtocolSections));
+
+
+
+~/Projects/ASPeL/aspel-workspace/packages/asl-projects/client/pages/sections/protocols/sections.js:
+~/Projects/ASPeL/aspel-workspace/packages/asl-projects/client/components/review.js:
+~/Projects/ASPeL/aspel-workspace/packages/asl-projects/client/components/application-summary.js:
+~/Projects/ASPeL/aspel-workspace/packages/asl-projects/client/components/step-badge.js:
+~/Projects/ASPeL/aspel-workspace/packages/asl-projects/client/components/side-nav.js:
+~/Projects/ASPeL/aspel-workspace/packages/asl-projects/client/components/changed-badge.js:
+
+

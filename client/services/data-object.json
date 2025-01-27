@@ -1,0 +1,53 @@
+{
+  "projectID": "project-id",
+  "changes": {
+    "sections": [
+      {
+        "sectionID": "section-id",
+        "name": "Section Name",
+        "changed": true,
+        "subSections": [
+          {
+            "subSectionID": "sub-section-id",
+            "name": "Sub-section Name",
+            "changed": true,
+            "fields": [
+              {
+                "fieldID": "field-id",
+                "name": "Field Name",
+                "type": "texteditor",
+                "initialValue": "Default value from schema",
+                "previousValue": "Old value from database",
+                "currentValue": "New value from database",
+                "changed": true,
+                "subFields": [
+                  {
+                    "subFieldID": "sub-field-id",
+                    "name": "Sub-field Name",
+                    "type": "checkbox",
+                    "initialValue": "Default value",
+                    "previousValue": "Old value",
+                    "currentValue": "Current value",
+                    "changed": true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+},
+
+{
+    "parentSectionID": "6d22de6f-7ea3-4b07-ad78-f387b070b24d",
+    "section": "details", (sub section key)
+    "name": "most-appropriate",
+    "label": "a) the most appropriate scientific approach?",
+    "type": "texteditor",
+    "initialValue": "Default value from schema",
+    "previousValue": "Old value from database",
+    "currentValue": "Current value from database",
+    "changed": true
+  }

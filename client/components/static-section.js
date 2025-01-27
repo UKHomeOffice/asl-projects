@@ -51,14 +51,17 @@ const StaticSection = ({ section, project, fields = [], isGranted, subsection = 
   );
 };
 
-const mapStateToProps = ({ project, application: { isGranted, schemaVersion, isFullApplication } }, { section }) => {
+const mapStateToProps = ({ project, application: { isGranted, schemaVersion, isFullApplication, ...application } }, { section }) => {
   const fields = flatten([
     ...(section.fields || []),
     ...(section.steps || []).filter(step => !step.show || step.show(project)).map(step => step.fields)
   ]);
 
   return {
-    project,
+    project: {
+      ...project,
+      licenceHolder: application.licenceHolder
+    },
     fields,
     isGranted,
     isLegacy: schemaVersion === 0,

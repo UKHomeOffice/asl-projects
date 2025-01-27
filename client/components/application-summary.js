@@ -20,6 +20,21 @@ import Submit from './submit';
 import { selector } from './sync-handler';
 import HoldingPage from './holding-page';
 
+function normalizeValue(value) {
+  if (value === null || value === undefined) {
+    return "";
+  }
+  if (typeof value === "object") {
+    return JSON.stringify(value);
+  }
+  return String(value).trim();
+}
+
+function sanitizeValue(value) {
+  return normalizeValue(value).replace(/["]+/g, "");
+}
+
+
 const mapStateToProps = ({
   project,
   comments,
@@ -64,6 +79,10 @@ const ApplicationSummary = () => {
 
   const [errors, setErrors] = useState(false);
   const ref = useRef(null);
+
+
+
+
 
   useEffect(() => {
     if (submitted && !isSyncing) { submit(); }
@@ -205,6 +224,117 @@ const ApplicationSummary = () => {
     return <HoldingPage />;
   }
 
+
+/**
+ * Recursively find all fields within a section and compare their values.
+ * @param {object} props - Contains all saved and current data (savedValues, currentValues, initialValues).
+ * @param {object} sectionData - The section object containing fields and nested subsections.
+ * @returns {boolean} - True if any field in the section differs, false otherwise.
+ */
+const hasSectionChangedDeep = (props, sectionData) => {
+  const { savedValues, currentValues, initialValues } = props;
+
+  if (!savedValues || !currentValues || !initialValues) {
+    //console.error("Missing savedValues, currentValues, or initialValues in props.");
+    return false;
+  }
+
+  /**
+   * Recursive helper function to compare values.
+   * @param {object} data - The section or field data to process.
+   * @returns {boolean} - True if any field differs, false otherwise.
+   */
+  const compareFields = (data) => {
+    let changed = false;
+
+    Object.entries(data).forEach(([key, value]) => {
+      // Handle nested objects (e.g., subsections)
+      if (value && typeof value === "object" && !Array.isArray(value)) {
+        if (compareFields(value)) {
+          changed = true;
+        }
+      } else {
+        // Compare leaf fields
+        const savedValue = savedValues[key];
+        const currentValue = currentValues[key];
+        const initialValue = initialValues[key];
+
+        const sanitizedSaved = sanitizeValue(savedValue);
+        const sanitizedCurrent = sanitizeValue(currentValue);
+        const sanitizedInitial = sanitizeValue(initialValue);
+
+        // Compare values and log debugging information
+        // console.log(`Field: ${key}`);
+        // console.log(`  Saved: ${sanitizedSaved}`);
+        // console.log(`  Current: ${sanitizedCurrent}`);
+        // console.log(`  Initial: ${sanitizedInitial}`);
+
+        if (
+          sanitizedSaved !== sanitizedCurrent ||
+          sanitizedSaved !== sanitizedInitial
+        ) {
+          //console.log(`  Field "${key}" has changed.`);
+          changed = true;
+        }
+      }
+    });
+
+    return changed;
+  };
+
+  return compareFields(sectionData);
+};
+
+
+
+
+
+const hasChangedFields = (fields, currentValues, initialValues) => {
+  return fields.some(field => {
+    // Normalize and sanitize current and initial values
+    const currentValue = sanitizeValue(currentValues[field]);
+    const initialValue = sanitizeValue(initialValues[field]);
+
+    // Special handling for array-based fields (e.g., checkboxes, multi-selects)
+    if (Array.isArray(currentValue) || Array.isArray(initialValue)) {
+      const currentArray = Array.isArray(currentValue) ? currentValue : [];
+      const initialArray = Array.isArray(initialValue) ? initialValue : [];
+      const changed = JSON.stringify(currentArray.sort()) !== JSON.stringify(initialArray.sort());
+
+      // console.log(`Field: ${field}`);
+      // console.log(`Current (Array):`, currentArray);
+      // console.log(`Initial (Array):`, initialArray);
+      // console.log(`Changed (Array):`, changed);
+
+      return changed;
+    }
+
+    // Special handling for boolean fields (e.g., checkboxes, radios)
+    if (typeof currentValue === "boolean" || typeof initialValue === "boolean") {
+      const changed = currentValue !== initialValue;
+
+      // console.log(`Field: ${field}`);
+      // console.log(`Current (Boolean):`, currentValue);
+      // console.log(`Initial (Boolean):`, initialValue);
+      // console.log(`Changed (Boolean):`, changed);
+
+      return changed;
+    }
+
+    // General scalar value comparison (e.g., text, textarea)
+    const changed = currentValue !== initialValue;
+
+    // console.log(`Field: ${field}`);
+    // console.log(`Current (Sanitized): "${currentValue}"`);
+    // console.log(`Initial (Sanitized): "${initialValue}"`);
+    // console.log(`Changed:`, changed);
+
+    return changed;
+  });
+};
+
+
+
   return (
     <div className="application-summary" ref={ref}>
       <ErrorSummary />
@@ -229,8 +359,10 @@ const ApplicationSummary = () => {
               <tbody>
                 {
                   subsections.map(key => {
+
                     const subsection = section.subsections[key];
                     const fields = Object.values(fieldsBySection[key] || []);
+
                     if (key === 'protocols') {
                       fields.push('reusableSteps');
                     }
@@ -245,7 +377,10 @@ const ApplicationSummary = () => {
                       </td>
                       <td className="controls">
                         <Comments subsection={key} />
-                        <ChangedBadge fields={fields} />
+                        {
+
+                            hasChangedFields(fields, values, project.initialValues || {}) && <ChangedBadge fields={fields} />
+                        }
                         <CompleteBadge isComplete={isComplete(subsection, key)} />
                       </td>
                     </tr>;
