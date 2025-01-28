@@ -1,0 +1,81 @@
+Change Management Summary : 
+
+Change Detection: 
+Detects changes at all levels (field, sub-field, sub-subsection, subsection, section).
+Handles all field types (text, text area, radio, select, true/false, duration, int, etc.).
+Handles  cases like conditional fields, read-only fields, and system-generated fields.
+Handles detecting changes on sections, sub section, sub sub sections
+Handles detecting changes on protocol,protocl sections,  protocl sub section, protocl sub sub sections 
+Handles detecting changes on steps
+
+Changed Badge Display:
+Shows badges at all levels when changes are detected.
+Removes badges when changes are reverted.
+Persists badges across saves and sessions.
+Clears badges after approval or rejection.
+
+
+Comparison Functionality:
+1. Show previous value and current value 
+2. Highlight the values that changed 
+
+
+
+
+Test Cases : 
+
+Change Detection at Field Level
+Test Case: Verify that the system detects changes to a **text field** when its value is modified from empty to non-empty, default to non-default, or existing value to a new value.
+
+Test Case: Verify that the system detects changes to a **text area field** when its content is modified, including additions, deletions, or updates.
+
+Test Case: Verify that the system detects changes to a **radio button field** when a different option is selected.
+
+Test Case: Verify that the system detects changes to a **select dropdown field** when a different option is selected.
+
+Test Case: Verify that the system detects changes to a **true/false field** when its value is toggled.
+
+Test Case: Verify that the system detects changes to a **duration field** when the time value is updated.
+
+Test Case: Verify that the system detects changes to an **integer field** when the numeric value is updated.
+
+Test Case: Verify that the system detects changes to a **sub-field** when its value is modified, and propagates the change badge to the parent field.
+
+Test Case: Verify that the system does **not** detect a change if a field’s value is updated to the same value (e.g., re-saving without modification).
+
+---
+
+Change Badge Display at Section, Subsection, and Sub-Subsection Levels
+Test Case: Verify that a change badge is displayed at the **field level** when its value is modified.
+
+Test Case: Verify that a change badge is displayed at the **sub-field level** when its value is modified, and the parent field also shows a change badge.
+
+Test Case: Verify that a change badge is displayed at the **sub-subsection level** when any field or sub-field within it is modified.
+
+Test Case: Verify that a change badge is displayed at the **subsection level** when any field, sub-field, or sub-subsection within it is modified.
+
+Test Case: Verify that a change badge is displayed at the **section level** when any field, sub-field, subsection, or sub-subsection within it is modified.
+
+Test Case: Verify that the change badge is **removed** at all levels (field, sub-field, sub-subsection, subsection, section) when a field is reverted to its original value.
+
+Test Case: Verify that the change badge is **persisted** at all levels even after the application is saved and reopened.
+
+Test Case: Verify that the change badge is **cleared** at all levels after the inspector approves or rejects the application.
+
+
+
+---
+
+Test Cases for Comparison and highlight 
+
+Test Case: Verify that the inspector can compare the **current value** of a field with:
+- **previous** (e.g., a field previous  value).
+- **current** (e.g., a field current value).
+
+Test Case: Verify that the inspector can view changed data with highlighted badge:
+
+
+---
+
+
+

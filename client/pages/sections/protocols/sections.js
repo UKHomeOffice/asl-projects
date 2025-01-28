@@ -21,7 +21,11 @@ import Conditions from '../../../components/conditions/protocol-conditions';
 import ChangedBadge from '../../../components/changed-badge';
 import {reusableStepFieldKeys} from '../../../helpers/steps';
 
+
+
+
 const getSection = (section, props) => {
+  console.log(section);
   const isFullApplicationPdf = props.isFullApplication && props.pdf;
   if (props.isGranted && props.granted && props.granted.review && !isFullApplicationPdf) {
     return <props.granted.review {...props} />;
@@ -106,13 +110,68 @@ const getBadges = (section, newComments, values) => {
 
   const fields = getFieldKeys(section, values);
 
+  // Initialize groups for fields with and without values
+  const fieldsWithValues = [];
+  const fieldsWithoutValues = [];
+
+  section.fields?.forEach((field, index) => {
+    console.log("Processing field:", field.name);
+
+    // Attempt to retrieve the value from the values object
+    const rawValue = field.name.includes('.')
+      ? field.name.split('.').reduce((acc, key) => acc?.[key], values)
+      : values?.[field.name];
+
+    let fieldValue;
+
+    if (typeof rawValue === 'object' && rawValue !== null) {
+      // Handle structured data
+      if (rawValue.object) {
+        fieldValue = rawValue.object; // Extract `object` key if available
+      } else if (Array.isArray(rawValue)) {
+        fieldValue = rawValue.join(', '); // Join array elements
+      } else if (rawValue.document) {
+        fieldValue = JSON.stringify(rawValue.document); // Handle `document` key
+      } else {
+        fieldValue = JSON.stringify(rawValue); // Convert object to string
+      }
+    } else {
+      // Handle simple values or fallback to default message
+      fieldValue = rawValue || null;
+    }
+
+    console.log(`Field ${index + 1}: ${field.name} = ${fieldValue}`);
+
+    // Group fields based on whether they have values or not
+    if (fieldValue) {
+      fieldsWithValues.push({
+        name: field.name,
+        label: field.label,
+        type: field.type,
+        value: fieldValue,
+      });
+    } else {
+      fieldsWithoutValues.push({
+        name: field.name,
+        label: field.label,
+        type: field.type,
+        value: "No value in database",
+      });
+    }
+  });
+
+  console.log("Fields with values:", fieldsWithValues);
+  console.log("Fields without values:", fieldsWithoutValues);
+
   return (
     <Fragment>
       {
         !!numberOfNewComments && <NewComments comments={numberOfNewComments} />
       }
       {
-        section.fields && <ChangedBadge fields={fields} protocolId={values.id} />
+        fieldsWithValues.length > 0 && (
+          <ChangedBadge fields={fields} protocolId={values.id} />
+        )
       }
     </Fragment>
   );
