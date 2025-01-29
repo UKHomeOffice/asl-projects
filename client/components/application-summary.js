@@ -20,9 +20,10 @@ import Submit from './submit';
 import { selector } from './sync-handler';
 import HoldingPage from './holding-page';
 
+
 /**
  * Normalise a given value into a consistent string format.
- *
+ * 
  * - If the value is `null` or `undefined`, it returns an empty string.
  * - If the value is an object, it converts it into a JSON string.
  * - For all other types, it converts the value into a string and trims any extra whitespace.
@@ -246,13 +247,6 @@ const ApplicationSummary = () => {
 
 
 /**
- * Recursively traverse and compare all fields in a section.
- * @param {object} props - The props containing all saved, initial, and current data.
- * @param {string} sectionName - The name of the section to check (e.g., "experience-projects").
- * @param {string} type - The type of comparison (e.g., "field").
- * @returns {boolean} - True if any field differs, false otherwise.
- */
-/**
  * Recursively find all fields within a section and compare their values.
  * @param {object} props - Contains all saved and current data (savedValues, currentValues, initialValues).
  * @param {object} sectionData - The section object containing fields and nested subsections.
@@ -291,10 +285,10 @@ const hasSectionChangedDeep = (props, sectionData) => {
         const sanitizedInitial = sanitizeValue(initialValue);
 
         // Compare values and log debugging information
-        console.log(`Field: ${key}`);
-        console.log(`  Saved: ${sanitizedSaved}`);
-        console.log(`  Current: ${sanitizedCurrent}`);
-        console.log(`  Initial: ${sanitizedInitial}`);
+        // console.log(`Field: ${key}`);
+        // console.log(`  Saved: ${sanitizedSaved}`);
+        // console.log(`  Current: ${sanitizedCurrent}`);
+        // console.log(`  Initial: ${sanitizedInitial}`);
 
         if (
           sanitizedSaved !== sanitizedCurrent ||
@@ -328,10 +322,10 @@ const hasChangedFields = (fields, currentValues, initialValues) => {
       const initialArray = Array.isArray(initialValue) ? initialValue : [];
       const changed = JSON.stringify(currentArray.sort()) !== JSON.stringify(initialArray.sort());
 
-      console.log(`Field: ${field}`);
-      console.log(`Current (Array):`, currentArray);
-      console.log(`Initial (Array):`, initialArray);
-      console.log(`Changed (Array):`, changed);
+      // console.log(`Field: ${field}`);
+      // console.log(`Current (Array):`, currentArray);
+      // console.log(`Initial (Array):`, initialArray);
+      // console.log(`Changed (Array):`, changed);
 
       return changed;
     }
@@ -340,10 +334,10 @@ const hasChangedFields = (fields, currentValues, initialValues) => {
     if (typeof currentValue === "boolean" || typeof initialValue === "boolean") {
       const changed = currentValue !== initialValue;
 
-      console.log(`Field: ${field}`);
-      console.log(`Current (Boolean):`, currentValue);
-      console.log(`Initial (Boolean):`, initialValue);
-      console.log(`Changed (Boolean):`, changed);
+      // console.log(`Field: ${field}`);
+      // console.log(`Current (Boolean):`, currentValue);
+      // console.log(`Initial (Boolean):`, initialValue);
+      // console.log(`Changed (Boolean):`, changed);
 
       return changed;
     }
@@ -351,10 +345,10 @@ const hasChangedFields = (fields, currentValues, initialValues) => {
     // General scalar value comparison (e.g., text, textarea)
     const changed = currentValue !== initialValue;
 
-    console.log(`Field: ${field}`);
-    console.log(`Current (Sanitized): "${currentValue}"`);
-    console.log(`Initial (Sanitized): "${initialValue}"`);
-    console.log(`Changed:`, changed);
+    // console.log(`Field: ${field}`);
+    // console.log(`Current (Sanitized): "${currentValue}"`);
+    // console.log(`Initial (Sanitized): "${initialValue}"`);
+    // console.log(`Changed:`, changed);
 
     return changed;
   });
@@ -406,8 +400,8 @@ const hasChangedFields = (fields, currentValues, initialValues) => {
                         <Comments subsection={key} />
                         {
 
-  hasChangedFields(fields, values, project.initialValues || {}) && <ChangedBadge fields={fields} />
-}
+                          hasChangedFields(fields, values, project.initialValues || {}) && <ChangedBadge fields={fields} />
+                        }
                         <CompleteBadge isComplete={isComplete(subsection, key)} />
                       </td>
                     </tr>;
