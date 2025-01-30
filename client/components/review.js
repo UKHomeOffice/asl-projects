@@ -15,10 +15,25 @@ import isEqual from 'lodash/isEqual'; // for deep comparison
 
 class Review extends React.Component {
 
+
+/**
+ * Checks whether the database value has changed compared to the current value.
+ *
+ * This method:
+ * - Normalises values for comparison, handling null, undefined, arrays, and objects.
+ * - Ensures duration fields have default values when missing.
+ * - Determines the actual current value by prioritising `currentValue` over `values[name]`.
+ * - Compares stored and current values to detect changes.
+ * - Handles dynamic species-based fields, ensuring changes in species-specific data are also detected.
+ *
+ * The method returns `true` if a change is detected, otherwise `false`.
+ *
+ * @returns {boolean} - `true` if there is a change in the data, otherwise `false`.
+ */
 hasDatabaseChange() {
-    const normalizeValue = value => {
+    const normaliseValue = value => {
         if (value === null || value === undefined || (Array.isArray(value) && value.length === 0)) {
-            // Normalize `null`, `undefined`, and empty arrays to a consistent empty state
+            // Normalise `null`, `undefined`, and empty arrays to a consistent empty state
             return null;
         }
         if (Array.isArray(value)) {
@@ -32,22 +47,25 @@ hasDatabaseChange() {
         return value; // Return all other values as-is
     };
 
-    const normalizeDuration = value => {
-        if (value && typeof value === 'object' && ('years' in value || 'months' in value)) {
-            // Normalize duration objects specifically
-            return {
-                years: value.years !== undefined && value.years !== null ? value.years : 5, // Default to 5 if undefined or null
-                months: value.months !== undefined && value.months !== null ? value.months : 0 // Default to 0 if undefined or null
-            };
-        }
-        return { years: 5, months: 0 }; // Default for completely missing duration
-    };
+    const normaliseDuration = value => {
+    if (value && typeof value === 'object' && ('years' in value || 'months' in value)) {
+        // Normalise duration objects specifically
+        return {
+            years: value.years ?? 5, // Default to 5 if undefined or null
+            months: value.months ?? 0 // Default to 0 if undefined or null
+        };
+    }
+
+      // Default for completely missing duration
+      return { years: 5, months: 0 };
+  };
+
 
     const { name, storedValue, currentValue, values } = this.props;
 
     // Adjust storedValue for duration fields
     const adjustedStoredValue =
-        name === 'duration' ? normalizeDuration(storedValue) : storedValue;
+        name === 'duration' ? normaliseDuration(storedValue) : storedValue;
 
     // Determine the actual current value for specific fields
     const actualCurrentValue = currentValue !== undefined && currentValue !== null
@@ -56,43 +74,32 @@ hasDatabaseChange() {
         ? values[name]
         : null; // Fallback to `null` if no value is provided
 
-    // Normalize stored and current values
-    const normalizedStoredValue =
-        name === 'duration' ? normalizeDuration(adjustedStoredValue) : normalizeValue(adjustedStoredValue);
-    const normalizedCurrentValue =
-        name === 'duration' ? normalizeDuration(actualCurrentValue) : normalizeValue(actualCurrentValue);
-
-    // console.log(`Field Name: ${name}`);
-    // console.log(`Stored Value:`, adjustedStoredValue);
-    // console.log(`Actual Current Value:`, actualCurrentValue);
-    // console.log(`Normalized Stored Value:`, normalizedStoredValue);
-    // console.log(`Normalized Current Value:`, normalizedCurrentValue);
-    // console.log(`Value for this field ${name}:`, this.props.values[name]);
+    // Normalise stored and current values
+    const normalisedStoredValue =
+        name === 'duration' ? normaliseDuration(adjustedStoredValue) : normaliseValue(adjustedStoredValue);
+    const normalisedCurrentValue =
+        name === 'duration' ? normaliseDuration(actualCurrentValue) : normaliseValue(actualCurrentValue);
 
     // Detect changes by comparing normalized values
-    let hasChange = !isEqual(normalizedStoredValue, normalizedCurrentValue);
-    //console.log(`Change Detected for ${name}:`, hasChange);
+    let hasChange = !isEqual(normalisedStoredValue, normalisedCurrentValue);
+
 
     // Add logic for species-based dynamic fields
     const species = values?.species || [];
     if (species.length === 0) {
-       // console.error('Species array is empty or undefined.');
+      
     } else {
-        //console.log('Checking species-based dynamic fields...');
         species.forEach(speciesName => {
             const fieldName = `reduction-quantities-${speciesName}`;
             const speciesStoredValue = values.storedValue?.[fieldName] || null;
             const speciesCurrentValue = values[fieldName] || null;
 
-            // console.log(`Field Name: ${fieldName}`);
-            // console.log(`Stored Value:`, speciesStoredValue);
-            // console.log(`Current Value:`, speciesCurrentValue);
+            if (!isEqual(normaliseValue(speciesStoredValue), normaliseValue(speciesCurrentValue))) {
 
-            if (!isEqual(normalizeValue(speciesStoredValue), normalizeValue(speciesCurrentValue))) {
-                //console.log(`Change Detected for ${fieldName}: true`);
-                hasChange = true; // Any change in dynamic fields sets hasChange to true
+              // any change in dynamic fields sets hasChange to true
+                hasChange = true; 
             } else {
-                //console.log(`Change Detected for ${fieldName}: false`);
+                
             }
         });
     }
@@ -142,7 +149,7 @@ hasDatabaseChange() {
       return <Comments field={`${this.props.prefix || ''}${this.props.name}`} collapsed={!this.props.readonly} />;
     }
 
-   // console.log('FIELD CALLED HERE');
+
     return (
       <div className={classnames('review', this.props.className)}>
         {
