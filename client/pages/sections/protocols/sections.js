@@ -25,7 +25,7 @@ import {reusableStepFieldKeys} from '../../../helpers/steps';
 
 
 const getSection = (section, props) => {
-  console.log(section);
+
   const isFullApplicationPdf = props.isFullApplication && props.pdf;
   if (props.isGranted && props.granted && props.granted.review && !isFullApplicationPdf) {
     return <props.granted.review {...props} />;
@@ -115,7 +115,7 @@ const getBadges = (section, newComments, values) => {
   const fieldsWithoutValues = [];
 
   section.fields?.forEach((field, index) => {
-    console.log("Processing field:", field.name);
+    
 
     // Attempt to retrieve the value from the values object
     const rawValue = field.name.includes('.')
@@ -140,8 +140,6 @@ const getBadges = (section, newComments, values) => {
       fieldValue = rawValue || null;
     }
 
-    console.log(`Field ${index + 1}: ${field.name} = ${fieldValue}`);
-
     // Group fields based on whether they have values or not
     if (fieldValue) {
       fieldsWithValues.push({
@@ -160,8 +158,7 @@ const getBadges = (section, newComments, values) => {
     }
   });
 
-  console.log("Fields with values:", fieldsWithValues);
-  console.log("Fields without values:", fieldsWithoutValues);
+
 
   return (
     <Fragment>
