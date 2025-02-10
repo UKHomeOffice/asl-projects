@@ -22,42 +22,27 @@ import HoldingPage from './holding-page';
 
 
 /**
- * Normalise a given value into a consistent string format.
- * 
- * - If the value is `null` or `undefined`, it returns an empty string.
- * - If the value is an object, it converts it into a JSON string.
- * - For all other types, it converts the value into a string and trims any extra whitespace.
- *
+ * Normalises a given value into a consistent string format.
  * @param {any} value - The input value to normalise.
- * @returns {string} - A normalised string representation of the input value.
+ * @returns {string} - A normalised string representation.
  */
 function normaliseValue(value) {
+  if (value == null) {
+    return "";
+  }
 
-if (value === null || value === undefined) {
-  return ""; // Return an empty string for null or undefined values.
-}
+  // Handle objects with a stable field order
+  if (typeof value === "object") {
+    return JSON.stringify(
+      Object.keys(value).sort().reduce((acc, key) => {
+        acc[key] = normaliseValue(value[key]);
+        return acc;
+      }, {})
+    ).replace(/["]+/g, "").trim();
+  }
 
-if (typeof value === "object") {
-  return JSON.stringify(value); // Convert objects to their JSON string representation.
-}
-
-return String(value).trim(); // Convert other types to string and trim whitespace.
-
-}
-
-/**
- * Clean a given value by normalising it and removing double quotes.
- *
- * - First, the value is normalised using `normaliseValue`, ensuring it is a consistent string.
- * - Then, any double quotes (`"`) in the string are removed using a regular expression.
- *
- * @param {any} value - The input value to clean.
- * @returns {string} - A sanitised string with double quotes removed.
- */
-function cleanValue(value) {
-  
-  // Remove all double quotes from the normalised value.
-  return normaliseValue(value).replace(/["]+/g, ""); 
+  // Normalise scalar values (string, number, boolean)
+  return String(value).trim().replace(/["]+/g, "");
 }
 
 
@@ -285,9 +270,9 @@ const hasSectionChangedDeep = (props, sectionData) => {
         const currentValue = currentValues[key];
         const initialValue = initialValues[key];
 
-        const sanitisedSaved    =  cleanValue(savedValue);
-        const sanitisedCurrent  =  cleanValue(currentValue);
-        const sanitisedInitial  =  cleanValue(initialValue);
+        const sanitisedSaved    =  normaliseValue(savedValue);
+        const sanitisedCurrent  =  normaliseValue(currentValue);
+        const sanitisedInitial  =  normaliseValue(initialValue);
 
         if (
           sanitisedSaved !== sanitisedCurrent ||
@@ -309,15 +294,6 @@ const hasSectionChangedDeep = (props, sectionData) => {
 
 /**
  * Determines if any fields in a given set have changed by comparing their current and initial values.
- * 
- * This function is designed to handle various field types, including:
- * 
- * - **Text & textarea fields:** Compared as normalised and sanitised strings.
- * - **Checkboxes & multi-selects:** Compared as sorted arrays to ensure order does not affect the result.
- * - **Radio buttons & boolean fields:** Directly compared as boolean values.
- * 
- * The function iterates through all specified fields and returns `true` if any have changed.
- *
  * @param {Array} fields - The list of field names to check for changes.
  * @param {Object} currentValues - The current values of the fields, typically from user input or state.
  * @param {Object} initialValues - The initial values of the fields, typically from the database or original state.
@@ -325,30 +301,10 @@ const hasSectionChangedDeep = (props, sectionData) => {
  */
 const hasChangedFields = (fields, currentValues, initialValues) => {
   return fields.some(field => {
-    // Normalise and sanitise current and initial values
-    const currentValue = cleanValue(currentValues[field]);
-    const initialValue = cleanValue(initialValues[field]);
+    const currentValue = normaliseValue(currentValues[field]);
+    const initialValue = normaliseValue(initialValues[field]);
 
-    // Special handling for array-based fields (e.g., checkboxes, multi-selects)
-    if (Array.isArray(currentValue) || Array.isArray(initialValue)) {
-      const currentArray = Array.isArray(currentValue) ? currentValue : [];
-      const initialArray = Array.isArray(initialValue) ? initialValue : [];
-      const changed = JSON.stringify(currentArray.sort()) !== JSON.stringify(initialArray.sort());
-
-      return changed;
-    }
-
-    // Special handling for boolean fields (e.g., checkboxes, radios)
-    if (typeof currentValue === "boolean" || typeof initialValue === "boolean") {
-      const changed = currentValue !== initialValue;
-
-      return changed;
-    }
-
-    // General scalar value comparison (e.g., text, textarea)
-    const changed = currentValue !== initialValue;
-
-    return changed;
+    return currentValue !== initialValue; 
   });
 };
 
