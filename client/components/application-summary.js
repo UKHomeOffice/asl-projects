@@ -19,31 +19,7 @@ import PreviewLicence from './preview-licence';
 import Submit from './submit';
 import { selector } from './sync-handler';
 import HoldingPage from './holding-page';
-
-
-/**
- * Normalises a given value into a consistent string format.
- * @param {any} value - The input value to normalise.
- * @returns {string} - A normalised string representation.
- */
-function normaliseValue(value) {
-  if (value == null) {
-    return "";
-  }
-
-  // Handle objects with a stable field order
-  if (typeof value === "object") {
-    return JSON.stringify(
-      Object.keys(value).sort().reduce((acc, key) => {
-        acc[key] = normaliseValue(value[key]);
-        return acc;
-      }, {})
-    ).replace(/["]+/g, "").trim();
-  }
-
-  // Normalise scalar values (string, number, boolean)
-  return String(value).trim().replace(/["]+/g, "");
-}
+import { normaliseValue } from '../helpers/normalisation';
 
 
 
@@ -352,10 +328,7 @@ const hasChangedFields = (fields, currentValues, initialValues) => {
                       </td>
                       <td className="controls">
                         <Comments subsection={key} />
-                        {
-
-                          hasChangedFields(fields, values, project.initialValues || {}) && <ChangedBadge fields={fields} />
-                        }
+                        {hasChangedFields(fields, values, project.initialValues || {}) && <ChangedBadge fields={fields} />}
                         <CompleteBadge isComplete={isComplete(subsection, key)} />
                       </td>
                     </tr>;

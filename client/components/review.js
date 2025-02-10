@@ -12,101 +12,59 @@ import { Markdown } from '@ukhomeoffice/asl-components';
 import ErrorBoundary from './error-boundary';
 import classnames from 'classnames';
 import isEqual from 'lodash/isEqual'; // for deep comparison
+import { normaliseValue } from '../helpers/normalisation';
+import { normaliseDuration } from '../helpers/normaliseDuration';
 
 class Review extends React.Component {
 
 
-/**
- * Checks whether the database value has changed compared to the current value.
- *
- * This method:
- * - Normalises values for comparison, handling null, undefined, arrays, and objects.
- * - Ensures duration fields have default values when missing.
- * - Determines the actual current value by prioritising `currentValue` over `values[name]`.
- * - Compares stored and current values to detect changes.
- * - Handles dynamic species-based fields, ensuring changes in species-specific data are also detected.
- *
- * The method returns `true` if a change is detected, otherwise `false`.
- *
- * @returns {boolean} - `true` if there is a change in the data, otherwise `false`.
- */
-hasDatabaseChange() {
-    const normaliseValue = value => {
-        if (value === null || value === undefined || (Array.isArray(value) && value.length === 0)) {
-            // Normalise `null`, `undefined`, and empty arrays to a consistent empty state
-            return null;
-        }
-        if (Array.isArray(value)) {
-            // Sort arrays to ensure order doesn't affect comparison
-            return value.sort();
-        }
-        if (typeof value === 'object' && value !== null) {
-            // Ensure consistent ordering of object keys for generic objects
-            return JSON.stringify(value, Object.keys(value).sort());
-        }
-        return value; // Return all other values as-is
-    };
-
-    const normaliseDuration = value => {
-    if (value && typeof value === 'object' && ('years' in value || 'months' in value)) {
-        // Normalise duration objects specifically
-        return {
-            years: value.years ?? 5, // Default to 5 if undefined or null
-            months: value.months ?? 0 // Default to 0 if undefined or null
-        };
-    }
-
-      // Default for completely missing duration
-      return { years: 5, months: 0 };
-  };
-
-
+ /**
+   * Checks whether the database value has changed compared to the current value.
+   * @returns {boolean} - `true` if there is a change in the data, otherwise `false`.
+   */
+  hasDatabaseChange() {
     const { name, storedValue, currentValue, values } = this.props;
 
-    // Adjust storedValue for duration fields
-    const adjustedStoredValue =
-        name === 'duration' ? normaliseDuration(storedValue) : storedValue;
+    // Adjust stored value for `duration` fields
+    const adjustedStoredValue = name === 'duration' ? normaliseDuration(storedValue) : storedValue;
 
-    // Determine the actual current value for specific fields
-    const actualCurrentValue = currentValue !== undefined && currentValue !== null
-        ? currentValue
-        : values[name] !== undefined
-        ? values[name]
-        : null; // Fallback to `null` if no value is provided
+    // Determine actual current value, prioritising explicitly provided values
+    const actualCurrentValue = currentValue ?? values[name] ?? '';
 
-    // Normalise stored and current values
-    const normalisedStoredValue =
-        name === 'duration' ? normaliseDuration(adjustedStoredValue) : normaliseValue(adjustedStoredValue);
-    const normalisedCurrentValue =
-        name === 'duration' ? normaliseDuration(actualCurrentValue) : normaliseValue(actualCurrentValue);
+    // Normalise stored and current values for accurate comparison
+    const normalisedStoredValue = name === 'duration' 
+      ? normaliseDuration(adjustedStoredValue) 
+      : normaliseValue(adjustedStoredValue);
+    
+    const normalisedCurrentValue = name === 'duration' 
+      ? normaliseDuration(actualCurrentValue) 
+      : normaliseValue(actualCurrentValue);
 
-    // Detect changes by comparing normalized values
+    // Compare normalised values directly
     let hasChange = !isEqual(normalisedStoredValue, normalisedCurrentValue);
 
-
-    // Add logic for species-based dynamic fields
-    const species = values?.species || [];
-    if (species.length === 0) {
-      
-    } else {
-        species.forEach(speciesName => {
-            const fieldName = `reduction-quantities-${speciesName}`;
-            const speciesStoredValue = values.storedValue?.[fieldName] || null;
-            const speciesCurrentValue = values[fieldName] || null;
-
-            if (!isEqual(normaliseValue(speciesStoredValue), normaliseValue(speciesCurrentValue))) {
-
-              // any change in dynamic fields sets hasChange to true
-                hasChange = true; 
-            } else {
-                
-            }
-        });
+    //  Separate logic for species-based dynamic fields
+    if (values?.species?.length) {
+      hasChange = this.hasSpeciesFieldChanges(values) || hasChange;
     }
 
     return hasChange;
-}
+  }
 
+  /**
+   * Checks for changes in species-based dynamic fields.
+   * @param {Object} values - The current form values.
+   * @returns {boolean} - `true` if any species-based fields have changed.
+   */
+  hasSpeciesFieldChanges(values) {
+    return values.species.some(speciesName => {
+      const fieldName = `reduction-quantities-${speciesName}`;
+      const speciesStoredValue = values.storedValue?.[fieldName] ?? '';
+      const speciesCurrentValue = values[fieldName] ?? '';
+
+      return !isEqual(normaliseValue(speciesStoredValue), normaliseValue(speciesCurrentValue));
+    });
+  }
 
 
 
@@ -215,8 +173,9 @@ const mapStateToProps = (state, ownProps) => {
   
   // Safely accessing database values
   const storedValue = (state.databaseValues && state.databaseValues[key]) || null;
-  const currentValue = ownProps.value || null; // current value from props, if available
 
+  // current value from props, if available
+  const currentValue = ownProps.value || null; 
   return {
     readonly: ownProps.readonly || readonly,
     changedFromFirst,
