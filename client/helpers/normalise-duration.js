@@ -7,11 +7,11 @@
  * @returns {Object} - A duration object with `years` and `months`.
  */
 export function normaliseDuration(value) {
-    if (value && typeof value === 'object' && ('years' in value || 'months' in value)) {
-        return {
-            years: value.years ?? 5,  // Default to 5 if undefined
-            months: value.months ?? 0 // Default to 0 if undefined
-        };
-    }
-    return { years: 5, months: 0 };
+  if (value && typeof value === 'object' && ('years' in value || 'months' in value)) {
+    return {
+      years: value.years ?? 5, // Default to 5 if undefined
+      months: value.months ?? 0 // Default to 0 if undefined
+    };
+  }
+  return { years: 5, months: 0 };
 }

@@ -1,17 +1,14 @@
 import React, { Fragment, useState, useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-
 import map from 'lodash/map';
 import pickBy from 'lodash/pickBy';
 import some from 'lodash/some';
 import mapValues from 'lodash/mapValues';
 import minimatch from 'minimatch';
-
 import { INCOMPLETE, PARTIALLY_COMPLETE, COMPLETE } from '../constants/completeness';
 import schemaMap from '../schema';
 import { flattenReveals, getNewComments, getFields, getScrollPos } from '../helpers';
-
 import NewComments from './new-comments';
 import ChangedBadge from './changed-badge';
 import NextSteps from './next-steps';
@@ -20,8 +17,6 @@ import Submit from './submit';
 import { selector } from './sync-handler';
 import HoldingPage from './holding-page';
 import { normaliseValue } from '../helpers/normalisation';
-
-
 
 const mapStateToProps = ({
   project,
@@ -67,10 +62,6 @@ const ApplicationSummary = () => {
 
   const [errors, setErrors] = useState(false);
   const ref = useRef(null);
-
-
-
-
 
   useEffect(() => {
     if (submitted && !isSyncing) { submit(); }
@@ -212,79 +203,21 @@ const ApplicationSummary = () => {
     return <HoldingPage />;
   }
 
-
-/**
- * Recursively find all fields within a section and compare their values.
- * @param {object} props - Contains all saved and current data (savedValues, currentValues, initialValues).
- * @param {object} sectionData - The section object containing fields and nested subsections.
- * @returns {boolean} - True if any field in the section differs, false otherwise.
- */
-const hasSectionChangedDeep = (props, sectionData) => {
-  const { savedValues, currentValues, initialValues } = props;
-
-  if (!savedValues || !currentValues || !initialValues) {
-    return false;
-  }
-
   /**
-   * Recursive helper function to compare values.
-   * @param {object} data - The section or field data to process.
-   * @returns {boolean} - True if any field differs, false otherwise.
-   */
-  const compareFields = (data) => {
-    let changed = false;
-
-    Object.entries(data).forEach(([key, value]) => {
-      // Handle nested objects (e.g., subsections)
-      if (value && typeof value === "object" && !Array.isArray(value)) {
-        if (compareFields(value)) {
-          changed = true;
-        }
-      } else {
-        // Compare leaf fields
-        const savedValue = savedValues[key];
-        const currentValue = currentValues[key];
-        const initialValue = initialValues[key];
-
-        const sanitisedSaved    =  normaliseValue(savedValue);
-        const sanitisedCurrent  =  normaliseValue(currentValue);
-        const sanitisedInitial  =  normaliseValue(initialValue);
-
-        if (
-          sanitisedSaved !== sanitisedCurrent ||
-          sanitisedSaved !== sanitisedInitial
-        ) {
-          changed = true;
-        }
-      }
-    });
-
-    return changed;
-  };
-
-  return compareFields(sectionData);
-};
-
-
-
-
-/**
  * Determines if any fields in a given set have changed by comparing their current and initial values.
  * @param {Array} fields - The list of field names to check for changes.
  * @param {Object} currentValues - The current values of the fields, typically from user input or state.
  * @param {Object} initialValues - The initial values of the fields, typically from the database or original state.
  * @returns {boolean} - Returns `true` if at least one field has changed, otherwise `false`.
  */
-const hasChangedFields = (fields, currentValues, initialValues) => {
-  return fields.some(field => {
-    const currentValue = normaliseValue(currentValues[field]);
-    const initialValue = normaliseValue(initialValues[field]);
+  const hasChangedFields = (fields, currentValues, initialValues) => {
+    return fields.some(field => {
+      const currentValue = normaliseValue(currentValues[field]);
+      const initialValue = normaliseValue(initialValues[field]);
 
-    return currentValue !== initialValue; 
-  });
-};
-
-
+      return currentValue !== initialValue;
+    });
+  };
 
   return (
     <div className="application-summary" ref={ref}>

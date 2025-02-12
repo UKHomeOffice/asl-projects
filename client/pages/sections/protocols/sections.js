@@ -21,9 +21,6 @@ import Conditions from '../../../components/conditions/protocol-conditions';
 import ChangedBadge from '../../../components/changed-badge';
 import {reusableStepFieldKeys} from '../../../helpers/steps';
 
-
-
-
 const getSection = (section, props) => {
 
   const isFullApplicationPdf = props.isFullApplication && props.pdf;
@@ -110,12 +107,11 @@ const getBadges = (section, newComments, values) => {
 
   const fields = getFieldKeys(section, values);
 
-  // Initialize groups for fields with and without values
+  // Initialise groups for fields with and without values
   const fieldsWithValues = [];
   const fieldsWithoutValues = [];
 
   section.fields?.forEach((field, index) => {
-    
 
     // Attempt to retrieve the value from the values object
     const rawValue = field.name.includes('.')
@@ -127,13 +123,17 @@ const getBadges = (section, newComments, values) => {
     if (typeof rawValue === 'object' && rawValue !== null) {
       // Handle structured data
       if (rawValue.object) {
-        fieldValue = rawValue.object; // Extract `object` key if available
+        // Extract `object` key if available
+        fieldValue = rawValue.object;
       } else if (Array.isArray(rawValue)) {
-        fieldValue = rawValue.join(', '); // Join array elements
+        // Join array elements
+        fieldValue = rawValue.join(', ');
       } else if (rawValue.document) {
-        fieldValue = JSON.stringify(rawValue.document); // Handle `document` key
+        // Handle `document` key
+        fieldValue = JSON.stringify(rawValue.document);
       } else {
-        fieldValue = JSON.stringify(rawValue); // Convert object to string
+        // Convert object to string
+        fieldValue = JSON.stringify(rawValue);
       }
     } else {
       // Handle simple values or fallback to default message
@@ -146,19 +146,17 @@ const getBadges = (section, newComments, values) => {
         name: field.name,
         label: field.label,
         type: field.type,
-        value: fieldValue,
+        value: fieldValue
       });
     } else {
       fieldsWithoutValues.push({
         name: field.name,
         label: field.label,
         type: field.type,
-        value: "No value in database",
+        value: 'No value in database'
       });
     }
   });
-
-
 
   return (
     <Fragment>
