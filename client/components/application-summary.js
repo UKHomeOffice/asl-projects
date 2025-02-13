@@ -16,7 +16,7 @@ import PreviewLicence from './preview-licence';
 import Submit from './submit';
 import { selector } from './sync-handler';
 import HoldingPage from './holding-page';
-import { normaliseValue } from '../helpers/normalisation';
+import { hasSectionChanged } from '../helpers/section-change-detection';
 
 const mapStateToProps = ({
   project,
@@ -203,21 +203,7 @@ const ApplicationSummary = () => {
     return <HoldingPage />;
   }
 
-  /**
- * Determines if any fields in a given set have changed by comparing their current and initial values.
- * @param {Array} fields - The list of field names to check for changes.
- * @param {Object} currentValues - The current values of the fields, typically from user input or state.
- * @param {Object} initialValues - The initial values of the fields, typically from the database or original state.
- * @returns {boolean} - Returns `true` if at least one field has changed, otherwise `false`.
- */
-  const hasChangedFields = (fields, currentValues, initialValues) => {
-    return fields.some(field => {
-      const currentValue = normaliseValue(currentValues[field]);
-      const initialValue = normaliseValue(initialValues[field]);
 
-      return currentValue !== initialValue;
-    });
-  };
 
   return (
     <div className="application-summary" ref={ref}>
@@ -261,7 +247,7 @@ const ApplicationSummary = () => {
                       </td>
                       <td className="controls">
                         <Comments subsection={key} />
-                        {hasChangedFields(fields, values, project.initialValues || {}) && <ChangedBadge fields={fields} />}
+                        {hasSectionChanged(fields, values, project.initialValues || {}) && <ChangedBadge fields={fields} />}
                         <CompleteBadge isComplete={isComplete(subsection, key)} />
                       </td>
                     </tr>;
