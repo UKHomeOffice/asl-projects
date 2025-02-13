@@ -119,14 +119,13 @@ const getBadges = (section, newComments, values) => {
 
     if (typeof rawValue === 'object' && rawValue !== null) {
       if (Array.isArray(rawValue)) {
-        fieldValue = rawValue.join(', ');  
+        fieldValue = rawValue.join(', ');
       } else {
-        fieldValue = normaliseValue(rawValue); 
+        fieldValue = normaliseValue(rawValue);
       }
     } else {
       fieldValue = rawValue || null;
     }
-
 
     // Group fields based on whether they have values or not
     if (fieldValue) {

@@ -203,8 +203,6 @@ const ApplicationSummary = () => {
     return <HoldingPage />;
   }
 
-
-
   return (
     <div className="application-summary" ref={ref}>
       <ErrorSummary />

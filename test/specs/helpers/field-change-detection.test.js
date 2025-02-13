@@ -2,7 +2,7 @@ import assert from 'assert';
 import { hasDatabaseChange } from '../../../client/helpers/field-change-detection';
 
 describe('hasDatabaseChange', () => {
-  
+
   it('should return false if the stored value and current value are identical', () => {
     const result = hasDatabaseChange('field1', 'value', 'value', {}, () => false);
     assert.strictEqual(result, false);
@@ -58,7 +58,7 @@ describe('hasDatabaseChange', () => {
     const initialValues = {
       protocols: [{ id: 'bb94a161-0a97-4f73-ba05-ba0270e46901', title: 'Original' }]
     };
-    
+
     const result = hasDatabaseChange('protocols', initialValues.protocols, values.protocols, values, () => false);
     assert.strictEqual(result, true);
   });
