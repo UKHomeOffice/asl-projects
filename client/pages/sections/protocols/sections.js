@@ -1,18 +1,14 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-
 import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
 import size from 'lodash/size';
 import flatten from 'lodash/flatten';
 import lowerFirst from 'lodash/lowerFirst';
-
 import Accordion from '../../../components/accordion';
 import ExpandingPanel from '../../../components/expanding-panel';
 import NewComments from '../../../components/new-comments';
-
 import { flattenReveals } from '../../../helpers';
-
 import Section from './section';
 import Steps from './steps';
 import Animals from './animals';
@@ -20,6 +16,7 @@ import LegacyAnimals from './legacy-animals';
 import Conditions from '../../../components/conditions/protocol-conditions';
 import ChangedBadge from '../../../components/changed-badge';
 import {reusableStepFieldKeys} from '../../../helpers/steps';
+import { normaliseValue } from '../../../helpers/normalisation';
 
 const getSection = (section, props) => {
 
@@ -121,24 +118,15 @@ const getBadges = (section, newComments, values) => {
     let fieldValue;
 
     if (typeof rawValue === 'object' && rawValue !== null) {
-      // Handle structured data
-      if (rawValue.object) {
-        // Extract `object` key if available
-        fieldValue = rawValue.object;
-      } else if (Array.isArray(rawValue)) {
-        // Join array elements
-        fieldValue = rawValue.join(', ');
-      } else if (rawValue.document) {
-        // Handle `document` key
-        fieldValue = JSON.stringify(rawValue.document);
+      if (Array.isArray(rawValue)) {
+        fieldValue = rawValue.join(', ');  
       } else {
-        // Convert object to string
-        fieldValue = JSON.stringify(rawValue);
+        fieldValue = normaliseValue(rawValue); 
       }
     } else {
-      // Handle simple values or fallback to default message
       fieldValue = rawValue || null;
     }
+
 
     // Group fields based on whether they have values or not
     if (fieldValue) {

@@ -1,7 +1,7 @@
 import isEqual from 'lodash/isEqual';
 import { normaliseValue } from './normalisation';
 import { normaliseDuration } from './normalise-duration';
-
+import { hasSpeciesFieldChanges } from './species-change-detection';
 /**
  * Checks whether the stored database value has changed compared to the current value.
  *
