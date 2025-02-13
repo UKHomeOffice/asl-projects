@@ -19,9 +19,9 @@ const NtsCheckBoxWithModal = (props) => {
     const values = [...(value || [])];
     const itemRemoved = values.includes(checkboxValue);
 
-    const {hasData} = hasExistingDataForCheckbox(project, checkboxValue);
-
     if (itemRemoved) {
+      const {hasData} = hasExistingDataForCheckbox(project, checkboxValue);
+
       if (hasData) {
         // If there's existing data, show the modal
         setShowModal(true);
@@ -54,7 +54,7 @@ const NtsCheckBoxWithModal = (props) => {
   };
   const customTextMap = {
     'set-free': 'Set free',
-    'kept-alive': 'Kept alive for non-regulated purposes or possible reuse',
+    'kept-alive': 'Kept alive at a licensed establishment for non-regulated purposes or possible reuse',
     'used-in-other-projects': 'Continued use on other projects',
     'killed': 'Killed',
     'rehomed': 'Rehomed'

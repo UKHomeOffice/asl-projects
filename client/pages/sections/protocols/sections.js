@@ -106,7 +106,6 @@ const getBadges = (section, newComments, values) => {
 
   // Initialise groups for fields with and without values
   const fieldsWithValues = [];
-  const fieldsWithoutValues = [];
 
   section.fields?.forEach((field, index) => {
 
@@ -134,13 +133,6 @@ const getBadges = (section, newComments, values) => {
         label: field.label,
         type: field.type,
         value: fieldValue
-      });
-    } else {
-      fieldsWithoutValues.push({
-        name: field.name,
-        label: field.label,
-        type: field.type,
-        value: 'No value in database'
       });
     }
   });

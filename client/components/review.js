@@ -128,7 +128,7 @@ const mapStateToProps = (state, ownProps) => {
     changedFromGranted,
     isGranted,
     previousProtocols,
-    storedValue, // safely provided stored value
+    storedValue,
     currentValue
   };
 };
