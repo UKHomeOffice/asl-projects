@@ -12,6 +12,10 @@ import { normaliseDuration } from './normalise-duration';
  * @returns {boolean} - `true` if a change is detected, otherwise `false`.
  */
 export function hasDatabaseChange(fieldName, storedValue, currentValue, values, hasSpeciesFieldChanges) {
+  // Prevents crashes if fieldName is undefined or invalid
+  if (!fieldName || typeof fieldName !== 'string') {
+    return false;
+  }
   const adjustedStoredValue = fieldName === 'duration' ? normaliseDuration(storedValue) : storedValue;
   const actualCurrentValue = currentValue ?? values[fieldName] ?? '';
 
