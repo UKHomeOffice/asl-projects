@@ -13,11 +13,12 @@ import { normaliseDuration } from './normalise-duration';
  */
 export function hasDatabaseChange(fieldName, storedValue, currentValue, values, hasSpeciesFieldChanges) {
   // Prevents crashes if fieldName is undefined or invalid
-  if (!fieldName || typeof fieldName !== 'string') {
-    return false;
+  if (fieldName == null) {
+    throw new Error('fieldName must be provided.');
   }
+
+  const actualCurrentValue = currentValue ?? values?.[fieldName] ?? '';
   const adjustedStoredValue = fieldName === 'duration' ? normaliseDuration(storedValue) : storedValue;
-  const actualCurrentValue = currentValue ?? values[fieldName] ?? '';
 
   const normalisedStoredValue = fieldName === 'duration'
     ? normaliseDuration(adjustedStoredValue)
