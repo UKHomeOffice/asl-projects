@@ -129,7 +129,8 @@ const mapStateToProps = (state, ownProps) => {
     isGranted,
     previousProtocols,
     storedValue,
-    currentValue
+    currentValue,
+    fieldName: ownProps.name
   };
 };
 
