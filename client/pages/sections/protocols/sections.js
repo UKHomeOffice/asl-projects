@@ -1,14 +1,18 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
+
 import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
 import size from 'lodash/size';
 import flatten from 'lodash/flatten';
 import lowerFirst from 'lodash/lowerFirst';
+
 import Accordion from '../../../components/accordion';
 import ExpandingPanel from '../../../components/expanding-panel';
 import NewComments from '../../../components/new-comments';
+
 import { flattenReveals } from '../../../helpers';
+
 import Section from './section';
 import Steps from './steps';
 import Animals from './animals';
@@ -16,10 +20,8 @@ import LegacyAnimals from './legacy-animals';
 import Conditions from '../../../components/conditions/protocol-conditions';
 import ChangedBadge from '../../../components/changed-badge';
 import {reusableStepFieldKeys} from '../../../helpers/steps';
-import { normaliseValue } from '../../../helpers/normalisation';
 
 const getSection = (section, props) => {
-
   const isFullApplicationPdf = props.isFullApplication && props.pdf;
   if (props.isGranted && props.granted && props.granted.review && !isFullApplicationPdf) {
     return <props.granted.review {...props} />;
@@ -104,48 +106,13 @@ const getBadges = (section, newComments, values) => {
 
   const fields = getFieldKeys(section, values);
 
-  // Initialise groups for fields with and without values
-  const fieldsWithValues = [];
-
-  section.fields?.forEach((field, index) => {
-
-    // Attempt to retrieve the value from the values object
-    const rawValue = field.name.includes('.')
-      ? field.name.split('.').reduce((acc, key) => acc?.[key], values)
-      : values?.[field.name];
-
-    let fieldValue;
-
-    if (typeof rawValue === 'object' && rawValue !== null) {
-      if (Array.isArray(rawValue)) {
-        fieldValue = rawValue.join(', ');
-      } else {
-        fieldValue = normaliseValue(rawValue);
-      }
-    } else {
-      fieldValue = rawValue || null;
-    }
-
-    // Group fields based on whether they have values or not
-    if (fieldValue) {
-      fieldsWithValues.push({
-        name: field.name,
-        label: field.label,
-        type: field.type,
-        value: fieldValue
-      });
-    }
-  });
-
   return (
     <Fragment>
       {
         !!numberOfNewComments && <NewComments comments={numberOfNewComments} />
       }
       {
-        fieldsWithValues.length > 0 && (
-          <ChangedBadge fields={fields} protocolId={values.id} />
-        )
+        section.fields && <ChangedBadge fields={fields} protocolId={values.id} />
       }
     </Fragment>
   );

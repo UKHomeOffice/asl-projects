@@ -1,14 +1,17 @@
 import React, { Fragment, useState, useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import map from 'lodash/map';
 import pickBy from 'lodash/pickBy';
 import some from 'lodash/some';
 import mapValues from 'lodash/mapValues';
 import minimatch from 'minimatch';
+
 import { INCOMPLETE, PARTIALLY_COMPLETE, COMPLETE } from '../constants/completeness';
 import schemaMap from '../schema';
 import { flattenReveals, getNewComments, getFields, getScrollPos } from '../helpers';
+
 import NewComments from './new-comments';
 import ChangedBadge from './changed-badge';
 import NextSteps from './next-steps';
@@ -16,7 +19,6 @@ import PreviewLicence from './preview-licence';
 import Submit from './submit';
 import { selector } from './sync-handler';
 import HoldingPage from './holding-page';
-import { hasSectionChanged } from '../helpers/section-change-detection';
 
 const mapStateToProps = ({
   project,
@@ -227,10 +229,8 @@ const ApplicationSummary = () => {
               <tbody>
                 {
                   subsections.map(key => {
-
                     const subsection = section.subsections[key];
                     const fields = Object.values(fieldsBySection[key] || []);
-
                     if (key === 'protocols') {
                       fields.push('reusableSteps');
                     }
@@ -245,7 +245,7 @@ const ApplicationSummary = () => {
                       </td>
                       <td className="controls">
                         <Comments subsection={key} />
-                        {hasSectionChanged(fields, values, project.initialValues || {}) && <ChangedBadge fields={fields} />}
+                        <ChangedBadge fields={fields} />
                         <CompleteBadge isComplete={isComplete(subsection, key)} />
                       </td>
                     </tr>;
