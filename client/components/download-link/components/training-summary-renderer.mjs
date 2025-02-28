@@ -44,7 +44,7 @@ export function populateTableWithTrainingRecords(table, training) {
 }
 
 function createBulletedList(items, container) {
-  if (items && items.length > 0) {
+  if (items.length > 0) {
     items.forEach(item => container.createParagraph(item).bullet());
   } else {
     container.createParagraph('-').center();
