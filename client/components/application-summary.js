@@ -1,17 +1,14 @@
 import React, { Fragment, useState, useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-
 import map from 'lodash/map';
 import pickBy from 'lodash/pickBy';
 import some from 'lodash/some';
 import mapValues from 'lodash/mapValues';
 import minimatch from 'minimatch';
-
 import { INCOMPLETE, PARTIALLY_COMPLETE, COMPLETE } from '../constants/completeness';
 import schemaMap from '../schema';
 import { flattenReveals, getNewComments, getFields, getScrollPos } from '../helpers';
-
 import NewComments from './new-comments';
 import ChangedBadge from './changed-badge';
 import NextSteps from './next-steps';
@@ -19,6 +16,8 @@ import PreviewLicence from './preview-licence';
 import Submit from './submit';
 import { selector } from './sync-handler';
 import HoldingPage from './holding-page';
+import { hasSectionChanged } from '../helpers/section-change-detection';
+import { useFeatureFlag, FEATURE_CHANGE_DETECTION } from '@asl/service/ui/feature-flag';
 
 const mapStateToProps = ({
   project,
@@ -56,14 +55,13 @@ const mapStateToProps = ({
 };
 
 const ApplicationSummary = () => {
-
   const props = useSelector(mapStateToProps);
   const { isSyncing } = useSelector(selector);
   const [submitted, setSubmitted] = useState(false);
   const { legacy, values, readonly, sections, basename, fieldsBySection, newComments, project, showComments } = props;
-
   const [errors, setErrors] = useState(false);
   const ref = useRef(null);
+  const hasChangeDetectionFeature = useFeatureFlag(FEATURE_CHANGE_DETECTION);
 
   useEffect(() => {
     if (submitted && !isSyncing) { submit(); }
@@ -229,14 +227,27 @@ const ApplicationSummary = () => {
               <tbody>
                 {
                   subsections.map(key => {
+
                     const subsection = section.subsections[key];
                     const fields = Object.values(fieldsBySection[key] || []);
+
                     if (key === 'protocols') {
                       fields.push('reusableSteps');
                     }
                     if (subsection.repeats) {
                       fields.push(subsection.repeats);
                     }
+                    // Call `hasSectionChanged` before rendering `ChangedBadge`
+                    const sectionHasChanges = hasSectionChanged(
+                      fields,
+                      values,
+                      project.initialValues || {},
+                      project.latestSubmittedValues || {},
+                      project.firstSubmittedValues || {},
+                      project.grantedValues || {},
+                      project.isGranted
+                    );
+
                     return <tr key={key}>
                       <td>
                         <ErrorMessage title={subsection.title} isComplete={isComplete(subsection, key)}>
@@ -245,7 +256,7 @@ const ApplicationSummary = () => {
                       </td>
                       <td className="controls">
                         <Comments subsection={key} />
-                        <ChangedBadge fields={fields} />
+                        {hasChangeDetectionFeature ? sectionHasChanges && <ChangedBadge fields={fields} /> : <ChangedBadge fields={fields} />}  {/* Only render if sectionHasChanges and feature flag is true */}
                         <CompleteBadge isComplete={isComplete(subsection, key)} />
                       </td>
                     </tr>;
