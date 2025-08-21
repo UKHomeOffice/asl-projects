@@ -58,7 +58,7 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "remark-parse": "^9.0.0",
-    "sha.js": "^2.4.11",
+    "sha.js": "^2.4.12",
     "shasum": "^1.0.2",
     "slate": "^0.47.8",
     "slate-react": "^0.22.10",
